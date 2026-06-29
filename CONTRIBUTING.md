@@ -54,6 +54,12 @@ pnpm lint typecheck test build   # run before opening a PR
 
 See [AGENTS.md](./AGENTS.md) for package boundaries, testing conventions, and agent-specific guidance.
 
+## Dependencies
+
+Shared dependency versions live in the `catalog` section of `pnpm-workspace.yaml`. Any package used in two or more `package.json` files must use `"catalog:"` — never duplicate version strings.
+
+All versions are exact pins (no `^` or `~`). Single-package deps are pinned literally in that package's `package.json`.
+
 ## Environment variables
 
 Copy `.env.example` to `.env` at the repo root. Never commit `.env`.
