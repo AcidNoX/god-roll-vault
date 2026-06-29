@@ -39,9 +39,18 @@ export const destinyItemInstanceComponentSchema = z.object({
   isEquipped: z.boolean().optional(),
 });
 
+export const destinyReusablePlugSchema = z.object({
+  plugItemHash: z.number(),
+});
+
+export const destinyItemReusablePlugsComponentSchema = z.object({
+  plugs: z.record(z.array(destinyReusablePlugSchema)).optional(),
+});
+
 export const destinyProfileResponseSchema = z.object({
   characters: z.record(destinyCharacterComponentSchema).optional(),
   characterInventories: z.record(destinyInventoryComponentSchema).optional(),
+  characterEquipment: z.record(destinyInventoryComponentSchema).optional(),
   profileInventory: destinyInventoryComponentSchema.optional(),
   itemComponents: z
     .object({
@@ -57,6 +66,11 @@ export const destinyProfileResponseSchema = z.object({
               sockets: z.array(destinyItemSocketStateSchema).optional(),
             }),
           ),
+        })
+        .optional(),
+      reusablePlugs: z
+        .object({
+          data: z.record(destinyItemReusablePlugsComponentSchema),
         })
         .optional(),
     })

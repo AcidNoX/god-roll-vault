@@ -1,0 +1,119 @@
+{
+  "characterInventories": {
+    "2305789507540360956": {
+      "items": [
+        {
+          "itemHash": 1363886209,
+          "itemInstanceId": "6913529092654216196",
+          "bucketHash": 149531261,
+          "quantity": 1,
+          "state": 4
+        },
+        {
+          "itemHash": 2595497736,
+          "itemInstanceId": "6913529092654216197",
+          "bucketHash": 2465295065,
+          "quantity": 1,
+          "state": 4
+        },
+        {
+          "itemHash": 3448274439,
+          "itemInstanceId": "6913529092654216198",
+          "bucketHash": 3448274439,
+          "quantity": 1
+        }
+      ]
+    }
+  },
+  "characterEquipment": {
+    "2305789507540360956": {
+      "items": [
+        {
+          "itemHash": 1363886209,
+          "itemInstanceId": "6913529092654216199",
+          "bucketHash": 953998645,
+          "quantity": 1,
+          "state": 4
+        }
+      ]
+    }
+  },
+  "profileInventory": {
+    "items": [
+      {
+        "itemHash": 3687335430,
+        "itemInstanceId": "6913529092654216200",
+        "bucketHash": 149531261,
+        "quantity": 1,
+        "state": 4
+      },
+      {
+        "itemHash": 1363886209,
+        "itemInstanceId": "6913529092654216201",
+        "bucketHash": 149531261,
+        "quantity": 1,
+        "state": 4
+      }
+    ],
+    "privacy": 1
+  },
+  "itemComponents": {
+    "instances": {
+      "data": {
+        "6913529092654216196": {
+          "primaryStat": { "value": 1985 },
+          "damageTypeHash": 3373582085
+        },
+        "6913529092654216197": {
+          "primaryStat": { "value": 1980 },
+          "damageTypeHash": 2303181850
+        },
+        "6913529092654216199": {
+          "primaryStat": { "value": 1987 },
+          "damageTypeHash": 3373582085,
+          "isEquipped": true
+        },
+        "6913529092654216200": {
+          "primaryStat": { "value": 1975 },
+          "damageTypeHash": 3373582085
+        },
+        "6913529092654216201": {
+          "primaryStat": { "value": 1960 },
+          "damageTypeHash": 3373582085
+        }
+      }
+    },
+    "sockets": {
+      "data": {
+        "6913529092654216196": {
+          "sockets": [
+            { "plugHash": 1467527085, "isEnabled": true, "isVisible": true },
+            { "plugHash": 3177301540, "isEnabled": true, "isVisible": true }
+          ]
+        },
+        "6913529092654216199": {
+          "sockets": []
+        },
+        "6913529092654216201": {
+          "sockets": [{ "plugHash": null, "isEnabled": true, "isVisible": true }]
+        }
+      }
+    },
+    "reusablePlugs": {
+      "data": {
+        "6913529092654216197": {
+          "plugs": {
+            "0": [{ "plugItemHash": 2847525152 }],
+            "1": [{ "plugItemHash": 1820237385 }, { "plugItemHash": 1710791522 }]
+          }
+        },
+        "6913529092654216201": {
+          "plugs": {
+            "2": [{ "plugItemHash": 1467527085 }],
+            "3": [{ "plugItemHash": 3177301540 }]
+          }
+        }
+      }
+    }
+  }
+}
