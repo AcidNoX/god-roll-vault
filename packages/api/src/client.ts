@@ -1,8 +1,9 @@
-import type { DestinyCharacter, DestinyMembership } from "@god-roll-vault/core";
+import type { DestinyCharacter, DestinyMembership, InventoryWeapon } from "@god-roll-vault/core";
 import type { z } from "zod";
 
 import { BungieApiError } from "./errors.js";
 import { mapCharacters, mapMemberships } from "./mappers/destiny.js";
+import { mapInventoryWeapons, WEAPON_PROFILE_COMPONENT_IDS } from "./mappers/inventory.js";
 import { destinyCharacterResponseSchema, destinyItemResponseSchema } from "./schemas/character.js";
 import { BUNGIE_SUCCESS_ERROR_CODE, bungieEnvelopeSchema } from "./schemas/envelope.js";
 import { type UserMembershipData, userMembershipDataSchema } from "./schemas/memberships.js";
@@ -42,6 +43,19 @@ export class BungieClient {
   async getCharacters(membershipType: number, membershipId: string): Promise<DestinyCharacter[]> {
     const profile = await this.getProfile(membershipType, membershipId, [200]);
     return mapCharacters(profile);
+  }
+
+  async getWeapons(
+    membershipType: number,
+    membershipId: string,
+    characterId: string,
+  ): Promise<InventoryWeapon[]> {
+    const profile = await this.getProfile(
+      membershipType,
+      membershipId,
+      WEAPON_PROFILE_COMPONENT_IDS,
+    );
+    return mapInventoryWeapons(profile, characterId);
   }
 
   async getProfile(

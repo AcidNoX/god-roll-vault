@@ -7,6 +7,7 @@ import { wrapBungieResponse } from "./fixtures/envelope.js";
 import itemFixture from "./fixtures/item.json";
 import membershipsFixture from "./fixtures/memberships.json";
 import profileFixture from "./fixtures/profile.json";
+import weaponsInventoryFixture from "./fixtures/weapons-inventory.json";
 import { type BungieApiError, BungieClient } from "./index.js";
 import { bungieEnvelopeSchema } from "./schemas/envelope.js";
 import { userMembershipDataSchema } from "./schemas/memberships.js";
@@ -153,6 +154,54 @@ describe("BungieClient", () => {
       name: "BungieApiError",
       errorCode: 1627,
       errorStatus: "DestinyAccountNotFound",
+    } satisfies Partial<BungieApiError>);
+  });
+
+  it("getWeapons requests inventory components and returns mapped weapons", async () => {
+    const captured = { url: "" };
+
+    server.use(
+      http.get(
+        `${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`,
+        ({ request }) => {
+          captured.url = request.url;
+          return HttpResponse.json(wrapBungieResponse(weaponsInventoryFixture));
+        },
+      ),
+    );
+
+    const weapons = await createClient().getWeapons(
+      3,
+      "4611686018467427903",
+      "2305789507540360956",
+    );
+
+    expect(new URL(captured.url).searchParams.get("components")).toBe("102,201,205,300,305,308");
+    expect(weapons).toHaveLength(5);
+    expect(weapons[0]?.name).toBe("Fatebringer (Timelost)");
+    expect(weapons.some((weapon) => weapon.location === "vault")).toBe(true);
+  });
+
+  it("getWeapons throws BungieApiError when the profile request fails", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`, () =>
+        HttpResponse.json(
+          wrapBungieResponse(weaponsInventoryFixture, {
+            ErrorCode: 5,
+            ErrorStatus: "SystemDisabled",
+            Message: "Bungie.net is temporarily offline.",
+            ThrottleSeconds: 30,
+          }),
+        ),
+      ),
+    );
+
+    await expect(
+      createClient().getWeapons(3, "4611686018467427903", "2305789507540360956"),
+    ).rejects.toMatchObject({
+      name: "BungieApiError",
+      errorCode: 5,
+      errorStatus: "SystemDisabled",
     } satisfies Partial<BungieApiError>);
   });
 
