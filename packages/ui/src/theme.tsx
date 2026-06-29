@@ -218,7 +218,12 @@ export function ThemeProvider({
     <ThemeContext.Provider value={theme}>
       <View
         testID={testID}
-        style={[styles.root, fullViewportStyle, { backgroundColor: theme.colors.background }, style]}
+        style={[
+          styles.root,
+          fullViewportStyle,
+          { backgroundColor: theme.colors.background },
+          style,
+        ]}
       >
         <WebDocumentTheme backgroundColor={theme.colors.background} />
         {children}
