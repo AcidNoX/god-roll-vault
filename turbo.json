@@ -1,0 +1,29 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".expo/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:e2e": {
+      "cache": false
+    },
+    "test:e2e:mobile": {
+      "cache": false
+    }
+  }
+}

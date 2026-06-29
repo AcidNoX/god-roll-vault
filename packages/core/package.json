@@ -1,0 +1,20 @@
+{
+  "name": "@god-roll-vault/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "echo \"@god-roll-vault/core: lint ok\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@god-roll-vault/config": "workspace:*",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@god-roll-vault/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "echo \"@god-roll-vault/web: lint ok\"",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"@god-roll-vault/web: no unit tests yet\"",
+    "test:e2e": "echo \"@god-roll-vault/web: e2e not configured yet\""
+  },
+  "dependencies": {
+    "@god-roll-vault/core": "workspace:*",
+    "@god-roll-vault/ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native-web": "^0.20.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.turbo/
+.expo/
+web-build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+blob-report/
+
+# Expo
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+.metro-health-check*
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

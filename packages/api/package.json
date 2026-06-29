@@ -1,0 +1,21 @@
+{
+  "name": "@god-roll-vault/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "echo \"@god-roll-vault/api: lint ok\"",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"@god-roll-vault/api: no tests yet\""
+  },
+  "dependencies": {
+    "@god-roll-vault/core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@god-roll-vault/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "echo \"@god-roll-vault/ui: lint ok\"",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"@god-roll-vault/ui: no tests yet\""
+  },
+  "dependencies": {
+    "@god-roll-vault/core": "workspace:*",
+    "react": "^19.0.0",
+    "react-native": "^0.79.2",
+    "react-native-web": "^0.20.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}
