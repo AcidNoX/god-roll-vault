@@ -161,24 +161,44 @@ const styles = {
   } satisfies ViewStyle,
 };
 
+type WebDocument = {
+  body: {
+    style: {
+      backgroundColor: string;
+      margin: string;
+    };
+  };
+  documentElement: {
+    style: {
+      backgroundColor: string;
+    };
+  };
+};
+
+function getWebDocument() {
+  return (globalThis as { document?: WebDocument }).document;
+}
+
 function WebDocumentTheme({ backgroundColor }: { backgroundColor: string }) {
   useEffect(() => {
-    if (typeof document === "undefined") {
+    const webDocument = getWebDocument();
+
+    if (!webDocument) {
       return;
     }
 
-    const previousBodyBackground = document.body.style.backgroundColor;
-    const previousBodyMargin = document.body.style.margin;
-    const previousHtmlBackground = document.documentElement.style.backgroundColor;
+    const previousBodyBackground = webDocument.body.style.backgroundColor;
+    const previousBodyMargin = webDocument.body.style.margin;
+    const previousHtmlBackground = webDocument.documentElement.style.backgroundColor;
 
-    document.body.style.backgroundColor = backgroundColor;
-    document.body.style.margin = "0";
-    document.documentElement.style.backgroundColor = backgroundColor;
+    webDocument.body.style.backgroundColor = backgroundColor;
+    webDocument.body.style.margin = "0";
+    webDocument.documentElement.style.backgroundColor = backgroundColor;
 
     return () => {
-      document.body.style.backgroundColor = previousBodyBackground;
-      document.body.style.margin = previousBodyMargin;
-      document.documentElement.style.backgroundColor = previousHtmlBackground;
+      webDocument.body.style.backgroundColor = previousBodyBackground;
+      webDocument.body.style.margin = previousBodyMargin;
+      webDocument.documentElement.style.backgroundColor = previousHtmlBackground;
     };
   }, [backgroundColor]);
 
