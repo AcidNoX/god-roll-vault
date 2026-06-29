@@ -18,6 +18,23 @@ const WEAPON_PROFILE_COMPONENTS = [102, 201, 205, 300, 305, 308] as const;
 
 export const WEAPON_PROFILE_COMPONENT_IDS: number[] = [...WEAPON_PROFILE_COMPONENTS];
 
+const DAMAGE_TYPE_HASH_TO_ELEMENT: Record<number, InventoryWeapon["element"]> = {
+  3373582085: "kinetic",
+  2303181850: "arc",
+  1847026933: "solar",
+  3454344768: "void",
+  151347233: "stasis",
+  3949783978: "strand",
+};
+
+function mapDamageTypeHashToElement(damageTypeHash: number | undefined): InventoryWeapon["element"] {
+  if (!damageTypeHash) {
+    return "unknown";
+  }
+
+  return DAMAGE_TYPE_HASH_TO_ELEMENT[damageTypeHash] ?? "unknown";
+}
+
 function collectCharacterItems(profile: DestinyProfileResponse, characterId: string): ItemSource[] {
   const sources: ItemSource[] = [];
 
@@ -106,6 +123,7 @@ function mapItemToWeapon(
     name: getWeaponName(item.itemHash),
     tier: getWeaponTier(item.itemHash),
     power: instance?.primaryStat?.value ?? 0,
+    element: mapDamageTypeHashToElement(instance?.damageTypeHash),
     perks: extractWeaponPerks(item.itemInstanceId, profile),
     location,
     bucketHash: item.bucketHash,

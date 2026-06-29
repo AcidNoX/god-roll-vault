@@ -14,6 +14,7 @@ function makeWeapon(overrides: Partial<InventoryWeapon> = {}): InventoryWeapon {
     name: "Test Hand Cannon",
     tier: "Legendary",
     power: 1800,
+    element: "kinetic",
     perks: [],
     location: "vault",
     bucketHash: 1498876634,

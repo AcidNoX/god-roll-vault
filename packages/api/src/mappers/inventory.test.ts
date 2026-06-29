@@ -55,6 +55,7 @@ describe("mapInventoryWeapons", () => {
       name: "Fatebringer (Timelost)",
       tier: "Legendary",
       power: 1985,
+      element: "kinetic",
       perks: [
         { plugHash: 1467527085, name: "Firefly" },
         { plugHash: 3177301540, name: "Explosive Payload" },
@@ -67,6 +68,9 @@ describe("mapInventoryWeapons", () => {
     const vaultWeapon = weapons.find((weapon) => weapon.itemInstanceId === "6913529092654216200");
     expect(vaultWeapon?.location).toBe("vault");
     expect(vaultWeapon?.name).toBe("Vault Test Shotgun");
+
+    const arcWeapon = weapons.find((weapon) => weapon.itemInstanceId === "6913529092654216197");
+    expect(arcWeapon?.element).toBe("arc");
 
     const equipped = weapons.find((weapon) => weapon.itemInstanceId === "6913529092654216199");
     expect(equipped?.isEquipped).toBe(true);

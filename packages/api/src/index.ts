@@ -1,4 +1,9 @@
-export type { DestinyCharacter, DestinyMembership, InventoryWeapon } from "@god-roll-vault/core";
+export type {
+  DestinyCharacter,
+  DestinyMembership,
+  InventoryWeapon,
+  WeaponElement,
+} from "@god-roll-vault/core";
 export type {
   AuthTokens,
   BuildAuthorizeUrlParams,
