@@ -1,0 +1,26 @@
+{
+  "item": {
+    "itemHash": 1363886209,
+    "itemInstanceId": "6913529092654216196",
+    "bucketHash": 149531261,
+    "quantity": 1,
+    "state": 4
+  },
+  "itemComponents": {
+    "instances": {
+      "data": {
+        "6913529092654216196": {
+          "primaryStat": { "value": 1985 },
+          "damageTypeHash": 3373582085
+        }
+      }
+    },
+    "sockets": {
+      "data": {
+        "6913529092654216196": {
+          "sockets": [{ "plugHash": 1467527085 }]
+        }
+      }
+    }
+  }
+}

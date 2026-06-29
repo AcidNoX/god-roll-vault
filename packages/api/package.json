@@ -12,10 +12,12 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@god-roll-vault/core": "workspace:*"
+    "zod": "3.24.4"
   },
   "devDependencies": {
+    "@god-roll-vault/config": "workspace:*",
     "@god-roll-vault/vitest": "workspace:*",
+    "msw": "2.7.5",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

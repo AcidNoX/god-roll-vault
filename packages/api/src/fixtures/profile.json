@@ -1,0 +1,46 @@
+{
+  "characters": {
+    "2305789507540360956": {
+      "characterId": "2305789507540360956",
+      "classType": 0,
+      "light": 1985,
+      "dateLastPlayed": "2026-06-01T12:00:00.000Z",
+      "emblemHash": 1963513382
+    }
+  },
+  "characterInventories": {
+    "2305789507540360956": {
+      "items": [
+        {
+          "itemHash": 1363886209,
+          "itemInstanceId": "6913529092654216196",
+          "bucketHash": 149531261,
+          "quantity": 1,
+          "state": 4
+        }
+      ]
+    }
+  },
+  "profileInventory": {
+    "items": [],
+    "privacy": 1
+  },
+  "itemComponents": {
+    "instances": {
+      "data": {
+        "6913529092654216196": {
+          "primaryStat": { "value": 1985 },
+          "damageTypeHash": 3373582085,
+          "isEquipped": true
+        }
+      }
+    },
+    "sockets": {
+      "data": {
+        "6913529092654216196": {
+          "sockets": [{ "plugHash": 1467527085, "isEnabled": true, "isVisible": true }]
+        }
+      }
+    }
+  }
+}

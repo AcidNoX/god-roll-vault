@@ -1,0 +1,16 @@
+{
+  "destinyMemberships": [
+    {
+      "membershipType": 3,
+      "membershipId": "4611686018467427903",
+      "displayName": "Guardian",
+      "bungieGlobalDisplayName": "Guardian",
+      "bungieGlobalDisplayNameCode": 1234
+    }
+  ],
+  "primaryMembershipId": "4611686018467427903",
+  "bungieNetUser": {
+    "membershipId": "4611686018467427902",
+    "displayName": "Guardian#1234"
+  }
+}
