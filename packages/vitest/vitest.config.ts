@@ -1,3 +1,3 @@
-import { defineNodeTestConfig } from "./dist/node.js";
+import { defineNodeTestConfig } from "./src/node.ts";
 
 export default defineNodeTestConfig();
