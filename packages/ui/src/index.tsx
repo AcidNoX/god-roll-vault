@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Text as RNText, View } from "react-native";
 
-export { WeaponCard } from "./WeaponCard.js";
 export type { WeaponCardProps } from "./WeaponCard.js";
+export { WeaponCard } from "./WeaponCard.js";
 
 export type AppTextProps = {
   children: ReactNode;

@@ -86,10 +86,13 @@ function flattenStyle(style: unknown): Record<string, unknown> {
   }
 
   if (Array.isArray(style)) {
-    return style.reduce<Record<string, unknown>>(
-      (merged, stylePart) => ({ ...merged, ...flattenStyle(stylePart) }),
-      {},
-    );
+    const merged: Record<string, unknown> = {};
+
+    for (const stylePart of style) {
+      Object.assign(merged, flattenStyle(stylePart));
+    }
+
+    return merged;
   }
 
   if (typeof style === "object") {
@@ -129,17 +132,19 @@ describe("WeaponCard", () => {
     ["partial", "Partial", "#3a2f12", "#f5c542"],
     ["missing", "Missing", "#3a1717", "#ff6b6b"],
     ["unknown", "Unknown", "#282836", "#5f6472"],
-  ] satisfies [MatchStatus, string, string, string][])(
-    "renders %s badge color and label",
-    (status, label, backgroundColor, borderColor) => {
-      const card = renderWeaponCard({ matchResult: makeMatchResult(status) });
-      const badge = findByTestID(card, `weapon-card-${weapon.itemInstanceId}-badge`);
+  ] satisfies [
+    MatchStatus,
+    string,
+    string,
+    string,
+  ][])("renders %s badge color and label", (status, label, backgroundColor, borderColor) => {
+    const card = renderWeaponCard({ matchResult: makeMatchResult(status) });
+    const badge = findByTestID(card, `weapon-card-${weapon.itemInstanceId}-badge`);
 
-      expect(textContent(badge)).toBe(label);
-      expect(flattenStyle(badge.props.style)).toMatchObject({
-        backgroundColor,
-        borderColor,
-      });
-    },
-  );
+    expect(textContent(badge)).toBe(label);
+    expect(flattenStyle(badge.props.style)).toMatchObject({
+      backgroundColor,
+      borderColor,
+    });
+  });
 });

@@ -27,7 +27,9 @@ const DAMAGE_TYPE_HASH_TO_ELEMENT: Record<number, InventoryWeapon["element"]> = 
   3949783978: "strand",
 };
 
-function mapDamageTypeHashToElement(damageTypeHash: number | undefined): InventoryWeapon["element"] {
+function mapDamageTypeHashToElement(
+  damageTypeHash: number | undefined,
+): InventoryWeapon["element"] {
   if (!damageTypeHash) {
     return "unknown";
   }
