@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "echo \"@god-roll-vault/config: no build\"",
-    "lint": "echo \"@god-roll-vault/config: lint ok\"",
     "typecheck": "echo \"@god-roll-vault/config: typecheck ok\"",
     "test": "echo \"@god-roll-vault/config: no tests\""
   }

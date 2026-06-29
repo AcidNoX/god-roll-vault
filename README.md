@@ -5,6 +5,7 @@ Cross-platform Destiny 2 gear manager for tracking weapon god rolls (PVP/PVE) ac
 ## Stack
 
 - **Monorepo:** Turborepo + pnpm
+- **Lint/format:** Biome
 - **Web:** Vite + react-native-web
 - **Mobile:** Expo
 - **Shared UI:** `packages/ui`
@@ -29,7 +30,8 @@ pnpm dev
 |---------|-------------|
 | `pnpm dev` | Start all apps in dev mode |
 | `pnpm build` | Build all packages and apps |
-| `pnpm lint` | Lint all packages |
+| `pnpm lint` | Biome lint + format check |
+| `pnpm lint:fix` | Biome auto-fix |
 | `pnpm typecheck` | Typecheck all packages |
 | `pnpm test` | Run unit tests |
 | `pnpm test:e2e` | Run web E2E tests (Playwright) |
@@ -42,7 +44,7 @@ apps/
   web/              # Vite web app
   mobile/           # Expo mobile app
 packages/
-  config/           # Shared eslint, tsconfig, vitest config
+  config/           # Shared tsconfig, vitest config
   core/             # God roll matching, domain types
   api/              # Bungie API + auth
   destiny-data/     # Weapon/perk/god-roll reference data

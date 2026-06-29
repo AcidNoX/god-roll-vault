@@ -12,7 +12,8 @@
 ```bash
 pnpm install
 pnpm build
-pnpm lint
+pnpm lint          # Biome check (format + lint)
+pnpm lint:fix      # Biome auto-fix
 pnpm typecheck
 pnpm test
 ```
@@ -25,5 +26,6 @@ pnpm test
 
 - Code in the correct package
 - Unit tests for business logic changes
-- `pnpm turbo lint typecheck test build` passes
+- `pnpm lint typecheck test build` passes locally
 - PR references the Linear issue ID
+- CI checks (`lint`, `typecheck`, `test`) pass on the PR
