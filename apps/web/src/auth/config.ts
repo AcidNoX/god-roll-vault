@@ -10,8 +10,19 @@ export function getAuthConfig(): AuthConfig {
   const redirectUri = import.meta.env.VITE_OAUTH_REDIRECT_URI;
 
   if (!clientId || !redirectUri) {
-    throw new Error("Missing VITE_BUNGIE_CLIENT_ID or VITE_OAUTH_REDIRECT_URI");
+    throw new Error(
+      "Missing Bungie OAuth config. Add BUNGIE_CLIENT_ID and BUNGIE_CLIENT_SECRET to the repo root .env (see docs/bungie-setup.md), then restart the dev server.",
+    );
   }
 
   return { clientId, clientSecret, redirectUri };
+}
+
+export function getAuthConfigError(): string | null {
+  try {
+    getAuthConfig();
+    return null;
+  } catch (error) {
+    return error instanceof Error ? error.message : "Missing OAuth configuration";
+  }
 }

@@ -55,6 +55,8 @@ OAUTH_REDIRECT_URI_MOBILE=godrollvault://auth/callback
 
 `.env` is gitignored. Do not commit API keys or client secrets.
 
+The web dev server reads the repo root `.env` automatically (`BUNGIE_CLIENT_ID` / `BUNGIE_CLIENT_SECRET` map to the Vite client). After editing `.env`, restart `pnpm dev`. Optional override: `apps/web/.env.local` with `VITE_BUNGIE_*` vars.
+
 ## OAuth flow (summary)
 
 Bungie uses OAuth 2.0 authorization code flow ([wiki](https://github.com/Bungie-net/api/wiki/OAuth-Documentation)).
