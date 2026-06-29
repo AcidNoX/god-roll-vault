@@ -1,17 +1,86 @@
 {
+  "106909392": {
+    "name": "Tactical Mag"
+  },
+  "588594999": {
+    "name": "Moving Target"
+  },
+  "839105230": {
+    "name": "Arrowhead Brake"
+  },
+  "957782887": {
+    "name": "Snapshot Sights"
+  },
+  "1015611457": {
+    "name": "Kill Clip"
+  },
+  "1168162263": {
+    "name": "Outlaw"
+  },
   "1467527085": {
     "name": "Firefly"
   },
-  "3177301540": {
-    "name": "Explosive Payload"
+  "1482024992": {
+    "name": "Smallbore"
   },
-  "1820237385": {
-    "name": "Fourth Times the Charm"
+  "1546637391": {
+    "name": "Vorpal Weapon"
   },
   "1710791522": {
     "name": "Rampage"
   },
+  "1820237385": {
+    "name": "Fourth Times the Charm"
+  },
+  "1840239774": {
+    "name": "Fluted Barrel"
+  },
+  "1890422124": {
+    "name": "Tap the Trigger"
+  },
+  "2213355989": {
+    "name": "High-Impact Reserves"
+  },
   "2847525152": {
     "name": "Accurized Rounds"
+  },
+  "3038247973": {
+    "name": "Explosive Payload"
+  },
+  "3142289711": {
+    "name": "Accurized Rounds"
+  },
+  "3177301540": {
+    "name": "Explosive Payload"
+  },
+  "3250034553": {
+    "name": "Hammer-Forged Rifling"
+  },
+  "3300816228": {
+    "name": "Auto-Loading Holster"
+  },
+  "3400784728": {
+    "name": "Triple Tap"
+  },
+  "3425386926": {
+    "name": "Rampage"
+  },
+  "3523296417": {
+    "name": "Demolitionist"
+  },
+  "3700496672": {
+    "name": "Shoot to Loot"
+  },
+  "3824105627": {
+    "name": "Firefly"
+  },
+  "3891536761": {
+    "name": "Kinetic Tremors"
+  },
+  "4090651448": {
+    "name": "Corkscrew Rifling"
+  },
+  "4104185692": {
+    "name": "Frenzy"
   }
 }
