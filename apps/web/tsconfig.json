@@ -5,8 +5,10 @@
     "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "paths": {
+      "@god-roll-vault/api": ["../../packages/api/src/index.ts"],
       "@god-roll-vault/core": ["../../packages/core/src/index.ts"],
-      "@god-roll-vault/ui": ["../../packages/ui/src/index.tsx"]
+      "@god-roll-vault/ui": ["../../packages/ui/src/index.tsx"],
+      "react-native": ["../../node_modules/react-native-web"]
     },
     "types": ["vite/client"]
   },

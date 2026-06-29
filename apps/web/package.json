@@ -12,14 +12,17 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@god-roll-vault/api": "workspace:*",
     "@god-roll-vault/core": "workspace:*",
     "@god-roll-vault/ui": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-native-web": "catalog:"
+    "react-native-web": "catalog:",
+    "react-router-dom": "7.6.2"
   },
   "devDependencies": {
     "@playwright/test": "1.52.0",
+    "@vitejs/plugin-basic-ssl": "2.0.0",
     "@types/react": "catalog:",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "catalog:",

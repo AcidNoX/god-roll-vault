@@ -1,11 +1,28 @@
-import { PROJECT_NAME } from "@god-roll-vault/core";
-import { AppText, Screen } from "@god-roll-vault/ui";
+import { Route, Routes } from "react-router-dom";
+
+import { AuthProvider } from "./auth/AuthProvider.js";
+import { ProtectedRoute } from "./components/ProtectedRoute.js";
+import { AuthCallbackPage } from "./pages/AuthCallbackPage.js";
+import { HomePage } from "./pages/HomePage.js";
+import { InventoryPage } from "./pages/InventoryPage.js";
+import { LoginPage } from "./pages/LoginPage.js";
 
 export function App() {
   return (
-    <Screen testID="app-root">
-      <AppText testID="app-title">God Roll Vault</AppText>
-      <AppText testID="app-subtitle">{PROJECT_NAME} web app</AppText>
-    </Screen>
+    <AuthProvider>
+      <Routes>
+        <Route element={<HomePage />} path="/" />
+        <Route element={<LoginPage />} path="/login" />
+        <Route element={<AuthCallbackPage />} path="/auth/callback" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <InventoryPage />
+            </ProtectedRoute>
+          }
+          path="/inventory"
+        />
+      </Routes>
+    </AuthProvider>
   );
 }
