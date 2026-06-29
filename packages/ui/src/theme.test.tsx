@@ -59,7 +59,7 @@ describe("ThemeProvider", () => {
     expect(flattenStyle(root.props.style)).toMatchObject({
       backgroundColor: darkTheme.colors.background,
       flex: 1,
-      minHeight: "100%",
+      minHeight: "100vh",
     });
     expect(textContent(root)).toBe("Vault ready");
   });

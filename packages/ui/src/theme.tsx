@@ -1,9 +1,9 @@
 import { createContext, type ReactNode, useContext, useEffect } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 
 export const colors = {
-  background: "#090613",
+  background: "#0f0920",
   surface: "#151022",
   surfaceRaised: "#1f1733",
   surfaceMuted: "#29213d",
@@ -157,9 +157,12 @@ const ThemeContext = createContext<Theme>(darkTheme);
 const styles = {
   root: {
     flex: 1,
-    minHeight: "100%",
   } satisfies ViewStyle,
 };
+
+const fullViewportStyle = {
+  minHeight: Platform.OS === "web" ? "100vh" : "100%",
+} as ViewStyle;
 
 type WebDocument = {
   body: {
@@ -215,7 +218,7 @@ export function ThemeProvider({
     <ThemeContext.Provider value={theme}>
       <View
         testID={testID}
-        style={[styles.root, { backgroundColor: theme.colors.background }, style]}
+        style={[styles.root, fullViewportStyle, { backgroundColor: theme.colors.background }, style]}
       >
         <WebDocumentTheme backgroundColor={theme.colors.background} />
         {children}
