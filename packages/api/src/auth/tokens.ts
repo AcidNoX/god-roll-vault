@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { BUNGIE_OAUTH_TOKEN_URL } from "./constants.js";
 import { OAuthError } from "./errors.js";
-import type { AuthTokens, ExchangeCodeForTokensParams } from "./types.js";
+import type { AuthTokens, ExchangeCodeForTokensParams, RefreshAccessTokenParams } from "./types.js";
 
 const bungieTokenResponseSchema = z.object({
   access_token: z.string(),
@@ -21,44 +21,28 @@ const oauthErrorResponseSchema = z.object({
 export function mapTokenResponseToAuthTokens(
   response: z.infer<typeof bungieTokenResponseSchema>,
   now = Date.now(),
+  previous?: AuthTokens,
 ): AuthTokens {
   return {
     accessToken: response.access_token,
-    refreshToken: response.refresh_token ?? "",
+    refreshToken: response.refresh_token ?? previous?.refreshToken ?? "",
     expiresAt: now + response.expires_in * 1000,
-    membershipId: response.membership_id,
+    membershipId: response.membership_id ?? previous?.membershipId,
     refreshExpiresAt:
       response.refresh_expires_in !== undefined
         ? now + response.refresh_expires_in * 1000
-        : undefined,
+        : previous?.refreshExpiresAt,
   };
 }
 
-/**
- * Exchanges an authorization code for access (and optionally refresh) tokens.
- *
- * Bungie quirks:
- * - Confidential clients should authenticate via `Authorization: Basic` (client_id:client_secret).
- * - Public clients must send `client_id` in the body and will **not** receive a refresh token.
- * - Access tokens expire in ~3600s; refresh tokens last ~90 days for confidential clients.
- * - Token responses are plain JSON (not the Platform API envelope).
- */
-export async function exchangeCodeForTokens({
-  clientId,
-  clientSecret,
-  code,
-  codeVerifier,
-  redirectUri,
-  tokenUrl = BUNGIE_OAUTH_TOKEN_URL,
-  fetch: fetchFn = fetch,
-}: ExchangeCodeForTokensParams): Promise<AuthTokens> {
-  const body = new URLSearchParams({
-    grant_type: "authorization_code",
-    code,
-    code_verifier: codeVerifier,
-    redirect_uri: redirectUri,
-  });
-
+async function requestOAuthTokens(
+  body: URLSearchParams,
+  clientId: string,
+  clientSecret: string | undefined,
+  fetchFn: typeof fetch,
+  tokenUrl: string,
+  previous?: AuthTokens,
+): Promise<AuthTokens> {
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
   });
@@ -88,5 +72,58 @@ export async function exchangeCodeForTokens({
   }
 
   const tokens = bungieTokenResponseSchema.parse(json);
-  return mapTokenResponseToAuthTokens(tokens);
+  return mapTokenResponseToAuthTokens(tokens, Date.now(), previous);
+}
+
+/**
+ * Exchanges an authorization code for access (and optionally refresh) tokens.
+ *
+ * Bungie quirks:
+ * - Confidential clients should authenticate via `Authorization: Basic` (client_id:client_secret).
+ * - Public clients must send `client_id` in the body and will **not** receive a refresh token.
+ * - Access tokens expire in ~3600s; refresh tokens last ~90 days for confidential clients.
+ * - Token responses are plain JSON (not the Platform API envelope).
+ */
+export async function exchangeCodeForTokens({
+  clientId,
+  clientSecret,
+  code,
+  codeVerifier,
+  redirectUri,
+  tokenUrl = BUNGIE_OAUTH_TOKEN_URL,
+  fetch: fetchFn = fetch,
+}: ExchangeCodeForTokensParams): Promise<AuthTokens> {
+  const body = new URLSearchParams({
+    grant_type: "authorization_code",
+    code,
+    code_verifier: codeVerifier,
+    redirect_uri: redirectUri,
+  });
+
+  return requestOAuthTokens(body, clientId, clientSecret, fetchFn, tokenUrl);
+}
+
+/**
+ * Refreshes an access token using a refresh token.
+ *
+ * Bungie does not include `scope` on refresh requests. The new access token
+ * keeps the same scopes as the original grant.
+ */
+export async function refreshAccessToken({
+  clientId,
+  clientSecret,
+  refreshToken,
+  tokenUrl = BUNGIE_OAUTH_TOKEN_URL,
+  fetch: fetchFn = fetch,
+}: RefreshAccessTokenParams): Promise<AuthTokens> {
+  const body = new URLSearchParams({
+    grant_type: "refresh_token",
+    refresh_token: refreshToken,
+  });
+
+  return requestOAuthTokens(body, clientId, clientSecret, fetchFn, tokenUrl, {
+    accessToken: "",
+    refreshToken,
+    expiresAt: 0,
+  });
 }

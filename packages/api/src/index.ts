@@ -3,15 +3,23 @@ export type {
   BuildAuthorizeUrlParams,
   ExchangeCodeForTokensParams,
   PkcePair,
+  RefreshAccessTokenParams,
+  RefreshTokensIfNeededParams,
+  TokenStore,
 } from "./auth/index.js";
 export {
   BUNGIE_OAUTH_AUTHORIZE_URL,
   BUNGIE_OAUTH_TOKEN_URL,
   buildAuthorizeUrl,
+  DEFAULT_TOKEN_EXPIRY_BUFFER_MS,
   exchangeCodeForTokens,
   generatePkce,
+  InMemoryTokenStore,
+  isAccessTokenExpired,
   mapTokenResponseToAuthTokens,
   OAuthError,
+  refreshAccessToken,
+  refreshTokensIfNeeded,
 } from "./auth/index.js";
 export type { BungieClientConfig } from "./client.js";
 export { BUNGIE_API_BASE_URL, BungieClient } from "./client.js";
