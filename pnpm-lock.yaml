@@ -27,6 +27,9 @@ catalogs:
     vitest:
       specifier: 3.2.6
       version: 3.2.6
+    zod:
+      specifier: 3.24.4
+      version: 3.24.4
 
 overrides:
   react-dom: 19.0.0
@@ -153,6 +156,10 @@ importers:
   packages/config: {}
 
   packages/core:
+    dependencies:
+      zod:
+        specifier: 'catalog:'
+        version: 3.24.4
     devDependencies:
       '@god-roll-vault/config':
         specifier: workspace:*

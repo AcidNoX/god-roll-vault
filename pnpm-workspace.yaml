@@ -9,5 +9,6 @@ catalog:
   react-native-web: 0.20.0
   typescript: 5.9.3
   vitest: 3.2.6
+  zod: 3.24.4
   "@types/react": 19.0.14
   "@vitejs/plugin-react": 4.7.0
