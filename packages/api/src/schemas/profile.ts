@@ -63,7 +63,7 @@ export const destinyProfileResponseSchema = z.object({
     .optional(),
 });
 
-export type DestinyItemComponent = z.infer<typeof destinyItemComponentSchema>;
-export type DestinyInventoryComponent = z.infer<typeof destinyInventoryComponentSchema>;
-export type DestinyCharacterComponent = z.infer<typeof destinyCharacterComponentSchema>;
-export type DestinyProfileResponse = z.infer<typeof destinyProfileResponseSchema>;
+export type DestinyItemComponent = z.output<typeof destinyItemComponentSchema>;
+export type DestinyInventoryComponent = z.output<typeof destinyInventoryComponentSchema>;
+export type DestinyCharacterComponent = z.output<typeof destinyCharacterComponentSchema>;
+export type DestinyProfileResponse = z.output<typeof destinyProfileResponseSchema>;

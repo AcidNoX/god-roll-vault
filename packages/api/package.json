@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@god-roll-vault/core": "workspace:*",
     "zod": "3.24.4"
   },
   "devDependencies": {

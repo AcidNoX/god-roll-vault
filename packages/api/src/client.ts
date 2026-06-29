@@ -1,10 +1,12 @@
+import type { DestinyCharacter, DestinyMembership } from "@god-roll-vault/core";
 import type { z } from "zod";
 
 import { BungieApiError } from "./errors.js";
+import { mapCharacters, mapMemberships } from "./mappers/destiny.js";
 import { destinyCharacterResponseSchema, destinyItemResponseSchema } from "./schemas/character.js";
 import { BUNGIE_SUCCESS_ERROR_CODE, bungieEnvelopeSchema } from "./schemas/envelope.js";
-import { userMembershipDataSchema } from "./schemas/memberships.js";
-import { destinyProfileResponseSchema } from "./schemas/profile.js";
+import { type UserMembershipData, userMembershipDataSchema } from "./schemas/memberships.js";
+import { type DestinyProfileResponse, destinyProfileResponseSchema } from "./schemas/profile.js";
 
 export const BUNGIE_API_BASE_URL = "https://www.bungie.net/Platform";
 
@@ -28,11 +30,25 @@ export class BungieClient {
     return this.config.apiKey;
   }
 
-  async getMembershipsForCurrentUser() {
+  async getMembershipsForCurrentUser(): Promise<UserMembershipData> {
     return this.request("/User/GetMembershipsForCurrentUser/", userMembershipDataSchema);
   }
 
-  async getProfile(membershipType: number, destinyMembershipId: string, components: number[]) {
+  async getMemberships(): Promise<DestinyMembership[]> {
+    const data = await this.getMembershipsForCurrentUser();
+    return mapMemberships(data);
+  }
+
+  async getCharacters(membershipType: number, membershipId: string): Promise<DestinyCharacter[]> {
+    const profile = await this.getProfile(membershipType, membershipId, [200]);
+    return mapCharacters(profile);
+  }
+
+  async getProfile(
+    membershipType: number,
+    destinyMembershipId: string,
+    components: number[],
+  ): Promise<DestinyProfileResponse> {
     const query = new URLSearchParams({
       components: components.join(","),
     });
@@ -72,11 +88,11 @@ export class BungieClient {
     );
   }
 
-  private async request<T>(
+  private async request<T extends z.ZodTypeAny>(
     path: string,
-    responseSchema: z.ZodType<T>,
+    responseSchema: T,
     init?: RequestInit,
-  ): Promise<T> {
+  ): Promise<z.output<T>> {
     const url = `${this.baseUrl.replace(/\/$/, "")}${path}`;
     const headers = new Headers(init?.headers);
     headers.set("X-API-Key", this.config.apiKey);
@@ -103,6 +119,6 @@ export class BungieClient {
       );
     }
 
-    return envelope.Response as T;
+    return envelope.Response as z.output<T>;
   }
 }

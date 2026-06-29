@@ -21,5 +21,5 @@ export const userMembershipDataSchema = z.object({
     .optional(),
 });
 
-export type GroupUserInfoCard = z.infer<typeof groupUserInfoCardSchema>;
-export type UserMembershipData = z.infer<typeof userMembershipDataSchema>;
+export type GroupUserInfoCard = z.output<typeof groupUserInfoCardSchema>;
+export type UserMembershipData = z.output<typeof userMembershipDataSchema>;
