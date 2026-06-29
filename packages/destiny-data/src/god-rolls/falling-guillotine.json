@@ -1,0 +1,23 @@
+{
+  "weaponHash": 614426548,
+  "weaponName": "Falling Guillotine",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Boss DPS",
+      "perks": {
+        "perk1": ["Vorpal Weapon"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk2"]
+    },
+    {
+      "mode": "pvp",
+      "label": "Flex",
+      "perks": {
+        "perk1": ["Demolitionist"]
+      },
+      "flexSlots": []
+    }
+  ]
+}

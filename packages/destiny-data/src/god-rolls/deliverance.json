@@ -1,6 +1,6 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 768621510,
+  "weaponName": "Deliverance",
   "rolls": [
     {
       "mode": "pvp",
@@ -8,10 +8,10 @@
       "perks": {
         "barrel": ["Arrowhead Brake"],
         "magazine": ["Accurized Rounds"],
-        "perk1": ["Kill Clip"],
-        "perk2": ["Rampage"]
+        "perk1": ["Tap the Trigger"],
+        "perk2": ["Kill Clip"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["perk1"]
     },
     {
       "mode": "pve",
@@ -19,10 +19,10 @@
       "perks": {
         "barrel": ["Fluted Barrel"],
         "magazine": ["Accurized Rounds"],
-        "perk1": ["Outlaw"],
-        "perk2": ["Rampage"]
+        "perk1": ["Frenzy"],
+        "perk2": ["Demolitionist"]
       },
-      "flexSlots": ["perk1"]
+      "flexSlots": ["perk2"]
     }
   ]
 }

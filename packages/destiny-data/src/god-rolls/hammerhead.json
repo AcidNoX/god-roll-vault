@@ -1,6 +1,6 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 1896309757,
+  "weaponName": "Hammerhead",
   "rolls": [
     {
       "mode": "pvp",
@@ -9,9 +9,9 @@
         "barrel": ["Arrowhead Brake"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Kill Clip"],
-        "perk2": ["Rampage"]
+        "perk2": ["Moving Target"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["perk2"]
     },
     {
       "mode": "pve",

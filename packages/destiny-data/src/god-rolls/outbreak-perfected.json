@@ -1,0 +1,14 @@
+{
+  "weaponHash": 400096939,
+  "weaponName": "Outbreak Perfected",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Add-clear",
+      "perks": {
+        "perk1": ["Outlaw"]
+      },
+      "flexSlots": []
+    }
+  ]
+}

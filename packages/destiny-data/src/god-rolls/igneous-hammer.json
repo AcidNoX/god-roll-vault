@@ -1,17 +1,17 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 1973107014,
+  "weaponName": "Igneous Hammer",
   "rolls": [
     {
       "mode": "pvp",
       "label": "Dueling",
       "perks": {
-        "barrel": ["Arrowhead Brake"],
+        "barrel": ["Smallbore"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Kill Clip"],
-        "perk2": ["Rampage"]
+        "perk2": ["Moving Target"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["perk2"]
     },
     {
       "mode": "pve",

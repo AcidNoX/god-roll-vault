@@ -1,0 +1,28 @@
+{
+  "weaponHash": 4190932264,
+  "weaponName": "Beloved",
+  "rolls": [
+    {
+      "mode": "pvp",
+      "label": "Quickscope",
+      "perks": {
+        "barrel": ["Fluted Barrel"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Snapshot Sights"],
+        "perk2": ["Moving Target"]
+      },
+      "flexSlots": ["perk2"]
+    },
+    {
+      "mode": "pve",
+      "label": "Boss DPS",
+      "perks": {
+        "barrel": ["Hammer-Forged Rifling"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Fourth Times the Charm"],
+        "perk2": ["Vorpal Weapon"]
+      },
+      "flexSlots": ["perk1"]
+    }
+  ]
+}

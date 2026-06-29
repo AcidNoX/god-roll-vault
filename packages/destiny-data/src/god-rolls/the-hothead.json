@@ -1,0 +1,24 @@
+{
+  "weaponHash": 4255171531,
+  "weaponName": "The Hothead",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Boss DPS",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Vorpal Weapon"]
+      },
+      "flexSlots": ["perk1"]
+    },
+    {
+      "mode": "pvp",
+      "label": "Flex",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk2"]
+    }
+  ]
+}
