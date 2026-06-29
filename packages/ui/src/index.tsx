@@ -1,6 +1,18 @@
 import type { ReactNode } from "react";
-import { Text as RNText, View } from "react-native";
 
+import { Box } from "./Box.js";
+import { Text } from "./Text.js";
+
+export type { BoxProps } from "./Box.js";
+export { Box } from "./Box.js";
+export type { PressableProps } from "./Pressable.js";
+export { Pressable } from "./Pressable.js";
+export type { StackDirection, StackProps } from "./Stack.js";
+export { Stack } from "./Stack.js";
+export type { TextProps } from "./Text.js";
+export { Text } from "./Text.js";
+export type { ColorToken, SpacingToken, SpacingValue, TextVariant } from "./theme.js";
+export { theme } from "./theme.js";
 export type { WeaponCardProps } from "./WeaponCard.js";
 export { WeaponCard } from "./WeaponCard.js";
 
@@ -10,11 +22,7 @@ export type AppTextProps = {
 };
 
 export function AppText({ children, testID }: AppTextProps) {
-  return (
-    <RNText testID={testID} style={{ color: "#f5f5f5", fontSize: 16 }}>
-      {children}
-    </RNText>
-  );
+  return <Text testID={testID}>{children}</Text>;
 }
 
 export type ScreenProps = {
@@ -24,16 +32,16 @@ export type ScreenProps = {
 
 export function Screen({ children, testID }: ScreenProps) {
   return (
-    <View
+    <Box
       testID={testID}
+      backgroundColor="background"
+      padding="lg"
       style={{
         flex: 1,
-        backgroundColor: "#0b0b14",
-        padding: 16,
         minHeight: "100%",
       }}
     >
       {children}
-    </View>
+    </Box>
   );
 }
