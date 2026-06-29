@@ -9,10 +9,27 @@ export const weaponPerkSchema = z.object({
   name: z.string(),
 });
 
+export const godRollPerkSlotSchema = z.enum(["barrel", "magazine", "perk1", "perk2"]);
+
+export const godRollSlotsSchema = z.object({
+  barrel: z.array(z.string()).optional(),
+  magazine: z.array(z.string()).optional(),
+  perk1: z.array(z.string()).optional(),
+  perk2: z.array(z.string()).optional(),
+});
+
+export const godRollFlexSlotSchema = z.object({
+  slot: godRollPerkSlotSchema,
+  perks: z.array(z.string()),
+});
+
 export const godRollDefinitionSchema = z.object({
   weaponHash: z.number(),
   mode: gameModeSchema,
-  perks: z.array(weaponPerkSchema),
+  label: z.string().optional(),
+  slots: godRollSlotsSchema.optional(),
+  flexSlots: z.array(godRollFlexSlotSchema).optional(),
+  perks: z.array(weaponPerkSchema).optional(),
 });
 
 export const godRollDefinitionsSchema = z.array(godRollDefinitionSchema);
