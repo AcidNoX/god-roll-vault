@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "echo \"@god-roll-vault/web: no unit tests yet\"",
-    "test:e2e": "echo \"@god-roll-vault/web: e2e not configured yet\""
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@god-roll-vault/core": "workspace:*",
@@ -19,6 +19,7 @@
     "react-native-web": "catalog:"
   },
   "devDependencies": {
+    "@playwright/test": "1.52.0",
     "@types/react": "catalog:",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "catalog:",
