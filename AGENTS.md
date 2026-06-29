@@ -50,6 +50,20 @@ Examples:
 
 **Types:** `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`, `build`
 
+## Testing
+
+Use `@god-roll-vault/vitest` shared configs. Add `*.test.ts` (or `*.test.tsx` for UI) alongside source files.
+
+| Package | Config import | Environment |
+|---------|---------------|-------------|
+| `core`, `api`, `destiny-data` | `@god-roll-vault/vitest/node` | Node |
+| `ui` | `@god-roll-vault/vitest/react` | jsdom |
+| `apps/*` | E2E only (Playwright / Maestro) — no unit test harness yet |
+
+**Required:** unit tests for all business logic in `core`, `api`, and `destiny-data`.  
+**UI:** component tests when adding non-trivial components.  
+**Apps:** covered by E2E smoke tests (see Linear tickets LEE-29, LEE-30).
+
 ## Definition of Done
 
 - Code in the correct package
