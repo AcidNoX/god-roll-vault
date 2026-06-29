@@ -1,14 +1,210 @@
 {
+  "46524085": {
+    "name": "Osteo Striga",
+    "tier": "Exotic"
+  },
+  "235827225": {
+    "name": "Eyasluna",
+    "tier": "Legendary"
+  },
+  "347366834": {
+    "name": "Ace of Spades",
+    "tier": "Exotic"
+  },
+  "400096939": {
+    "name": "Outbreak Perfected",
+    "tier": "Exotic"
+  },
+  "431721920": {
+    "name": "Zaouli's Bane",
+    "tier": "Legendary"
+  },
+  "613334176": {
+    "name": "Forbearance",
+    "tier": "Legendary"
+  },
+  "614426548": {
+    "name": "Falling Guillotine",
+    "tier": "Legendary"
+  },
+  "768621510": {
+    "name": "Deliverance",
+    "tier": "Legendary"
+  },
+  "882778888": {
+    "name": "Rose",
+    "tier": "Legendary"
+  },
+  "892183998": {
+    "name": "Nullify (Adept)",
+    "tier": "Legendary"
+  },
+  "1216319404": {
+    "name": "Fatebringer (Timelost)",
+    "tier": "Legendary"
+  },
   "1363886209": {
     "name": "Fatebringer (Timelost)",
+    "tier": "Legendary"
+  },
+  "1364093401": {
+    "name": "The Last Word",
+    "tier": "Exotic"
+  },
+  "1481892490": {
+    "name": "The Palindrome (Adept)",
+    "tier": "Legendary"
+  },
+  "1891561814": {
+    "name": "Whisper of the Worm",
+    "tier": "Exotic"
+  },
+  "1896309757": {
+    "name": "Hammerhead",
+    "tier": "Legendary"
+  },
+  "1911060537": {
+    "name": "Taipan-4fr",
+    "tier": "Legendary"
+  },
+  "1973107014": {
+    "name": "Igneous Hammer",
+    "tier": "Legendary"
+  },
+  "2119346509": {
+    "name": "Ammit AR2",
+    "tier": "Legendary"
+  },
+  "2186258845": {
+    "name": "Bellowing Giant",
+    "tier": "Legendary"
+  },
+  "2314610827": {
+    "name": "Igneous Hammer (Adept)",
+    "tier": "Legendary"
+  },
+  "2357297366": {
+    "name": "Witherhoard",
+    "tier": "Exotic"
+  },
+  "2429822977": {
+    "name": "Austringer",
+    "tier": "Legendary"
+  },
+  "2533990645": {
+    "name": "Blast Furnace",
+    "tier": "Legendary"
+  },
+  "2563012876": {
+    "name": "Matador 64",
     "tier": "Legendary"
   },
   "2595497736": {
     "name": "Crafted Test Rifle",
     "tier": "Legendary"
   },
+  "2763843898": {
+    "name": "Midnight Coup",
+    "tier": "Legendary"
+  },
+  "2812324400": {
+    "name": "Parasite",
+    "tier": "Exotic"
+  },
+  "2886339027": {
+    "name": "Cataclysmic (Adept)",
+    "tier": "Legendary"
+  },
+  "3055790362": {
+    "name": "Austringer",
+    "tier": "Legendary"
+  },
+  "3089417789": {
+    "name": "Riskrunner",
+    "tier": "Exotic"
+  },
+  "3098328572": {
+    "name": "The Recluse",
+    "tier": "Legendary"
+  },
+  "3211806999": {
+    "name": "Izanagi's Burden",
+    "tier": "Exotic"
+  },
+  "3565520715": {
+    "name": "Crowd Pleaser",
+    "tier": "Legendary"
+  },
+  "3621336854": {
+    "name": "Accrued Redemption",
+    "tier": "Legendary"
+  },
+  "3652506829": {
+    "name": "Stormchaser",
+    "tier": "Legendary"
+  },
+  "3654674561": {
+    "name": "Dead Man's Tale",
+    "tier": "Exotic"
+  },
   "3687335430": {
     "name": "Vault Test Shotgun",
+    "tier": "Legendary"
+  },
+  "3843477312": {
+    "name": "Blast Furnace",
+    "tier": "Legendary"
+  },
+  "3849355625": {
+    "name": "Abeyant Leap",
+    "tier": "Exotic"
+  },
+  "3856705927": {
+    "name": "Hawkmoon",
+    "tier": "Exotic"
+  },
+  "3960926756": {
+    "name": "Celestial Nighthawk",
+    "tier": "Exotic"
+  },
+  "3973202132": {
+    "name": "Thorn",
+    "tier": "Exotic"
+  },
+  "4043921923": {
+    "name": "The Mountaintop",
+    "tier": "Legendary"
+  },
+  "4067556514": {
+    "name": "Thoughtless",
+    "tier": "Legendary"
+  },
+  "4077588826": {
+    "name": "The Palindrome (Adept)",
+    "tier": "Legendary"
+  },
+  "4103414242": {
+    "name": "Divinity",
+    "tier": "Exotic"
+  },
+  "4152016199": {
+    "name": "Better Devils",
+    "tier": "Legendary"
+  },
+  "4190932264": {
+    "name": "Beloved",
+    "tier": "Legendary"
+  },
+  "4219826183": {
+    "name": "Fatebringer (Timelost)",
+    "tier": "Legendary"
+  },
+  "4227181568": {
+    "name": "Exit Strategy",
+    "tier": "Legendary"
+  },
+  "4255171531": {
+    "name": "The Hothead",
     "tier": "Legendary"
   }
 }
