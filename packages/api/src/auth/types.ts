@@ -1,3 +1,5 @@
+import type { TokenStore } from "./token-store.js";
+
 export type AuthTokens = {
   accessToken: string;
   refreshToken: string;
@@ -26,6 +28,26 @@ export type ExchangeCodeForTokensParams = {
   redirectUri: string;
   /** Required for confidential clients (web). Omit for public clients (mobile). */
   clientSecret?: string;
+  tokenUrl?: string;
+  fetch?: typeof fetch;
+};
+
+export type RefreshAccessTokenParams = {
+  clientId: string;
+  refreshToken: string;
+  /** Required for confidential clients (web). Omit for public clients (mobile). */
+  clientSecret?: string;
+  tokenUrl?: string;
+  fetch?: typeof fetch;
+};
+
+export type RefreshTokensIfNeededParams = {
+  store: TokenStore;
+  clientId: string;
+  clientSecret?: string;
+  /** Refresh when access token expires within this window. Default: 60s. */
+  expiryBufferMs?: number;
+  now?: number;
   tokenUrl?: string;
   fetch?: typeof fetch;
 };
