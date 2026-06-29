@@ -60,7 +60,7 @@ Perk names must match entries in `src/manifest/mvp-plugs.json` (Bungie-verified 
 ### Validation
 
 - **Schema** — Zod schemas in `src/god-rolls/schema.ts` (`godRollEntrySchema`, etc.), exported from the package entry point.
-- **Manifest cross-check** — `validateGodRollDirectory()` ensures weapon hashes, weapon names, and perk names align with MVP manifest data.
+- **Manifest cross-check** — validation helpers in `src/god-rolls/validate.ts` ensure weapon hashes, weapon names, and perk names align with MVP manifest data.
 - **CLI** — `pnpm validate-data` (root) or `pnpm --filter @god-roll-vault/destiny-data validate-data` validates every `*.json` file in `src/god-rolls/`.
 
 Validation failures print `file:path: message` lines and exit with code 1.

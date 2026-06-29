@@ -1,11 +1,12 @@
 import { readdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ZodError } from "zod";
 
-import { getWeaponName } from "../manifest/lookup.js";
-import mvpPlugs from "../manifest/mvp-plugs.json";
 import { GOD_ROLL_PERK_SLOTS, type GodRollEntry, godRollEntrySchema } from "./schema.js";
+
+const require = createRequire(import.meta.url);
 
 export type GodRollValidationIssue = {
   file?: string;
@@ -19,9 +20,21 @@ export type GodRollValidationResult = {
   issues: GodRollValidationIssue[];
 };
 
-const knownPerkNames = new Set(
-  Object.values(mvpPlugs as Record<string, { name: string }>).map((entry) => entry.name),
-);
+function resolveManifestDir(fromModuleUrl = import.meta.url): string {
+  const moduleDir = dirname(fileURLToPath(fromModuleUrl));
+  return resolve(moduleDir, "../../src/manifest");
+}
+
+function loadMvpWeapons(fromModuleUrl = import.meta.url): Record<string, { name: string }> {
+  const weaponsPath = join(resolveManifestDir(fromModuleUrl), "mvp-weapons.json");
+  return require(weaponsPath) as Record<string, { name: string }>;
+}
+
+function loadKnownPerkNames(fromModuleUrl = import.meta.url): Set<string> {
+  const plugsPath = join(resolveManifestDir(fromModuleUrl), "mvp-plugs.json");
+  const plugs = require(plugsPath) as Record<string, { name: string }>;
+  return new Set(Object.values(plugs).map((entry) => entry.name));
+}
 
 /** Directory containing curated god-roll JSON files (`src/god-rolls`). */
 export function resolveGodRollsDir(fromModuleUrl = import.meta.url): string {
@@ -60,7 +73,10 @@ export function validateGodRollManifest(
   file?: string,
 ): GodRollValidationIssue[] {
   const issues: GodRollValidationIssue[] = [];
-  const expectedWeaponName = getWeaponName(entry.weaponHash);
+  const weapons = loadMvpWeapons();
+  const expectedWeaponName =
+    weapons[String(entry.weaponHash)]?.name ?? `Unknown Weapon (${entry.weaponHash})`;
+  const knownPerkNames = loadKnownPerkNames();
 
   if (expectedWeaponName.startsWith("Unknown Weapon")) {
     issues.push({

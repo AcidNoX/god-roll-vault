@@ -16,17 +16,6 @@ export {
   godRollPerksSchema,
   godRollRollSchema,
 } from "./god-rolls/schema.js";
-export type {
-  GodRollValidationIssue,
-  GodRollValidationResult,
-} from "./god-rolls/validate.js";
-export {
-  resolveGodRollsDir,
-  validateGodRollDirectory,
-  validateGodRollEntry,
-  validateGodRollFile,
-  validateGodRollManifest,
-} from "./god-rolls/validate.js";
 export type { WeaponDefinition } from "./manifest/lookup.js";
 export {
   getPerkName,

@@ -1,5 +1,7 @@
-import { gameModeSchema } from "@god-roll-vault/core";
 import { z } from "zod";
+
+/** Mirrors `gameModeSchema` from `@god-roll-vault/core` (`pvp` | `pve`). */
+const gameModeSchema = z.enum(["pvp", "pve"]);
 
 /** Socket column keys used in curated god-roll JSON (barrel through origin trait). */
 export const GOD_ROLL_PERK_SLOTS = [

@@ -66,7 +66,8 @@ describe("godRollEntrySchema", () => {
     const result = godRollEntrySchema.safeParse(invalid);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.message).toContain('flexSlots entry "perk3"');
+      expect(result.error.issues[0]?.message).toContain("flexSlots entry");
+      expect(result.error.issues[0]?.message).toContain("perk3");
     }
   });
 });
