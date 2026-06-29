@@ -18,14 +18,41 @@ pnpm typecheck
 pnpm test
 ```
 
-## Branch Naming
+## Tickets, Branches, and PRs
 
-`leehiggitt/lee-XX-short-description` (matches Linear issue branches)
+Every change goes through a Linear ticket, a branch, and a pull request. Do not push directly to `main`.
+
+### Linear ticket
+
+- Create or pick up a Linear issue before starting work
+- Every PR must reference its ticket in the description (link or ID)
+
+### Branch naming
+
+```
+<github_username>/<ticket-id-lowercase>
+```
+
+Example: `leehiggitt/lee-66`
+
+### PR title (conventional commits)
+
+```
+type(TICKET-ID): Short description
+```
+
+Examples:
+
+- `chore(LEE-66): Document PR and branch conventions`
+- `feat(LEE-44): Implement god roll matching algorithm`
+- `ci(LEE-65): Add GitHub Actions workflow`
+
+**Types:** `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`, `build`
 
 ## Definition of Done
 
 - Code in the correct package
 - Unit tests for business logic changes
 - `pnpm lint typecheck test build` passes locally
-- PR references the Linear issue ID
+- PR has an associated Linear ticket and uses the title format above
 - CI checks (`lint`, `typecheck`, `test`) pass on the PR

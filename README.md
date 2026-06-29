@@ -53,4 +53,4 @@ packages/
 
 ## Development
 
-See [AGENTS.md](./AGENTS.md) for AI agent conventions and package boundaries.
+See [AGENTS.md](./AGENTS.md) for AI agent conventions — including Linear ticket requirements, branch naming (`leehiggitt/lee-XX`), and PR title format (`type(LEE-XX): description`).
