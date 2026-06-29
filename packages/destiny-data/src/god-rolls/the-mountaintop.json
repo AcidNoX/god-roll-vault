@@ -1,0 +1,14 @@
+{
+  "weaponHash": 4043921923,
+  "weaponName": "The Mountaintop",
+  "rolls": [
+    {
+      "mode": "pvp",
+      "label": "Momentum",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"]
+      },
+      "flexSlots": []
+    }
+  ]
+}

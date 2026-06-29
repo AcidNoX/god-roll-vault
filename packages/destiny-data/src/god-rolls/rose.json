@@ -1,6 +1,6 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 882778888,
+  "weaponName": "Rose",
   "rolls": [
     {
       "mode": "pvp",
@@ -11,18 +11,18 @@
         "perk1": ["Kill Clip"],
         "perk2": ["Rampage"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["magazine"]
     },
     {
       "mode": "pve",
       "label": "Add-clear",
       "perks": {
-        "barrel": ["Fluted Barrel"],
+        "barrel": ["Hammer-Forged Rifling"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Outlaw"],
-        "perk2": ["Rampage"]
+        "perk2": ["Explosive Payload"]
       },
-      "flexSlots": ["perk1"]
+      "flexSlots": ["perk2"]
     }
   ]
 }

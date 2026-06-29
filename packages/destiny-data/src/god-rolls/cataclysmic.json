@@ -1,0 +1,28 @@
+{
+  "weaponHash": 2886339027,
+  "weaponName": "Cataclysmic (Adept)",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Boss DPS",
+      "perks": {
+        "barrel": ["Arrowhead Brake"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Fourth Times the Charm"],
+        "perk2": ["Frenzy"]
+      },
+      "flexSlots": ["perk1"]
+    },
+    {
+      "mode": "pvp",
+      "label": "Flex",
+      "perks": {
+        "barrel": ["Fluted Barrel"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk2"]
+    }
+  ]
+}

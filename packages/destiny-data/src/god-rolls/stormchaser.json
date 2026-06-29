@@ -1,0 +1,28 @@
+{
+  "weaponHash": 3652506829,
+  "weaponName": "Stormchaser",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Boss DPS",
+      "perks": {
+        "barrel": ["Arrowhead Brake"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Frenzy"],
+        "perk2": ["Vorpal Weapon"]
+      },
+      "flexSlots": ["perk1"]
+    },
+    {
+      "mode": "pvp",
+      "label": "Flex",
+      "perks": {
+        "barrel": ["Fluted Barrel"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk2"]
+    }
+  ]
+}
