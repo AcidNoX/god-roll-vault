@@ -8,7 +8,6 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "lint": "echo \"@god-roll-vault/api: lint ok\"",
     "typecheck": "tsc --noEmit",
     "test": "echo \"@god-roll-vault/api: no tests yet\""
   },

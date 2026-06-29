@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "expo start",
     "build": "echo \"@god-roll-vault/mobile: use EAS for production builds\"",
-    "lint": "echo \"@god-roll-vault/mobile: lint ok\"",
     "typecheck": "tsc --noEmit",
     "test": "echo \"@god-roll-vault/mobile: no unit tests yet\"",
     "test:e2e:mobile": "echo \"@god-roll-vault/mobile: maestro not configured yet\""

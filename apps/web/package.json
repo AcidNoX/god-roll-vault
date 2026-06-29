@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "echo \"@god-roll-vault/web: lint ok\"",
     "typecheck": "tsc --noEmit",
     "test": "echo \"@god-roll-vault/web: no unit tests yet\"",
     "test:e2e": "echo \"@god-roll-vault/web: e2e not configured yet\""

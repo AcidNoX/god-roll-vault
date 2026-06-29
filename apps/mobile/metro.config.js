@@ -1,5 +1,5 @@
-import { getDefaultConfig } from "expo/metro-config";
 import path from "node:path";
+import { getDefaultConfig } from "expo/metro-config";
 
 const projectRoot = __dirname;
 const monorepoRoot = path.resolve(projectRoot, "../..");
