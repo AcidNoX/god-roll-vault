@@ -33,4 +33,9 @@ export type {
   RollMatchResult,
 } from "./types/god-roll.js";
 export { GOD_ROLL_PERK_SLOTS } from "./types/god-roll.js";
-export type { InventoryWeapon, ItemLocation, WeaponPerk } from "./types/inventory.js";
+export type {
+  InventoryWeapon,
+  ItemLocation,
+  WeaponElement,
+  WeaponPerk,
+} from "./types/inventory.js";
