@@ -1,0 +1,9 @@
+appId: host.exp.Exponent
+tags:
+  - smoke
+---
+- runFlow: subflows/open-expo-app.yaml
+- assertVisible:
+    id: "app-title"
+- assertVisible: "God Roll Vault"
+- assertVisible: "God Roll Vault mobile app"

@@ -1,0 +1,11 @@
+# Opens the app in Expo Go. Requires Metro on port 8081 (pnpm --filter @god-roll-vault/mobile dev).
+# Android emulator: set EXPO_URL=exp://10.0.2.2:8081 before running maestro.
+env:
+  EXPO_URL: ${EXPO_URL || "exp://127.0.0.1:8081/--/"}
+---
+- launchApp
+- openLink: ${EXPO_URL}
+- extendedWaitUntil:
+    visible:
+      id: "app-root"
+    timeout: 60000

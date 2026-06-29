@@ -1,0 +1,8 @@
+flows:
+  - "smoke.yaml"
+
+platform:
+  ios:
+    disableAnimations: true
+  android:
+    disableAnimations: true
