@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useEffect } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 import { View } from "react-native";
 
@@ -161,6 +161,30 @@ const styles = {
   } satisfies ViewStyle,
 };
 
+function WebDocumentTheme({ backgroundColor }: { backgroundColor: string }) {
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const previousBodyBackground = document.body.style.backgroundColor;
+    const previousBodyMargin = document.body.style.margin;
+    const previousHtmlBackground = document.documentElement.style.backgroundColor;
+
+    document.body.style.backgroundColor = backgroundColor;
+    document.body.style.margin = "0";
+    document.documentElement.style.backgroundColor = backgroundColor;
+
+    return () => {
+      document.body.style.backgroundColor = previousBodyBackground;
+      document.body.style.margin = previousBodyMargin;
+      document.documentElement.style.backgroundColor = previousHtmlBackground;
+    };
+  }, [backgroundColor]);
+
+  return null;
+}
+
 export function ThemeProvider({
   children,
   style,
@@ -169,7 +193,11 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   return (
     <ThemeContext.Provider value={theme}>
-      <View testID={testID} style={[styles.root, { backgroundColor: theme.colors.background }, style]}>
+      <View
+        testID={testID}
+        style={[styles.root, { backgroundColor: theme.colors.background }, style]}
+      >
+        <WebDocumentTheme backgroundColor={theme.colors.background} />
         {children}
       </View>
     </ThemeContext.Provider>

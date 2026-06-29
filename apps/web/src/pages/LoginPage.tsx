@@ -1,4 +1,4 @@
-import { AppText, Screen } from "@god-roll-vault/ui";
+import { AppText, Screen, useTheme } from "@god-roll-vault/ui";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -6,29 +6,28 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider.js";
 import { getAuthConfigError } from "../auth/config.js";
 
-const buttonStyle: CSSProperties = {
-  backgroundColor: "#e8a317",
-  border: "none",
-  borderRadius: 4,
-  color: "#0b0b14",
-  cursor: "pointer",
-  fontSize: 16,
-  fontWeight: 600,
-  marginTop: 16,
-  padding: "12px 24px",
-};
-
-const errorStyle: CSSProperties = {
-  color: "#ff8a8a",
-  fontSize: 14,
-  marginTop: 16,
-  maxWidth: 420,
-};
-
 export function LoginPage() {
   const { isAuthenticated, isLoading, login } = useAuth();
+  const theme = useTheme();
   const [loginError, setLoginError] = useState<string | null>(null);
   const configError = getAuthConfigError();
+  const buttonStyle: CSSProperties = {
+    backgroundColor: theme.colors.accent.gold,
+    border: "none",
+    borderRadius: theme.borderRadius.sm,
+    color: theme.colors.background,
+    cursor: "pointer",
+    fontSize: theme.typography.fontSize.body,
+    fontWeight: theme.typography.fontWeight.semibold,
+    marginTop: theme.spacing.lg,
+    padding: `${theme.spacing.md}px ${theme.spacing.xl}px`,
+  };
+  const errorStyle: CSSProperties = {
+    color: theme.colors.badge.missing.text,
+    fontSize: 14,
+    marginTop: theme.spacing.lg,
+    maxWidth: 420,
+  };
 
   if (isLoading) {
     return (
