@@ -15,6 +15,7 @@ Cross-platform Destiny 2 gear manager for tracking weapon god rolls (PVP/PVE) ac
 - Node.js 20+
 - pnpm 10+
 - [Bungie.net API credentials](docs/bungie-setup.md) (for auth/inventory features)
+- [Bungie API data reference](docs/bungie-api-data.md) (response shapes for domain modeling)
 
 ## Getting Started
 
