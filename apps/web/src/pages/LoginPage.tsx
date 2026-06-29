@@ -23,7 +23,7 @@ export function LoginPage() {
     padding: `${theme.spacing.md}px ${theme.spacing.xl}px`,
   };
   const errorStyle: CSSProperties = {
-    color: theme.colors.badge.missing.text,
+    color: theme.colors.accent.red,
     fontSize: 14,
     marginTop: theme.spacing.lg,
     maxWidth: 420,
