@@ -8,7 +8,7 @@
     "build": "echo \"@god-roll-vault/mobile: use EAS for production builds\"",
     "typecheck": "tsc --noEmit",
     "test": "echo \"@god-roll-vault/mobile: no unit tests yet\"",
-    "test:e2e:mobile": "echo \"@god-roll-vault/mobile: maestro not configured yet\""
+    "test:e2e:mobile": "maestro test .maestro"
   },
   "dependencies": {
     "@god-roll-vault/core": "workspace:*",
