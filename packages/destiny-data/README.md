@@ -65,6 +65,35 @@ Perk names must match entries in `src/manifest/mvp-plugs.json` (Bungie-verified 
 
 Validation failures print `file:path: message` lines and exit with code 1.
 
+### Starter dataset (LEE-43)
+
+Twenty curated weapons in `src/god-rolls/` — one JSON file per weapon. Legendaries include PVP and PVE rolls where both modes apply; fixed-roll exotics document a single recommended mode. Perk names are limited to the current `mvp-plugs.json` pool and will expand as the manifest grows.
+
+| Weapon | Hash | Category | light.gg |
+|--------|------|----------|----------|
+| The Palindrome (Adept) | `1481892490` | Hand cannon | [link](https://www.light.gg/db/items/1481892490/) |
+| Eyasluna | `235827225` | Hand cannon | [link](https://www.light.gg/db/items/235827225/) |
+| Austringer | `2429822977` | Hand cannon | [link](https://www.light.gg/db/items/2429822977/) |
+| Fatebringer (Timelost) | `4219826183` | Hand cannon | [link](https://www.light.gg/db/items/4219826183/) |
+| Igneous Hammer | `1973107014` | Hand cannon | [link](https://www.light.gg/db/items/1973107014/) |
+| Rose | `882778888` | Hand cannon | [link](https://www.light.gg/db/items/882778888/) |
+| Blast Furnace | `2533990645` | Pulse rifle | [link](https://www.light.gg/db/items/2533990645/) |
+| Outbreak Perfected | `400096939` | Pulse rifle (Exotic) | [link](https://www.light.gg/db/items/400096939/) |
+| Dead Man's Tale | `3654674561` | Scout rifle (Exotic) | [link](https://www.light.gg/db/items/3654674561/) |
+| Beloved | `4190932264` | Sniper rifle | [link](https://www.light.gg/db/items/4190932264/) |
+| Deliverance | `768621510` | Fusion rifle | [link](https://www.light.gg/db/items/768621510/) |
+| The Recluse | `3098328572` | Submachine gun | [link](https://www.light.gg/db/items/3098328572/) |
+| Hammerhead | `1896309757` | Machine gun | [link](https://www.light.gg/db/items/1896309757/) |
+| Forbearance | `613334176` | Grenade launcher | [link](https://www.light.gg/db/items/613334176/) |
+| The Mountaintop | `4043921923` | Grenade launcher | [link](https://www.light.gg/db/items/4043921923/) |
+| Witherhoard | `2357297366` | Grenade launcher (Exotic) | [link](https://www.light.gg/db/items/2357297366/) |
+| The Hothead | `4255171531` | Rocket launcher | [link](https://www.light.gg/db/items/4255171531/) |
+| Stormchaser | `3652506829` | Linear fusion rifle | [link](https://www.light.gg/db/items/3652506829/) |
+| Cataclysmic (Adept) | `2886339027` | Linear fusion rifle | [link](https://www.light.gg/db/items/2886339027/) |
+| Falling Guillotine | `614426548` | Sword | [link](https://www.light.gg/db/items/614426548/) |
+
+Roll recommendations were informed by community consensus on light.gg god-roll pages and in-game perk pools; expand `mvp-plugs.json` before adding perks not yet in the manifest.
+
 ## Package boundaries
 
 This package must not import React (see root `AGENTS.md`).

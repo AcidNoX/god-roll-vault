@@ -1,0 +1,28 @@
+{
+  "weaponHash": 3654674561,
+  "weaponName": "Dead Man's Tale",
+  "rolls": [
+    {
+      "mode": "pvp",
+      "label": "Dueling",
+      "perks": {
+        "barrel": ["Hammer-Forged Rifling"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Moving Target"],
+        "perk2": ["Snapshot Sights"]
+      },
+      "flexSlots": ["perk1", "perk2"]
+    },
+    {
+      "mode": "pve",
+      "label": "Major DPS",
+      "perks": {
+        "barrel": ["Hammer-Forged Rifling"],
+        "magazine": ["Tactical Mag"],
+        "perk1": ["Fourth Times the Charm"],
+        "perk2": ["Vorpal Weapon"]
+      },
+      "flexSlots": ["magazine"]
+    }
+  ]
+}

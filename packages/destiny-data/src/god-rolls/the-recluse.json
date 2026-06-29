@@ -1,0 +1,15 @@
+{
+  "weaponHash": 3098328572,
+  "weaponName": "The Recluse",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Add-clear",
+      "perks": {
+        "perk1": ["Outlaw"],
+        "perk2": ["Rampage"]
+      },
+      "flexSlots": []
+    }
+  ]
+}

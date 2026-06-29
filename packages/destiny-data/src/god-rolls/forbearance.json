@@ -1,0 +1,24 @@
+{
+  "weaponHash": 613334176,
+  "weaponName": "Forbearance",
+  "rolls": [
+    {
+      "mode": "pvp",
+      "label": "Flex",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk2"]
+    },
+    {
+      "mode": "pve",
+      "label": "Add-clear",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"],
+        "perk2": ["Demolitionist"]
+      },
+      "flexSlots": ["perk1"]
+    }
+  ]
+}

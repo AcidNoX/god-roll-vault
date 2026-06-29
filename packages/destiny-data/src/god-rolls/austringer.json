@@ -1,6 +1,6 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 2429822977,
+  "weaponName": "Austringer",
   "rolls": [
     {
       "mode": "pvp",
@@ -9,9 +9,9 @@
         "barrel": ["Arrowhead Brake"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Kill Clip"],
-        "perk2": ["Rampage"]
+        "perk2": ["Moving Target"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["magazine"]
     },
     {
       "mode": "pve",
@@ -20,9 +20,9 @@
         "barrel": ["Fluted Barrel"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Outlaw"],
-        "perk2": ["Rampage"]
+        "perk2": ["Explosive Payload"]
       },
-      "flexSlots": ["perk1"]
+      "flexSlots": ["perk2"]
     }
   ]
 }

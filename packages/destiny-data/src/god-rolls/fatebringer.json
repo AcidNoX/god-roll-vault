@@ -1,26 +1,26 @@
 {
-  "weaponHash": 1481892490,
-  "weaponName": "The Palindrome (Adept)",
+  "weaponHash": 4219826183,
+  "weaponName": "Fatebringer (Timelost)",
   "rolls": [
     {
       "mode": "pvp",
       "label": "Dueling",
       "perks": {
-        "barrel": ["Arrowhead Brake"],
+        "barrel": ["Smallbore"],
         "magazine": ["Accurized Rounds"],
         "perk1": ["Kill Clip"],
-        "perk2": ["Rampage"]
+        "perk2": ["Firefly"]
       },
-      "flexSlots": ["magazine", "perk2"]
+      "flexSlots": ["perk2"]
     },
     {
       "mode": "pve",
       "label": "Add-clear",
       "perks": {
-        "barrel": ["Fluted Barrel"],
+        "barrel": ["Hammer-Forged Rifling"],
         "magazine": ["Accurized Rounds"],
-        "perk1": ["Outlaw"],
-        "perk2": ["Rampage"]
+        "perk1": ["Explosive Payload"],
+        "perk2": ["Firefly"]
       },
       "flexSlots": ["perk1"]
     }

@@ -1,0 +1,14 @@
+{
+  "weaponHash": 2357297366,
+  "weaponName": "Witherhoard",
+  "rolls": [
+    {
+      "mode": "pve",
+      "label": "Add-clear",
+      "perks": {
+        "perk1": ["Auto-Loading Holster"]
+      },
+      "flexSlots": []
+    }
+  ]
+}
