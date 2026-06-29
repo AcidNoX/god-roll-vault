@@ -2,6 +2,7 @@ import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import characterFixture from "./fixtures/character.json";
+import charactersFixture from "./fixtures/characters.json";
 import { wrapBungieResponse } from "./fixtures/envelope.js";
 import itemFixture from "./fixtures/item.json";
 import membershipsFixture from "./fixtures/memberships.json";
@@ -82,6 +83,77 @@ describe("BungieClient", () => {
 
     expect(memberships.primaryMembershipId).toBe("4611686018467427903");
     expect(memberships.destinyMemberships[0]?.membershipType).toBe(3);
+  });
+
+  it("getMemberships returns mapped domain memberships", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/User/GetMembershipsForCurrentUser/`, () =>
+        HttpResponse.json(wrapBungieResponse(membershipsFixture)),
+      ),
+    );
+
+    const memberships = await createClient().getMemberships();
+
+    expect(memberships).toEqual([
+      {
+        membershipType: 3,
+        membershipId: "4611686018467427903",
+        displayName: "Guardian#1234",
+      },
+    ]);
+  });
+
+  it("getCharacters requests component 200 and returns mapped characters", async () => {
+    const captured = { url: "" };
+
+    server.use(
+      http.get(
+        `${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`,
+        ({ request }) => {
+          captured.url = request.url;
+          return HttpResponse.json(wrapBungieResponse(charactersFixture));
+        },
+      ),
+    );
+
+    const characters = await createClient().getCharacters(3, "4611686018467427903");
+
+    expect(new URL(captured.url).searchParams.get("components")).toBe("200");
+    expect(characters).toEqual([
+      {
+        characterId: "2305789507540360956",
+        classType: 0,
+        light: 1985,
+        dateLastPlayed: "2026-06-01T12:00:00.000Z",
+      },
+      {
+        characterId: "2305789507540360957",
+        classType: 1,
+        light: 1980,
+        dateLastPlayed: "2026-05-28T08:30:00.000Z",
+      },
+    ]);
+  });
+
+  it("getCharacters throws BungieApiError when the profile request fails", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`, () =>
+        HttpResponse.json(
+          wrapBungieResponse(charactersFixture, {
+            ErrorCode: 1627,
+            ErrorStatus: "DestinyAccountNotFound",
+            Message: "Destiny account not found.",
+            ThrottleSeconds: 0,
+          }),
+        ),
+      ),
+    );
+
+    await expect(createClient().getCharacters(3, "4611686018467427903")).rejects.toMatchObject({
+      name: "BungieApiError",
+      errorCode: 1627,
+      errorStatus: "DestinyAccountNotFound",
+    } satisfies Partial<BungieApiError>);
   });
 
   it("getProfile requests the expected components", async () => {
