@@ -1,0 +1,17 @@
+{
+  "weaponHash": 1481892490,
+  "weaponName": "The Palindrome (Adept)",
+  "rolls": [
+    {
+      "mode": "pvp",
+      "label": "Dueling",
+      "perks": {
+        "barrel": ["Arrowhead Brake"],
+        "magazine": ["Accurized Rounds"],
+        "perk1": ["Kill Clip"],
+        "perk2": ["Rampage"]
+      },
+      "flexSlots": ["magazine"]
+    }
+  ]
+}
