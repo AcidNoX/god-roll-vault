@@ -1,3 +1,18 @@
+export type {
+  AuthTokens,
+  BuildAuthorizeUrlParams,
+  ExchangeCodeForTokensParams,
+  PkcePair,
+} from "./auth/index.js";
+export {
+  BUNGIE_OAUTH_AUTHORIZE_URL,
+  BUNGIE_OAUTH_TOKEN_URL,
+  buildAuthorizeUrl,
+  exchangeCodeForTokens,
+  generatePkce,
+  mapTokenResponseToAuthTokens,
+  OAuthError,
+} from "./auth/index.js";
 export type { BungieClientConfig } from "./client.js";
 export { BUNGIE_API_BASE_URL, BungieClient } from "./client.js";
 export { BungieApiError } from "./errors.js";
