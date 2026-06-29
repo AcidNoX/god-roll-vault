@@ -34,6 +34,7 @@ pnpm dev
 | `pnpm lint:fix` | Biome auto-fix |
 | `pnpm typecheck` | Typecheck all packages |
 | `pnpm test` | Run unit tests |
+| `pnpm test:coverage` | Run unit tests with coverage |
 | `pnpm test:e2e` | Run web E2E tests (Playwright) |
 | `pnpm test:e2e:mobile` | Run mobile E2E tests (Maestro) |
 
@@ -44,7 +45,8 @@ apps/
   web/              # Vite web app
   mobile/           # Expo mobile app
 packages/
-  config/           # Shared tsconfig, vitest config
+  vitest/           # Shared Vitest configs (node + react)
+  config/           # Shared tsconfig
   core/             # God roll matching, domain types
   api/              # Bungie API + auth
   destiny-data/     # Weapon/perk/god-roll reference data

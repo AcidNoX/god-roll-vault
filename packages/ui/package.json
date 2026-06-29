@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"@god-roll-vault/ui: no tests yet\""
+    "test": "vitest run"
   },
   "dependencies": {
     "@god-roll-vault/core": "workspace:*",
@@ -18,8 +18,10 @@
     "react-native-web": "^0.20.0"
   },
   "devDependencies": {
+    "@god-roll-vault/vitest": "workspace:*",
     "@types/react": "^19.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "react": "^19.0.0"

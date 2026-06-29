@@ -9,9 +9,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"@god-roll-vault/destiny-data: no tests yet\""
+    "test": "vitest run"
   },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "@god-roll-vault/vitest": "workspace:*",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
