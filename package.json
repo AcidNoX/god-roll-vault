@@ -10,7 +10,8 @@
     "test": "turbo test",
     "test:coverage": "turbo test -- --coverage",
     "test:e2e": "turbo test:e2e",
-    "test:e2e:mobile": "turbo test:e2e:mobile"
+    "test:e2e:mobile": "turbo test:e2e:mobile",
+    "validate-data": "pnpm --filter @god-roll-vault/destiny-data validate-data"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.1",

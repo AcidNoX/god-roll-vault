@@ -9,9 +9,15 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "validate-data": "pnpm build && node dist/god-rolls/validate-data.js"
+  },
+  "dependencies": {
+    "@god-roll-vault/core": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
+    "@god-roll-vault/config": "workspace:*",
     "@god-roll-vault/vitest": "workspace:*",
     "typescript": "catalog:",
     "vitest": "catalog:"
