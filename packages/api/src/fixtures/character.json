@@ -1,0 +1,21 @@
+{
+  "character": {
+    "characterId": "2305789507540360956",
+    "classType": 0,
+    "light": 1985,
+    "dateLastPlayed": "2026-06-01T12:00:00.000Z"
+  },
+  "characterInventory": {
+    "items": [
+      {
+        "itemHash": 1363886209,
+        "itemInstanceId": "6913529092654216196",
+        "bucketHash": 149531261,
+        "quantity": 1
+      }
+    ]
+  },
+  "characterEquipment": {
+    "items": []
+  }
+}
