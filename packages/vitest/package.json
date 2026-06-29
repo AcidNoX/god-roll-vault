@@ -1,0 +1,33 @@
+{
+  "name": "@god-roll-vault/vitest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vitest/coverage-v8": "^3.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.2",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

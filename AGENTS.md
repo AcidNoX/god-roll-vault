@@ -16,6 +16,7 @@ pnpm lint          # Biome check (format + lint)
 pnpm lint:fix      # Biome auto-fix
 pnpm typecheck
 pnpm test
+pnpm test:coverage   # unit tests with v8 coverage
 ```
 
 ## Tickets, Branches, and PRs
@@ -52,7 +53,7 @@ Examples:
 ## Definition of Done
 
 - Code in the correct package
-- Unit tests for business logic changes
+- Unit tests for business logic changes (use `@god-roll-vault/vitest/node` or `/react`)
 - `pnpm lint typecheck test build` passes locally
 - PR has an associated Linear ticket and uses the title format above
 - CI checks (`lint`, `typecheck`, `test`) pass on the PR
