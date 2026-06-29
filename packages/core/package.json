@@ -14,7 +14,7 @@
   "devDependencies": {
     "@god-roll-vault/config": "workspace:*",
     "@god-roll-vault/vitest": "workspace:*",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
