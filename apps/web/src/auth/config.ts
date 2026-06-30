@@ -4,6 +4,22 @@ export type AuthConfig = {
   redirectUri: string;
 };
 
+export type BungieApiConfig = {
+  apiKey: string;
+};
+
+export function getBungieApiConfig(): BungieApiConfig {
+  const apiKey = import.meta.env.VITE_BUNGIE_API_KEY;
+
+  if (!apiKey) {
+    throw new Error(
+      "Missing Bungie API key. Add BUNGIE_API_KEY to the repo root .env (see docs/bungie-setup.md), then restart the dev server.",
+    );
+  }
+
+  return { apiKey };
+}
+
 export function getAuthConfig(): AuthConfig {
   const clientId = import.meta.env.VITE_BUNGIE_CLIENT_ID;
   const clientSecret = import.meta.env.VITE_BUNGIE_CLIENT_SECRET || undefined;

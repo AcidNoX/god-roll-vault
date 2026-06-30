@@ -14,5 +14,5 @@ export function HomePage() {
     );
   }
 
-  return <Navigate replace to={isAuthenticated ? "/inventory" : "/login"} />;
+  return <Navigate replace to={isAuthenticated ? "/characters" : "/login"} />;
 }

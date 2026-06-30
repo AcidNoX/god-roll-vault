@@ -38,7 +38,7 @@ export function LoginPage() {
   }
 
   if (isAuthenticated) {
-    return <Navigate replace to="/inventory" />;
+    return <Navigate replace to="/characters" />;
   }
 
   return (

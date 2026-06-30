@@ -12,6 +12,8 @@ function resolveWebAuthEnv(mode: string) {
   const appEnv = loadEnv(mode, __dirname, "");
 
   return {
+    apiKey:
+      appEnv.VITE_BUNGIE_API_KEY || rootEnv.VITE_BUNGIE_API_KEY || rootEnv.BUNGIE_API_KEY || "",
     clientId:
       appEnv.VITE_BUNGIE_CLIENT_ID ||
       rootEnv.VITE_BUNGIE_CLIENT_ID ||
@@ -36,6 +38,7 @@ export default defineConfig(({ mode }) => {
   return {
     envDir: repoRoot,
     define: {
+      "import.meta.env.VITE_BUNGIE_API_KEY": JSON.stringify(authEnv.apiKey),
       "import.meta.env.VITE_BUNGIE_CLIENT_ID": JSON.stringify(authEnv.clientId),
       "import.meta.env.VITE_BUNGIE_CLIENT_SECRET": JSON.stringify(authEnv.clientSecret),
       "import.meta.env.VITE_OAUTH_REDIRECT_URI": JSON.stringify(authEnv.redirectUri),
