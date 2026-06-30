@@ -129,6 +129,42 @@ describe("BungieClient", () => {
     ]);
   });
 
+  it("getPlayableMemberships omits deprecated platforms and honors cross-save primary", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/User/GetMembershipsForCurrentUser/`, () =>
+        HttpResponse.json(
+          wrapBungieResponse({
+            destinyMemberships: [
+              {
+                membershipType: 5,
+                membershipId: "4611686018501887616",
+                displayName: "Stadia",
+              },
+              {
+                membershipType: 3,
+                membershipId: "4611686018467427903",
+                displayName: "Guardian",
+                bungieGlobalDisplayName: "Guardian",
+                bungieGlobalDisplayNameCode: 1234,
+              },
+            ],
+            primaryMembershipId: "4611686018467427903",
+          }),
+        ),
+      ),
+    );
+
+    const memberships = await createClient().getPlayableMemberships();
+
+    expect(memberships).toEqual([
+      {
+        membershipType: 3,
+        membershipId: "4611686018467427903",
+        displayName: "Guardian#1234",
+      },
+    ]);
+  });
+
   it("getCharacters requests component 200 and returns mapped characters", async () => {
     const captured = { url: "" };
 
@@ -137,7 +173,14 @@ describe("BungieClient", () => {
         `${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`,
         ({ request }) => {
           captured.url = request.url;
-          return HttpResponse.json(wrapBungieResponse(charactersFixture));
+          return HttpResponse.json(
+            wrapBungieResponse({
+              characters: {
+                data: charactersFixture.characters,
+                privacy: 1,
+              },
+            }),
+          );
         },
       ),
     );
@@ -205,6 +248,50 @@ describe("BungieClient", () => {
     expect(weapons).toHaveLength(5);
     expect(weapons[0]?.name).toBe("Fatebringer (Timelost)");
     expect(weapons.some((weapon) => weapon.location === "vault")).toBe(true);
+  });
+
+  it("getWeapons parses Bungie component envelopes from live-shaped responses", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/Destiny2/:membershipType/Profile/:destinyMembershipId/`, () =>
+        HttpResponse.json(
+          wrapBungieResponse({
+            characterInventories: {
+              data: weaponsInventoryFixture.characterInventories,
+              privacy: 1,
+            },
+            characterEquipment: {
+              data: weaponsInventoryFixture.characterEquipment,
+              privacy: 1,
+            },
+            profileInventory: {
+              data: {
+                items: weaponsInventoryFixture.profileInventory.items,
+              },
+              privacy: 1,
+            },
+            itemComponents: {
+              instances: {
+                data: weaponsInventoryFixture.itemComponents.instances.data,
+              },
+              sockets: {
+                data: weaponsInventoryFixture.itemComponents.sockets.data,
+              },
+              reusablePlugs: {
+                data: weaponsInventoryFixture.itemComponents.reusablePlugs.data,
+              },
+            },
+          }),
+        ),
+      ),
+    );
+
+    const weapons = await createClient().getWeapons(
+      3,
+      "4611686018467427903",
+      "2305789507540360956",
+    );
+
+    expect(weapons).toHaveLength(5);
   });
 
   it("getWeapons throws BungieApiError when the profile request fails", async () => {
@@ -288,6 +375,29 @@ describe("BungieClient", () => {
     expect(item.itemComponents?.sockets?.data["6913529092654216196"]?.sockets?.[0]?.plugHash).toBe(
       1467527085,
     );
+  });
+
+  it("throws BungieApiError when ErrorCode is not success and Response is omitted", async () => {
+    server.use(
+      http.get(`${TEST_BASE_URL}/User/GetMembershipsForCurrentUser/`, () =>
+        HttpResponse.json({
+          ErrorCode: 2108,
+          ErrorStatus: "WebAuthRequired",
+          Message: "Authentication is required to call this function.",
+          ThrottleSeconds: 0,
+          MessageData: {},
+        }),
+      ),
+    );
+
+    await expect(
+      createClient({ accessToken: ACCESS_TOKEN }).getMembershipsForCurrentUser(),
+    ).rejects.toMatchObject({
+      name: "BungieApiError",
+      errorCode: 2108,
+      errorStatus: "WebAuthRequired",
+      message: "Authentication is required to call this function.",
+    } satisfies Partial<BungieApiError>);
   });
 
   it("throws BungieApiError when ErrorCode is not success", async () => {

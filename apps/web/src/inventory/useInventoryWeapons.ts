@@ -1,13 +1,18 @@
-import { type AuthTokens, BungieClient, type InventoryWeapon } from "@god-roll-vault/api";
+import {
+  BungieClient,
+  enrichInventoryWeapons,
+  formatApiError,
+  type InventoryWeapon,
+} from "@god-roll-vault/api";
 import { useEffect, useState } from "react";
 
+import { useAuth } from "../auth/AuthProvider.js";
 import { getBungieApiConfig } from "../auth/config.js";
 import type { SelectedCharacter } from "../characters/selected-character.js";
 
 type UseInventoryWeaponsOptions = {
   reloadToken: number;
   selectedCharacter: SelectedCharacter | null;
-  tokens: AuthTokens | null;
 };
 
 type UseInventoryWeaponsResult = {
@@ -20,8 +25,8 @@ type UseInventoryWeaponsResult = {
 export function useInventoryWeapons({
   reloadToken,
   selectedCharacter,
-  tokens,
 }: UseInventoryWeaponsOptions): UseInventoryWeaponsResult {
+  const { ensureValidTokens } = useAuth();
   const [weapons, setWeapons] = useState<InventoryWeapon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -39,14 +44,6 @@ export function useInventoryWeapons({
         return;
       }
 
-      if (!tokens) {
-        setWeapons([]);
-        setError("Sign in again to load your Destiny weapons.");
-        setIsLoading(false);
-        setIsRefreshing(false);
-        return;
-      }
-
       if (reloadToken === 0) {
         setIsLoading(true);
       } else {
@@ -55,6 +52,11 @@ export function useInventoryWeapons({
       setError(null);
 
       try {
+        const tokens = await ensureValidTokens();
+        if (!tokens) {
+          throw new Error("Sign in again to load your Destiny weapons.");
+        }
+
         const { apiKey } = getBungieApiConfig();
         const client = new BungieClient({
           apiKey,
@@ -65,13 +67,14 @@ export function useInventoryWeapons({
           selectedCharacter.membershipId,
           selectedCharacter.characterId,
         );
+        const enrichedWeapons = await enrichInventoryWeapons(client, inventoryWeapons);
 
         if (!cancelled) {
-          setWeapons(inventoryWeapons);
+          setWeapons(enrichedWeapons);
         }
       } catch (loadError) {
         if (!cancelled) {
-          setError(loadError instanceof Error ? loadError.message : "Unable to load weapons.");
+          setError(formatApiError(loadError, "Unable to load weapons."));
           setWeapons([]);
         }
       } finally {
@@ -87,7 +90,7 @@ export function useInventoryWeapons({
     return () => {
       cancelled = true;
     };
-  }, [tokens, selectedCharacter, reloadToken]);
+  }, [ensureValidTokens, selectedCharacter, reloadToken]);
 
   return {
     error,

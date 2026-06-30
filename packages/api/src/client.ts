@@ -1,11 +1,13 @@
 import type { DestinyCharacter, DestinyMembership, InventoryWeapon } from "@god-roll-vault/core";
+import type { WeaponDefinition } from "@god-roll-vault/destiny-data";
 import type { z } from "zod";
-
 import { BungieApiError } from "./errors.js";
-import { mapCharacters, mapMemberships } from "./mappers/destiny.js";
-import { mapInventoryWeapons, WEAPON_PROFILE_COMPONENT_IDS } from "./mappers/inventory.js";
+import { mapCharacters, mapMemberships, resolvePlayableMemberships } from "./mappers/destiny.js";
+import { buildInventoryWeapons, WEAPON_PROFILE_COMPONENT_IDS } from "./mappers/inventory.js";
+import { mapInventoryItemDefinition } from "./mappers/manifest.js";
 import { destinyCharacterResponseSchema, destinyItemResponseSchema } from "./schemas/character.js";
-import { BUNGIE_SUCCESS_ERROR_CODE, bungieEnvelopeSchema } from "./schemas/envelope.js";
+import { BUNGIE_SUCCESS_ERROR_CODE, bungieEnvelopeMetaSchema } from "./schemas/envelope.js";
+import { destinyInventoryItemDefinitionSchema } from "./schemas/manifest-item.js";
 import { type UserMembershipData, userMembershipDataSchema } from "./schemas/memberships.js";
 import { type DestinyProfileResponse, destinyProfileResponseSchema } from "./schemas/profile.js";
 
@@ -21,6 +23,7 @@ export type BungieClientConfig = {
 export class BungieClient {
   private readonly baseUrl: string;
   private readonly fetchFn: typeof fetch;
+  private readonly inventoryItemDefinitionCache = new Map<number, WeaponDefinition | null>();
 
   constructor(private readonly config: BungieClientConfig) {
     this.baseUrl = config.baseUrl ?? BUNGIE_API_BASE_URL;
@@ -40,6 +43,11 @@ export class BungieClient {
     return mapMemberships(data);
   }
 
+  async getPlayableMemberships(): Promise<DestinyMembership[]> {
+    const data = await this.getMembershipsForCurrentUser();
+    return resolvePlayableMemberships(data);
+  }
+
   async getCharacters(membershipType: number, membershipId: string): Promise<DestinyCharacter[]> {
     const profile = await this.getProfile(membershipType, membershipId, [200]);
     return mapCharacters(profile);
@@ -48,14 +56,33 @@ export class BungieClient {
   async getWeapons(
     membershipType: number,
     membershipId: string,
-    characterId: string,
+    _characterId: string,
   ): Promise<InventoryWeapon[]> {
     const profile = await this.getProfile(
       membershipType,
       membershipId,
       WEAPON_PROFILE_COMPONENT_IDS,
     );
-    return mapInventoryWeapons(profile, characterId);
+    return buildInventoryWeapons(this, profile);
+  }
+
+  async getInventoryItemDefinition(itemHash: number): Promise<WeaponDefinition | null> {
+    if (this.inventoryItemDefinitionCache.has(itemHash)) {
+      return this.inventoryItemDefinitionCache.get(itemHash) ?? null;
+    }
+
+    try {
+      const definition = await this.request(
+        `/Destiny2/Manifest/DestinyInventoryItemDefinition/${itemHash}/`,
+        destinyInventoryItemDefinitionSchema,
+      );
+      const mapped = mapInventoryItemDefinition(definition);
+      this.inventoryItemDefinitionCache.set(itemHash, mapped);
+      return mapped;
+    } catch {
+      this.inventoryItemDefinitionCache.set(itemHash, null);
+      return null;
+    }
   }
 
   async getProfile(
@@ -121,7 +148,7 @@ export class BungieClient {
     });
 
     const json: unknown = await response.json();
-    const envelope = bungieEnvelopeSchema(responseSchema).parse(json);
+    const envelope = bungieEnvelopeMetaSchema.parse(json);
 
     if (envelope.ErrorCode !== BUNGIE_SUCCESS_ERROR_CODE) {
       throw new BungieApiError(
@@ -133,6 +160,6 @@ export class BungieClient {
       );
     }
 
-    return envelope.Response as z.output<T>;
+    return responseSchema.parse(envelope.Response);
   }
 }

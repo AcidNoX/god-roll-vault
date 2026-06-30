@@ -2,13 +2,17 @@ import type { InventoryWeapon, WeaponPerk } from "@god-roll-vault/core";
 import {
   getPerkIconUrl,
   getPerkName,
+  getWeaponDefinition,
   getWeaponIconUrl,
   getWeaponName,
   getWeaponTier,
   isWeaponBucket,
+  isWeaponItemHash,
 } from "@god-roll-vault/destiny-data";
 
+import type { BungieClient } from "../client.js";
 import type { DestinyItemComponent, DestinyProfileResponse } from "../schemas/profile.js";
+import { prefetchInventoryItemDefinitions } from "./prefetch-manifest.js";
 
 type ItemSource = {
   item: DestinyItemComponent;
@@ -65,6 +69,29 @@ function collectCharacterItems(profile: DestinyProfileResponse, characterId: str
   return sources;
 }
 
+function collectAllCharacterItems(profile: DestinyProfileResponse): ItemSource[] {
+  const characterIds = new Set([
+    ...Object.keys(profile.characterInventories ?? {}),
+    ...Object.keys(profile.characterEquipment ?? {}),
+  ]);
+
+  return [...characterIds].flatMap((characterId) => collectCharacterItems(profile, characterId));
+}
+
+function collectItemSources(profile: DestinyProfileResponse): ItemSource[] {
+  return [...collectAllCharacterItems(profile), ...collectVaultItems(profile)];
+}
+
+function isWeaponItem(
+  item: DestinyItemComponent,
+): item is DestinyItemComponent & { itemInstanceId: string } {
+  if (!item.itemInstanceId) {
+    return false;
+  }
+
+  return isWeaponItemHash(item.itemHash) || isWeaponBucket(item.bucketHash);
+}
+
 function collectVaultItems(profile: DestinyProfileResponse): ItemSource[] {
   const vaultItems = profile.profileInventory?.items ?? [];
   return vaultItems.map((item) => ({
@@ -118,7 +145,7 @@ function mapItemToWeapon(
 ): InventoryWeapon | null {
   const { item, location, isEquipped } = source;
 
-  if (!item.itemInstanceId || !isWeaponBucket(item.bucketHash)) {
+  if (!isWeaponItem(item)) {
     return null;
   }
 
@@ -144,9 +171,9 @@ function mapItemToWeapon(
 
 export function mapInventoryWeapons(
   profile: DestinyProfileResponse,
-  characterId: string,
+  _characterId?: string,
 ): InventoryWeapon[] {
-  const sources = [...collectCharacterItems(profile, characterId), ...collectVaultItems(profile)];
+  const sources = collectItemSources(profile);
   const weapons: InventoryWeapon[] = [];
 
   for (const source of sources) {
@@ -157,4 +184,26 @@ export function mapInventoryWeapons(
   }
 
   return weapons;
+}
+
+export async function buildInventoryWeapons(
+  client: BungieClient,
+  profile: DestinyProfileResponse,
+): Promise<InventoryWeapon[]> {
+  const itemHashes = collectItemSources(profile)
+    .filter((source) => {
+      if (!source.item.itemInstanceId) {
+        return false;
+      }
+
+      if (isWeaponBucket(source.item.bucketHash)) {
+        return false;
+      }
+
+      return !getWeaponDefinition(source.item.itemHash);
+    })
+    .map((source) => source.item.itemHash);
+
+  await prefetchInventoryItemDefinitions(client, itemHashes);
+  return mapInventoryWeapons(profile);
 }

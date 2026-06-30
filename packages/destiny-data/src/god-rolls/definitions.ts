@@ -6,6 +6,7 @@ import type {
   GodRollSlots,
 } from "@god-roll-vault/core";
 
+import mvpWeapons from "../manifest/mvp-weapons.json";
 import austringer from "./austringer.json";
 import beloved from "./beloved.json";
 import blastFurnace from "./blast-furnace.json";
@@ -80,16 +81,25 @@ function toGodRollFlexSlots(roll: GodRollEntry["rolls"][number]): GodRollFlexSlo
     .filter((entry) => entry.perks.length > 0);
 }
 
+function getAlternateWeaponHashes(weaponHash: number, weaponName: string): number[] {
+  return Object.entries(mvpWeapons)
+    .filter(([hash, weapon]) => Number(hash) !== weaponHash && weapon.name === weaponName)
+    .map(([hash]) => Number(hash));
+}
+
 export function createGodRollDefinitions(entries: GodRollEntry[]): GodRollDefinition[] {
-  return entries.flatMap((entry) =>
-    entry.rolls.map((roll) => ({
+  return entries.flatMap((entry) => {
+    const alternateWeaponHashes = getAlternateWeaponHashes(entry.weaponHash, entry.weaponName);
+
+    return entry.rolls.map((roll) => ({
       weaponHash: entry.weaponHash,
+      ...(alternateWeaponHashes.length > 0 ? { alternateWeaponHashes } : {}),
       mode: roll.mode as GameMode,
       label: roll.label,
       slots: toGodRollSlots(roll.perks),
       flexSlots: toGodRollFlexSlots(roll),
-    })),
-  );
+    }));
+  });
 }
 
 export const godRollEntries: GodRollEntry[] = rawGodRollEntries.map((entry) =>

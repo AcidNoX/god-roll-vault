@@ -97,7 +97,7 @@ function createResult(
 
 function emptyResult(weapon: InventoryWeaponRef, mode: GameMode): RollMatchResult {
   return {
-    status: "missing",
+    status: "unknown",
     mode,
     weaponHash: weapon.itemHash,
     itemInstanceId: weapon.itemInstanceId,
@@ -108,12 +108,19 @@ function emptyResult(weapon: InventoryWeaponRef, mode: GameMode): RollMatchResul
   };
 }
 
+function definitionMatchesWeapon(definition: GodRollDefinition, weaponHash: number): boolean {
+  return (
+    definition.weaponHash === weaponHash ||
+    definition.alternateWeaponHashes?.includes(weaponHash) === true
+  );
+}
+
 export function matchGodRoll(
   weapon: InventoryWeaponRef,
   godRollDef: GodRollDefinition,
   mode: GameMode,
 ): RollMatchResult {
-  const weaponHashMatches = weapon.itemHash === godRollDef.weaponHash;
+  const weaponHashMatches = definitionMatchesWeapon(godRollDef, weapon.itemHash);
   const weaponPerkNames = weapon.perks.map((perk) => perk.name);
   const details = weaponHashMatches ? buildSlotDetails(godRollDef, weaponPerkNames) : [];
 
@@ -126,7 +133,8 @@ export function findBestRoll(
   mode: GameMode,
 ): RollMatchResult {
   const candidates = allGodRolls.filter(
-    (definition) => definition.weaponHash === weapon.itemHash && definition.mode === mode,
+    (definition) =>
+      definitionMatchesWeapon(definition, weapon.itemHash) && definition.mode === mode,
   );
 
   if (candidates.length === 0) {

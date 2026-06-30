@@ -78,4 +78,12 @@ describe("godRollDefinitions", () => {
       ),
     ).toBe(true);
   });
+
+  it("includes alternate hashes for reissued weapons in the MVP manifest", () => {
+    const fatebringerRoll = godRollDefinitions.find(
+      (definition) => definition.weaponHash === 4219826183 && definition.mode === "pvp",
+    );
+
+    expect(fatebringerRoll?.alternateWeaponHashes).toContain(1363886209);
+  });
 });

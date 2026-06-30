@@ -68,7 +68,7 @@ function findByTestID(node: ReactNode, testID: string): ReactElement<TestElement
 }
 
 describe("WeaponCard", () => {
-  it("renders compact weapon details with an element fallback and default unknown badge", () => {
+  it("renders compact weapon details with an element fallback and no badge without roll data", () => {
     const card = renderWeaponCard();
     const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
 
@@ -80,7 +80,9 @@ describe("WeaponCard", () => {
     expect(elementIcon.props.accessibilityLabel).toBe("Arc element");
     expect(textContent(elementIcon)).toBe("A");
 
-    expect(textContent(findByTestID(card, `${cardTestID}-badge`))).toBe("Unknown");
+    expect(() => findByTestID(card, `${cardTestID}-badge`)).toThrow(
+      `Unable to find testID ${cardTestID}-badge`,
+    );
   });
 
   it("renders a weapon icon image when an asset URL is available", () => {
@@ -125,12 +127,6 @@ describe("WeaponCard", () => {
       "Missing",
       designTokens.colors.badge.missing.background,
       designTokens.colors.badge.missing.border,
-    ],
-    [
-      "unknown",
-      "Unknown",
-      designTokens.colors.badge.unknown.background,
-      designTokens.colors.badge.unknown.border,
     ],
   ] satisfies [
     MatchStatus,

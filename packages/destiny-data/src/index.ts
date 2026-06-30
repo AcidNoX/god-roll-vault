@@ -24,11 +24,16 @@ export {
 export type { WeaponDefinition } from "./manifest/lookup.js";
 export {
   BUNGIE_ASSET_BASE_URL,
+  DESTINY_ITEM_TYPE_WEAPON,
   getBungieAssetUrl,
   getPerkIconUrl,
   getPerkName,
+  getPlugDefinition,
   getWeaponDefinition,
   getWeaponIconUrl,
   getWeaponName,
   getWeaponTier,
+  isWeaponItemHash,
+  registerPlugDefinition,
+  registerWeaponDefinition,
 } from "./manifest/lookup.js";

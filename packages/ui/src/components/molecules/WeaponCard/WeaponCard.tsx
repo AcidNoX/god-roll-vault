@@ -65,13 +65,15 @@ export function WeaponCard({ weapon, matchResult, disposition, onPress }: Weapon
           <Text style={weaponCardStyles.powerText} testID={`${cardTestID}-power`}>
             Power {weapon.power}
           </Text>
-          <View
-            accessibilityLabel={`${badge.label} match status`}
-            style={[weaponCardStyles.badge, badge.containerStyle]}
-            testID={`${cardTestID}-badge`}
-          >
-            <Text style={[weaponCardStyles.badgeText, badge.textStyle]}>{badge.label}</Text>
-          </View>
+          {status !== "unknown" ? (
+            <View
+              accessibilityLabel={`${badge.label} match status`}
+              style={[weaponCardStyles.badge, badge.containerStyle]}
+              testID={`${cardTestID}-badge`}
+            >
+              <Text style={[weaponCardStyles.badgeText, badge.textStyle]}>{badge.label}</Text>
+            </View>
+          ) : null}
           {dispositionBadge ? (
             <View
               accessibilityLabel={`${dispositionBadge.label} recommendation`}

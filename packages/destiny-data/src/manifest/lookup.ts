@@ -7,16 +7,47 @@ export type WeaponDefinition = {
   name: string;
   tier: string;
   iconPath?: string;
+  itemType?: number;
 };
+
+/** Bungie `DestinyItemType.Weapon` */
+export const DESTINY_ITEM_TYPE_WEAPON = 3;
 
 type ManifestWeaponEntry = WeaponDefinition;
 type ManifestPlugEntry = { name: string; iconPath?: string };
 
 const weapons = mvpWeapons as Record<string, ManifestWeaponEntry>;
 const plugs = mvpPlugs as Record<string, ManifestPlugEntry>;
+const runtimeWeapons: Record<string, ManifestWeaponEntry> = {};
+const runtimePlugs: Record<string, ManifestPlugEntry> = {};
+
+export function registerWeaponDefinition(itemHash: number, definition: WeaponDefinition): void {
+  runtimeWeapons[String(itemHash)] = definition;
+}
+
+export function registerPlugDefinition(
+  plugHash: number,
+  definition: { name: string; iconPath?: string },
+): void {
+  runtimePlugs[String(plugHash)] = definition;
+}
+
+export function getPlugDefinition(plugHash: number): ManifestPlugEntry | undefined {
+  return runtimePlugs[String(plugHash)] ?? plugs[String(plugHash)];
+}
 
 export function getWeaponDefinition(itemHash: number): WeaponDefinition | undefined {
-  return weapons[String(itemHash)];
+  return runtimeWeapons[String(itemHash)] ?? weapons[String(itemHash)];
+}
+
+export function isWeaponItemHash(itemHash: number): boolean {
+  const definition = getWeaponDefinition(itemHash);
+  if (definition?.itemType !== undefined) {
+    return definition.itemType === DESTINY_ITEM_TYPE_WEAPON;
+  }
+
+  // Curated MVP manifest entries are weapons only.
+  return definition !== undefined;
 }
 
 export function getWeaponName(itemHash: number): string {
@@ -44,9 +75,9 @@ export function getWeaponIconUrl(itemHash: number): string | undefined {
 }
 
 export function getPerkName(plugHash: number): string {
-  return plugs[String(plugHash)]?.name ?? `Unknown Perk (${plugHash})`;
+  return getPlugDefinition(plugHash)?.name ?? `Unknown Perk (${plugHash})`;
 }
 
 export function getPerkIconUrl(plugHash: number): string | undefined {
-  return getBungieAssetUrl(plugs[String(plugHash)]?.iconPath);
+  return getBungieAssetUrl(getPlugDefinition(plugHash)?.iconPath);
 }

@@ -3,6 +3,7 @@ import {
   buildAuthorizeUrl,
   exchangeCodeForTokens,
   generatePkce,
+  refreshTokensIfNeeded,
   type TokenStore,
 } from "@god-roll-vault/api";
 import {
@@ -26,6 +27,7 @@ type AuthContextValue = {
   login: () => Promise<void>;
   logout: () => Promise<void>;
   completeLogin: (code: string, state: string) => Promise<void>;
+  ensureValidTokens: () => Promise<AuthTokens | null>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -110,6 +112,23 @@ export function AuthProvider({ children, tokenStore = defaultTokenStore }: AuthP
     [tokenStore],
   );
 
+  const ensureValidTokens = useCallback(async () => {
+    const config = getAuthConfig();
+    const validTokens = await refreshTokensIfNeeded({
+      store: tokenStore,
+      clientId: config.clientId,
+      clientSecret: config.clientSecret,
+    });
+
+    if (validTokens) {
+      setTokens(validTokens);
+    } else {
+      setTokens(null);
+    }
+
+    return validTokens;
+  }, [tokenStore]);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       tokens,
@@ -118,8 +137,9 @@ export function AuthProvider({ children, tokenStore = defaultTokenStore }: AuthP
       login,
       logout,
       completeLogin,
+      ensureValidTokens,
     }),
-    [tokens, isLoading, login, logout, completeLogin],
+    [tokens, isLoading, login, logout, completeLogin, ensureValidTokens],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
