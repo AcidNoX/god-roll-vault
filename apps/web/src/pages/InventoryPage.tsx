@@ -22,6 +22,7 @@ import {
 import {
   type ChangeEvent,
   type CSSProperties,
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -397,48 +398,53 @@ export function InventoryPage() {
         ) : (
           <Box testID="weapon-inventory-list">
             <Stack gap="md">
-              {visibleEvaluations.map((evaluation) => (
-                <WeaponCard
-                  key={evaluation.weapon.itemInstanceId}
-                  matchResult={evaluation.result}
-                  onPress={() => setSelectedWeaponId(evaluation.weapon.itemInstanceId)}
-                  weapon={evaluation.weapon}
-                />
-              ))}
+              {visibleEvaluations.map((evaluation) => {
+                const detailIsOpen =
+                  selectedEvaluation?.weapon.itemInstanceId === evaluation.weapon.itemInstanceId;
+
+                return (
+                  <Fragment key={evaluation.weapon.itemInstanceId}>
+                    <WeaponCard
+                      matchResult={evaluation.result}
+                      onPress={() => setSelectedWeaponId(evaluation.weapon.itemInstanceId)}
+                      weapon={evaluation.weapon}
+                    />
+                    {detailIsOpen ? (
+                      <Box
+                        padding="lg"
+                        style={{
+                          backgroundColor: theme.colors.surfaceRaised,
+                          borderColor: theme.colors.border,
+                          borderRadius: theme.borderRadius.lg,
+                          borderWidth: 1,
+                        }}
+                        testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}`}
+                      >
+                        <Stack gap="md">
+                          <Stack gap="xs">
+                            <Text testID="weapon-detail-title" variant="heading">
+                              {selectedEvaluation.weapon.name}
+                            </Text>
+                            <Text color="textMuted" testID="weapon-detail-status" variant="caption">
+                              {formatMatchStatus(selectedEvaluation.result.status)} in{" "}
+                              {mode.toUpperCase()} ({selectedEvaluation.result.score}% match)
+                            </Text>
+                          </Stack>
+
+                          <PerkList
+                            matchResult={selectedEvaluation.result}
+                            perks={toWeaponPerks(selectedEvaluation.weapon.perks)}
+                            testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}-perk-list`}
+                          />
+                        </Stack>
+                      </Box>
+                    ) : null}
+                  </Fragment>
+                );
+              })}
             </Stack>
           </Box>
         )}
-
-        {selectedEvaluation ? (
-          <Box
-            padding="lg"
-            style={{
-              backgroundColor: theme.colors.surfaceRaised,
-              borderColor: theme.colors.border,
-              borderRadius: theme.borderRadius.lg,
-              borderWidth: 1,
-            }}
-            testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}`}
-          >
-            <Stack gap="md">
-              <Stack gap="xs">
-                <Text testID="weapon-detail-title" variant="heading">
-                  {selectedEvaluation.weapon.name}
-                </Text>
-                <Text color="textMuted" testID="weapon-detail-status" variant="caption">
-                  {formatMatchStatus(selectedEvaluation.result.status)} in {mode.toUpperCase()} (
-                  {selectedEvaluation.result.score}% match)
-                </Text>
-              </Stack>
-
-              <PerkList
-                matchResult={selectedEvaluation.result}
-                perks={toWeaponPerks(selectedEvaluation.weapon.perks)}
-                testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}-perk-list`}
-              />
-            </Stack>
-          </Box>
-        ) : null}
       </Stack>
     </Screen>
   );
