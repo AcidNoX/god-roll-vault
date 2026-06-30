@@ -57,7 +57,7 @@ describe("BungieClient", () => {
           },
         }),
       );
-    } as typeof fetch;
+    } as unknown as typeof fetch;
 
     try {
       await createClient().getMembershipsForCurrentUser();
