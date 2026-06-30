@@ -1,4 +1,8 @@
-import { evaluateInventory, type GameMode, type InventoryEvaluation } from "@god-roll-vault/core";
+import {
+  type GameMode,
+  groupInventoryByWeapon,
+  type WeaponDuplicateGroup,
+} from "@god-roll-vault/core";
 import { godRollDefinitions } from "@god-roll-vault/destiny-data";
 import {
   Box,
@@ -9,7 +13,7 @@ import {
   Stack,
   Text,
   useTheme,
-  WeaponCard,
+  WeaponGroupCard,
 } from "@god-roll-vault/ui";
 import { type ChangeEvent, type CSSProperties, useCallback, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -23,35 +27,34 @@ import {
 } from "../inventory/routes.js";
 import { useInventoryWeapons } from "../inventory/useInventoryWeapons.js";
 
-function sortInventoryEvaluations(evaluations: InventoryEvaluation[]): InventoryEvaluation[] {
-  return [...evaluations].sort((left, right) => {
-    const leftGodRoll = left.result.status === "perfect" ? 1 : 0;
-    const rightGodRoll = right.result.status === "perfect" ? 1 : 0;
-
-    if (leftGodRoll !== rightGodRoll) {
-      return rightGodRoll - leftGodRoll;
-    }
-
-    if (left.weapon.power !== right.weapon.power) {
-      return right.weapon.power - left.weapon.power;
-    }
-
-    return left.weapon.name.localeCompare(right.weapon.name);
-  });
-}
-
-function filterInventoryEvaluations(
-  evaluations: InventoryEvaluation[],
+function filterWeaponGroups(
+  groups: WeaponDuplicateGroup[],
   searchQuery: string,
-): InventoryEvaluation[] {
+): WeaponDuplicateGroup[] {
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase();
   if (!normalizedQuery) {
-    return evaluations;
+    return groups;
   }
 
-  return evaluations.filter((evaluation) =>
-    evaluation.weapon.name.toLocaleLowerCase().includes(normalizedQuery),
+  return groups.filter((group) => group.weaponName.toLocaleLowerCase().includes(normalizedQuery));
+}
+
+function formatInventorySummary(groups: WeaponDuplicateGroup[], mode: GameMode): string {
+  const duplicateGroups = groups.filter((group) => group.copyCount > 1).length;
+  const dismantleCandidates = groups.reduce(
+    (count, group) =>
+      count + group.instances.filter((instance) => instance.disposition === "dismantle").length,
+    0,
   );
+  const godRollCount = groups.filter((group) => group.keeper.result.status === "perfect").length;
+  const godRollLabel = godRollCount === 1 ? "god roll" : "god rolls";
+  const base = `${groups.length} weapons, ${godRollCount} ${godRollLabel} in ${mode.toUpperCase()}`;
+
+  if (duplicateGroups === 0) {
+    return base;
+  }
+
+  return `${base} · ${duplicateGroups} duplicates · ${dismantleCandidates} to dismantle`;
 }
 
 export function InventoryPage() {
@@ -94,18 +97,18 @@ export function InventoryPage() {
     padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
   };
 
-  const evaluations = useMemo(
-    () => evaluateInventory(weapons, godRollDefinitions, mode),
+  const weaponGroups = useMemo(
+    () => groupInventoryByWeapon(weapons, godRollDefinitions, mode),
     [weapons, mode],
   );
-  const visibleEvaluations = useMemo(
-    () => filterInventoryEvaluations(sortInventoryEvaluations(evaluations), searchQuery),
-    [evaluations, searchQuery],
+  const visibleGroups = useMemo(
+    () => filterWeaponGroups(weaponGroups, searchQuery),
+    [weaponGroups, searchQuery],
   );
-  const godRollCount = evaluations.filter(
-    (evaluation) => evaluation.result.status === "perfect",
-  ).length;
-  const godRollLabel = godRollCount === 1 ? "god roll" : "god rolls";
+  const summaryText = useMemo(
+    () => formatInventorySummary(weaponGroups, mode),
+    [weaponGroups, mode],
+  );
 
   const handleRefresh = useCallback(() => {
     setReloadToken((current) => current + 1);
@@ -124,6 +127,17 @@ export function InventoryPage() {
     setSearchQuery(event.target.value);
   }, []);
 
+  const handleSelectInstance = useCallback(
+    (itemInstanceId: string) => {
+      if (!selectedCharacter) {
+        return;
+      }
+
+      navigate(createWeaponDetailPath(itemInstanceId, selectedCharacter, mode));
+    },
+    [mode, navigate, selectedCharacter],
+  );
+
   return (
     <Screen testID="inventory-page">
       <Stack gap="xl" style={{ maxWidth: 960, width: "100%" }}>
@@ -133,7 +147,7 @@ export function InventoryPage() {
               Weapon inventory
             </Text>
             <Text color="textMuted" testID="inventory-subtitle">
-              Review selected character and vault weapons against curated god rolls.
+              Compare duplicate copies and see which roll to keep for each weapon.
             </Text>
             {tokens?.membershipId ? (
               <Text color="textMuted" testID="inventory-membership-id" variant="caption">
@@ -220,7 +234,7 @@ export function InventoryPage() {
           />
 
           <Text color="textMuted" testID="inventory-summary" variant="caption">
-            {evaluations.length} weapons, {godRollCount} {godRollLabel} in {mode.toUpperCase()}
+            {summaryText}
           </Text>
         </Stack>
 
@@ -253,7 +267,7 @@ export function InventoryPage() {
             message="No character or vault weapons were found for this selection."
             testID="inventory-empty"
           />
-        ) : visibleEvaluations.length === 0 ? (
+        ) : visibleGroups.length === 0 ? (
           <EmptyState
             icon="?"
             message="No weapons match your search."
@@ -262,20 +276,11 @@ export function InventoryPage() {
         ) : (
           <Box testID="weapon-inventory-list">
             <Stack gap="md">
-              {visibleEvaluations.map((evaluation) => (
-                <WeaponCard
-                  key={evaluation.weapon.itemInstanceId}
-                  matchResult={evaluation.result}
-                  onPress={() =>
-                    navigate(
-                      createWeaponDetailPath(
-                        evaluation.weapon.itemInstanceId,
-                        selectedCharacter,
-                        mode,
-                      ),
-                    )
-                  }
-                  weapon={evaluation.weapon}
+              {visibleGroups.map((group) => (
+                <WeaponGroupCard
+                  group={group}
+                  key={group.itemHash}
+                  onSelectInstance={handleSelectInstance}
                 />
               ))}
             </Stack>

@@ -1,9 +1,10 @@
-import type { InventoryWeapon, RollMatchResult } from "@god-roll-vault/core";
+import type { InstanceDisposition, InventoryWeapon, RollMatchResult } from "@god-roll-vault/core";
 import type { GestureResponderEvent, TextStyle, ViewStyle } from "react-native";
 
 export type WeaponCardProps = {
   weapon: InventoryWeapon;
   matchResult?: RollMatchResult;
+  disposition?: InstanceDisposition;
   onPress?: (event: GestureResponderEvent) => void;
 };
 

@@ -1,13 +1,19 @@
 import { Pressable, Text, View } from "react-native";
 
 import { Image } from "../../atoms/Image/index.js";
-import { badgePresentationByStatus, elementPresentationByType } from "./WeaponCard.constants.js";
+import {
+  badgePresentationByStatus,
+  dispositionPresentationByType,
+  elementPresentationByType,
+} from "./WeaponCard.constants.js";
 import { weaponCardStyles } from "./WeaponCard.styles.js";
 import type { WeaponCardProps } from "./WeaponCard.types.js";
 
-export function WeaponCard({ weapon, matchResult, onPress }: WeaponCardProps) {
+export function WeaponCard({ weapon, matchResult, disposition, onPress }: WeaponCardProps) {
   const status = matchResult?.status ?? "unknown";
   const badge = badgePresentationByStatus[status];
+  const dispositionBadge =
+    disposition && disposition !== "only" ? dispositionPresentationByType[disposition] : undefined;
   const element = elementPresentationByType[weapon.element] ?? elementPresentationByType.unknown;
   const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
 
@@ -66,6 +72,17 @@ export function WeaponCard({ weapon, matchResult, onPress }: WeaponCardProps) {
           >
             <Text style={[weaponCardStyles.badgeText, badge.textStyle]}>{badge.label}</Text>
           </View>
+          {dispositionBadge ? (
+            <View
+              accessibilityLabel={`${dispositionBadge.label} recommendation`}
+              style={[weaponCardStyles.badge, dispositionBadge.containerStyle]}
+              testID={`${cardTestID}-disposition`}
+            >
+              <Text style={[weaponCardStyles.badgeText, dispositionBadge.textStyle]}>
+                {dispositionBadge.label}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </View>
     </Pressable>
