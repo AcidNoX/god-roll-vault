@@ -1,151 +1,188 @@
 {
   "46524085": {
     "name": "Osteo Striga",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/2752ee2761149f004df20e78749c1bab.jpg"
   },
   "235827225": {
     "name": "Eyasluna",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/9385daf600d89dd759c3b3f690edbc03.jpg"
   },
   "347366834": {
     "name": "Ace of Spades",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/cdfbfd3f098329a367294f191070f8c4.jpg"
   },
   "400096939": {
     "name": "Outbreak Perfected",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/a1b6a5f3e52878610397249986300b23.jpg"
   },
   "431721920": {
     "name": "Zaouli's Bane",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/d11aa112b88dc2cbf48706fdad606710.jpg"
   },
   "613334176": {
     "name": "Forbearance",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/2222167aadddbfe4954b9710784c1f6e.jpg"
   },
   "614426548": {
     "name": "Falling Guillotine",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/84d0e560209551999cdde82172dfc619.jpg"
   },
   "768621510": {
     "name": "Deliverance",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/b32b09e7a3e0cf827ca1bea39dc71d05.jpg"
   },
   "882778888": {
     "name": "Rose",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/6e4408c36fd0fc44222ba42f8e73775b.jpg"
   },
   "892183998": {
     "name": "Nullify (Adept)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/5811f7bd2abb7a2c553361e582d1bd3f.jpg"
   },
   "1216319404": {
     "name": "Fatebringer (Timelost)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg"
   },
   "1363886209": {
     "name": "Fatebringer (Timelost)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/b62083eed6a4708e581fc9a061bcc8e9.jpg"
   },
   "1364093401": {
     "name": "The Last Word",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/a10719f1f2180e473ea9a0957e3b9fe4.jpg"
   },
   "1481892490": {
     "name": "The Palindrome (Adept)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/78ae6b265b88372efa8d30f8a037e4c5.jpg"
   },
   "1891561814": {
     "name": "Whisper of the Worm",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/e47c31826843f6fd0aa863eac6fd093e.jpg"
   },
   "1896309757": {
     "name": "Hammerhead",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/fce18f0dd7659d137619d6871569a484.jpg"
   },
   "1911060537": {
     "name": "Taipan-4fr",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/70bea113574eff7b0211a4f28f54b7a3.jpg"
   },
   "1973107014": {
     "name": "Igneous Hammer",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/d526de3389b40131261567496816368e.jpg"
   },
   "2119346509": {
     "name": "Ammit AR2",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/6498f5e14ba8fa839f6baebd58dc3e6b.jpg"
   },
   "2186258845": {
     "name": "Bellowing Giant",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/d93a12a1f2250f0869a4173c022bd46d.jpg"
   },
   "2314610827": {
     "name": "Igneous Hammer (Adept)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/1262dfde8b848588888d501852078a11.jpg"
   },
   "2357297366": {
     "name": "Witherhoard",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/3e4fc5bcc1dea42508124e11572367d2.jpg"
   },
   "2429822977": {
     "name": "Austringer",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/e905d8c17ef5ead5c6f9cd107b4b6f09.jpg"
   },
   "2533990645": {
     "name": "Blast Furnace",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/350334c365f422c9b5127a140fdc2845.jpg"
   },
   "2563012876": {
     "name": "Matador 64",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/f6bdd6d3f42abeb57770a4006475499e.jpg"
   },
   "2595497736": {
     "name": "Crafted Test Rifle",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/19a69290319a69374c3ae6acc9ca5600.jpg"
   },
   "2763843898": {
     "name": "Midnight Coup",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/a16c0c62d2153cb59ca7dd5565d66d6a.jpg"
   },
   "2812324400": {
     "name": "Parasite",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/0a71a14d8614d619a40649f09b28b466.jpg"
   },
   "2886339027": {
     "name": "Cataclysmic (Adept)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/1743ef015a30466edce0d45460127552.jpg"
   },
   "3055790362": {
     "name": "Austringer",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/e905d8c17ef5ead5c6f9cd107b4b6f09.jpg"
   },
   "3089417789": {
     "name": "Riskrunner",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/0b7fa10956ee9f16899ce1838c3c0e31.jpg"
   },
   "3098328572": {
     "name": "The Recluse",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/2c402566189bbaa3c2300f8bfa64eb39.jpg"
   },
   "3211806999": {
     "name": "Izanagi's Burden",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/8763caf9bfb147a41f3e34ec7eaf876b.jpg"
   },
   "3565520715": {
     "name": "Crowd Pleaser",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/286951a62ff8df56bb05b5ec97dad51a.jpg"
   },
   "3621336854": {
     "name": "Accrued Redemption",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/adbd4c3544c36a8c94e976bbb806095d.jpg"
   },
   "3652506829": {
     "name": "Stormchaser",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/0b3c602c10a80fcc5c688f6298e53fc6.jpg"
   },
   "3654674561": {
     "name": "Dead Man's Tale",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/cfc2c246cfd404d749fffbfe3ae3dfec.jpg"
   },
   "3687335430": {
     "name": "Vault Test Shotgun",
@@ -153,59 +190,72 @@
   },
   "3843477312": {
     "name": "Blast Furnace",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/c394cdcf034778c2b0663b170d853437.jpg"
   },
   "3849355625": {
     "name": "Abeyant Leap",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/8ca0dc9ac4166580356aa2d1f243e009.jpg"
   },
   "3856705927": {
     "name": "Hawkmoon",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/cef1290d58a2d94d1437e1e569fa7996.jpg"
   },
   "3960926756": {
     "name": "Celestial Nighthawk",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/a7c3ee955c5e8b1c20122206d1bf60ff.jpg"
   },
   "3973202132": {
     "name": "Thorn",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/d9fdb6774ff70cccd4161c13885d1258.jpg"
   },
   "4043921923": {
     "name": "The Mountaintop",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/86ea98de7083b2d1cf7230bae0cf4213.jpg"
   },
   "4067556514": {
     "name": "Thoughtless",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/1d7964be3a2985699b2fe6cc9e549119.jpg"
   },
   "4077588826": {
     "name": "The Palindrome (Adept)",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/be35ab535cfeb7065682cc17545abfdd.jpg"
   },
   "4103414242": {
     "name": "Divinity",
-    "tier": "Exotic"
+    "tier": "Exotic",
+    "iconPath": "/common/destiny2_content/icons/c6aa03536fd68b5fca5ad6b83ea0cf1e.jpg"
   },
   "4152016199": {
     "name": "Better Devils",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/f4b794cd673cd939521f9a2dcc9a5476.jpg"
   },
   "4190932264": {
     "name": "Beloved",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/0458b8ce93e3fffe362514275dd395ef.jpg"
   },
   "4219826183": {
     "name": "Fatebringer (Timelost)",
-    "iconPath": "/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg"
   },
   "4227181568": {
     "name": "Exit Strategy",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/84ef86c66632d3c64aea5741615d8bcd.jpg"
   },
   "4255171531": {
     "name": "The Hothead",
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "iconPath": "/common/destiny2_content/icons/db22afe58ea054de47b2fbb7ff6dae53.jpg"
   }
 }

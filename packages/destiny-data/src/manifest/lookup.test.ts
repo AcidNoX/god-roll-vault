@@ -20,10 +20,13 @@ describe("manifest lookup", () => {
   });
 
   it("resolves known weapon and perk hashes", () => {
-    expect(getWeaponDefinition(1363886209)).toEqual({
+    expect(getWeaponDefinition(1363886209)).toMatchObject({
       name: "Fatebringer (Timelost)",
       tier: "Legendary",
     });
+    expect(getWeaponDefinition(1363886209)?.iconPath).toMatch(
+      /^\/common\/destiny2_content\/icons\//,
+    );
     expect(getWeaponName(1363886209)).toBe("Fatebringer (Timelost)");
     expect(getWeaponTier(1363886209)).toBe("Legendary");
     expect(getWeaponName(347366834)).toBe("Ace of Spades");
@@ -36,8 +39,8 @@ describe("manifest lookup", () => {
     expect(getWeaponIconUrl(4219826183)).toBe(
       "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
     );
-    expect(getPerkIconUrl(3177301540)).toBe(
-      "https://www.bungie.net/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png",
+    expect(getPerkIconUrl(3038247973)).toBe(
+      "https://www.bungie.net/common/destiny2_content/icons/31f02e5f3bae68ecdfdd3f899cf931c7.png",
     );
   });
 

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inventory — God Roll Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="inventory.css" />
+  </head>
+  <body class="inventory-page">
+    <nav class="preview-nav" aria-label="Preview screens">
+      <a href="index.html">All</a>
+      <a href="login.html">Login</a>
+      <a href="weapon-detail.html">Detail</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+
+    <header class="app-header">
+      <div class="logo">God Roll Vault</div>
+      <nav class="header-nav" aria-label="Main">
+        <a class="active" href="inventory.html">Inventory</a>
+        <a href="index.html">Characters</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <input
+        class="search-bar search-bar-wide"
+        placeholder="is:weapon perk:firefly"
+        type="search"
+        aria-label="Search inventory"
+      />
+      <button class="icon-btn" type="button" title="Refresh inventory">↻</button>
+      <button class="icon-btn" type="button" title="Open settings">⚙</button>
+    </header>
+
+    <div class="character-strip">
+      <div class="emblem emblem-lg" role="img" aria-label="Titan emblem">
+        <span class="emblem-void"></span>
+        <span class="emblem-solar"></span>
+      </div>
+      <div class="character-meta">
+        <div class="character-name">Titan</div>
+        <div class="character-stats">
+          <span class="power-level">1985</span>
+          <span class="character-detail"><strong>8</strong> perfect rolls · 24 weapons · PVP targets</span>
+        </div>
+      </div>
+      <div class="strip-actions">
+        <fieldset class="mode-toggle">
+          <legend class="mode-toggle-legend">God roll mode</legend>
+          <button class="active" type="button">PVP</button>
+          <button type="button">PVE</button>
+        </fieldset>
+        <button class="btn" type="button">Change character</button>
+      </div>
+    </div>
+
+    <main class="inventory-layout">
+      <section class="weapon-panel" id="weapon-sections" aria-label="Equipped weapons"></section>
+      <aside class="detail-panel detail-panel-fixed" id="detail-panel" aria-label="Selected weapon"></aside>
+    </main>
+
+    <script src="inventory-data.js"></script>
+    <script src="preview-render.js"></script>
+  </body>
+</html>

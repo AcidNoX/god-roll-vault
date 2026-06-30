@@ -1,0 +1,471 @@
+/* Inventory hi-fi — frontend-design pass (GRV × DIM) */
+
+.inventory-page {
+  --font-display: "Chakra Petch", "Segoe UI", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --bg-tile: #1a1b1c;
+  --glow-gold: rgba(245, 220, 86, 0.35);
+  --glow-focus: rgba(72, 135, 186, 0.45);
+  --slot-kinetic: #d6d6d6;
+  --slot-energy: #79bbe8;
+  --slot-power: #e8a534;
+  --verdict-match: #6ee7a8;
+  --verdict-miss: #f87171;
+  --verdict-neutral: #48494a;
+
+  background:
+    radial-gradient(ellipse 120% 80% at 0% 0%, rgba(232, 165, 52, 0.04), transparent 50%),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(72, 135, 186, 0.05), transparent 45%),
+    var(--bg-app);
+  font-family: var(--font-body);
+}
+
+.inventory-page .preview-nav {
+  opacity: 0.85;
+}
+
+.inventory-page .logo {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.inventory-page .header-nav a {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.inventory-page .header-nav a.active {
+  position: relative;
+}
+
+.inventory-page .header-nav a.active::after {
+  background: var(--brand);
+  bottom: -14px;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.inventory-page .search-bar-wide {
+  font-family: var(--font-body);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.inventory-page .search-bar-wide:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(72, 135, 186, 0.25);
+  outline: none;
+}
+
+.inventory-page .character-strip {
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.inventory-page .character-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.inventory-page .power-level {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.inventory-page .character-detail strong {
+  color: var(--god-perfect);
+  font-weight: 600;
+}
+
+/* Section labels encode weapon slot */
+.inventory-page .weapon-section {
+  animation: section-in 0.45s ease both;
+}
+
+.inventory-page .weapon-section:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.inventory-page .weapon-section:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+@keyframes section-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inventory-page .section-label {
+  align-items: center;
+  color: var(--text-secondary);
+  display: flex;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  gap: 8px;
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+
+.inventory-page .slot-dot {
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: 6px;
+  width: 6px;
+}
+
+.inventory-page .slot-dot.kinetic {
+  background: var(--slot-kinetic);
+  box-shadow: 0 0 6px rgba(214, 214, 214, 0.4);
+}
+
+.inventory-page .slot-dot.energy {
+  background: var(--slot-energy);
+  box-shadow: 0 0 6px rgba(121, 187, 232, 0.45);
+}
+
+.inventory-page .slot-dot.power {
+  background: var(--slot-power);
+  box-shadow: 0 0 6px rgba(232, 165, 52, 0.45);
+}
+
+/* Tiles */
+.inventory-page .item-tile {
+  background: var(--bg-tile);
+  border-radius: 2px;
+  border-width: 2px;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.inventory-page .item-tile:hover {
+  border-color: var(--border-focus);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.inventory-page .item-tile.selected {
+  animation: selected-glow 2.4s ease-in-out infinite;
+  border-color: var(--border-focus);
+  box-shadow:
+    0 0 0 1px var(--border-focus),
+    0 0 18px var(--glow-focus);
+  outline: none;
+}
+
+@keyframes selected-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px var(--border-focus),
+      0 0 14px var(--glow-focus);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px var(--border-focus),
+      0 0 22px var(--glow-gold);
+  }
+}
+
+.inventory-page .item-tile .item-icon {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%),
+    linear-gradient(145deg, #3d3e40, #222324);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.inventory-page .item-tile .item-icon-img {
+  height: 38px;
+  left: 6px;
+  object-fit: contain;
+  position: absolute;
+  top: 10px;
+  width: 38px;
+}
+
+.inventory-page .item-tile .power {
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.inventory-page .badge {
+  font-family: var(--font-display);
+  font-size: 7px;
+}
+
+/* Detail panel — signature: roll verdict meter */
+.inventory-page .detail-panel-fixed {
+  background: linear-gradient(180deg, #2a2b2c 0%, #252627 120px, #252627 100%);
+  border-left: 1px solid var(--border);
+  padding: 0;
+}
+
+.inventory-page .detail-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 16px;
+}
+
+.inventory-page .roll-verdict {
+  background: #1a1a1a;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px 12px;
+}
+
+.inventory-page .roll-verdict-top {
+  align-items: baseline;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.inventory-page .roll-verdict-label {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.inventory-page .roll-verdict-score {
+  color: var(--god-perfect);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.inventory-page .roll-verdict-score span {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.inventory-page .verdict-meter {
+  display: flex;
+  gap: 4px;
+  height: 6px;
+}
+
+.inventory-page .verdict-segment {
+  background: var(--verdict-neutral);
+  border-radius: 1px;
+  flex: 1;
+  transition: background 0.2s ease;
+}
+
+.inventory-page .verdict-segment.match {
+  background: var(--verdict-match);
+  box-shadow: 0 0 8px rgba(110, 231, 168, 0.35);
+}
+
+.inventory-page .verdict-segment.miss {
+  background: var(--verdict-miss);
+}
+
+.inventory-page .verdict-caption {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.inventory-page .weapon-hero {
+  border-radius: 4px;
+  border-width: 2px;
+  box-shadow: inset 0 -40px 60px rgba(0, 0, 0, 0.5);
+  height: 168px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.inventory-page .weapon-hero::before {
+  background: radial-gradient(ellipse at center, rgba(160, 119, 206, 0.12) 0%, transparent 70%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.inventory-page .weapon-hero-art {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.55));
+  height: 140px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+}
+
+.inventory-page .weapon-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.inventory-page .god-roll-pill {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.inventory-page .perk-compare-header {
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+}
+
+.inventory-page .socket-label {
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  margin: 14px 0 6px;
+}
+
+.inventory-page .perk-socket {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(72, 73, 74, 0.6);
+  border-radius: 3px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+.inventory-page .perk-socket-row {
+  align-items: center;
+  display: grid;
+  font-size: 13px;
+  grid-template-columns: 3px 1fr 1fr;
+  min-height: 36px;
+}
+
+.inventory-page .perk-status {
+  align-self: stretch;
+}
+
+.inventory-page .perk-status.match {
+  background: var(--verdict-match);
+}
+
+.inventory-page .perk-status.miss {
+  background: var(--verdict-miss);
+}
+
+.inventory-page .perk-status.neutral {
+  background: var(--verdict-neutral);
+}
+
+.inventory-page .perk-cell {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.inventory-page .perk-cell.target {
+  border-left: 1px solid rgba(72, 73, 74, 0.5);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.inventory-page .perk-cell.target.match {
+  color: var(--verdict-match);
+}
+
+.inventory-page .perk-cell.yours.match {
+  color: var(--verdict-match);
+}
+
+.inventory-page .perk-cell.yours.miss {
+  color: var(--text-secondary);
+}
+
+.inventory-page .perk-icon-img {
+  border-radius: 2px;
+  flex-shrink: 0;
+  height: 28px;
+  object-fit: contain;
+  width: 28px;
+}
+
+.inventory-page .roll-source {
+  font-family: var(--font-display);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.inventory-page .detail-actions {
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 14px;
+}
+
+.inventory-page .btn-primary {
+  background: var(--btn-primary);
+  border-color: var(--btn-primary);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.inventory-page .btn-primary:hover {
+  background: #5a9fd4;
+  border-color: #5a9fd4;
+}
+
+.inventory-page button:focus-visible,
+.inventory-page a:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inventory-page .weapon-section,
+  .inventory-page .item-tile.selected {
+    animation: none;
+  }
+
+  .inventory-page .item-tile {
+    transition: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .inventory-page .detail-panel-fixed {
+    border-left: none;
+  }
+}

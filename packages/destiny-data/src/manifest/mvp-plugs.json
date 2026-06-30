@@ -1,30 +1,39 @@
 {
   "106909392": {
-    "name": "Tactical Mag"
+    "name": "Tactical Mag",
+    "iconPath": "/common/destiny2_content/icons/f0e309a267b25279a871d182f8910bcc.png"
   },
   "588594999": {
-    "name": "Moving Target"
+    "name": "Moving Target",
+    "iconPath": "/common/destiny2_content/icons/40b591eae7f122fdf1cfca21fc6f6c0f.png"
   },
   "839105230": {
-    "name": "Arrowhead Brake"
+    "name": "Arrowhead Brake",
+    "iconPath": "/common/destiny2_content/icons/8f7fb54687aa52a9c2595d90ce9c9417.png"
   },
   "957782887": {
-    "name": "Snapshot Sights"
+    "name": "Snapshot Sights",
+    "iconPath": "/common/destiny2_content/icons/ce16c9e2cbd73bb548af3e15bdfc7177.png"
   },
   "1015611457": {
-    "name": "Kill Clip"
+    "name": "Kill Clip",
+    "iconPath": "/common/destiny2_content/icons/0afd4799427004b2d8170ab213a2ef0c.png"
   },
   "1168162263": {
-    "name": "Outlaw"
+    "name": "Outlaw",
+    "iconPath": "/common/destiny2_content/icons/382df469a091c33e190ee583b64923e8.png"
   },
   "1467527085": {
-    "name": "Firefly"
+    "name": "Firefly",
+    "iconPath": "/common/destiny2_content/icons/d9e5e8fa07a84c29252b78b0e7b3106d.png"
   },
   "1482024992": {
-    "name": "Smallbore"
+    "name": "Smallbore",
+    "iconPath": "/common/destiny2_content/icons/7d1bb6a623f14959a47156ee71acfc3a.png"
   },
   "1546637391": {
-    "name": "Vorpal Weapon"
+    "name": "Vorpal Weapon",
+    "iconPath": "/common/destiny2_content/icons/bc5130b227ee577f2678ec2d2c97bf4a.png"
   },
   "1710791522": {
     "name": "Rampage"
@@ -33,55 +42,70 @@
     "name": "Fourth Times the Charm"
   },
   "1840239774": {
-    "name": "Fluted Barrel"
+    "name": "Fluted Barrel",
+    "iconPath": "/common/destiny2_content/icons/260eba9dd149dbb94b1306c9ed4dd8db.png"
   },
   "1890422124": {
-    "name": "Tap the Trigger"
+    "name": "Tap the Trigger",
+    "iconPath": "/common/destiny2_content/icons/a7840da2970b4137a333fb187477dfe0.png"
   },
   "2213355989": {
-    "name": "High-Impact Reserves"
+    "name": "High-Impact Reserves",
+    "iconPath": "/common/destiny2_content/icons/33ed859a08f2ccf643a1ac3c7f201966.png"
   },
   "2847525152": {
     "name": "Accurized Rounds"
   },
   "3038247973": {
-    "name": "Explosive Payload"
+    "name": "Explosive Payload",
+    "iconPath": "/common/destiny2_content/icons/31f02e5f3bae68ecdfdd3f899cf931c7.png"
   },
   "3142289711": {
-    "name": "Accurized Rounds"
+    "name": "Accurized Rounds",
+    "iconPath": "/common/destiny2_content/icons/d85024478504205359c7fb52dbc4f6b6.png"
   },
   "3177301540": {
     "name": "Explosive Payload",
     "iconPath": "/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png"
   },
   "3250034553": {
-    "name": "Hammer-Forged Rifling"
+    "name": "Hammer-Forged Rifling",
+    "iconPath": "/common/destiny2_content/icons/2b9eb6d4489cffc18c10223279198bcc.png"
   },
   "3300816228": {
-    "name": "Auto-Loading Holster"
+    "name": "Auto-Loading Holster",
+    "iconPath": "/common/destiny2_content/icons/e4262099a1c2cea78b48a6680c5248c9.png"
   },
   "3400784728": {
-    "name": "Triple Tap"
+    "name": "Triple Tap",
+    "iconPath": "/common/destiny2_content/icons/0795f44c0c3611b15428742c67918cd1.png"
   },
   "3425386926": {
-    "name": "Rampage"
+    "name": "Rampage",
+    "iconPath": "/common/destiny2_content/icons/8976ead57430e4f5f8af1b3005de4f83.png"
   },
   "3523296417": {
-    "name": "Demolitionist"
+    "name": "Demolitionist",
+    "iconPath": "/common/destiny2_content/icons/da009697110e06b65d6f827b3b6d5f70.png"
   },
   "3700496672": {
-    "name": "Shoot to Loot"
+    "name": "Shoot to Loot",
+    "iconPath": "/common/destiny2_content/icons/e8c6e23afe3c4215f0dc0c2941500c28.png"
   },
   "3824105627": {
-    "name": "Firefly"
+    "name": "Firefly",
+    "iconPath": "/common/destiny2_content/icons/629e225e6f8214326bc1eb0a911a6f6d.png"
   },
   "3891536761": {
-    "name": "Kinetic Tremors"
+    "name": "Kinetic Tremors",
+    "iconPath": "/common/destiny2_content/icons/300c343e6c33651a74d8a3fe81536146.png"
   },
   "4090651448": {
-    "name": "Corkscrew Rifling"
+    "name": "Corkscrew Rifling",
+    "iconPath": "/common/destiny2_content/icons/7730e1732ed7ef91afce50277639c493.png"
   },
   "4104185692": {
-    "name": "Frenzy"
+    "name": "Frenzy",
+    "iconPath": "/common/destiny2_content/icons/23e06f4ced1b3e6476f342978ff5bb37.png"
   }
 }
