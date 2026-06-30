@@ -74,9 +74,14 @@ async function fetchItem(hash) {
   return {
     hash,
     name: item.displayProperties.name,
+    iconPath: item.displayProperties.icon || undefined,
     tier: item.inventory?.tierTypeName ?? "Unknown",
     type: item.itemTypeDisplayName ?? "",
   };
+}
+
+function withOptionalIconPath(entry, item) {
+  return item.iconPath ? { ...entry, iconPath: item.iconPath } : entry;
 }
 
 const weapons = {};
@@ -85,7 +90,7 @@ const plugs = {};
 for (const hash of [...new Set(weaponHashes)]) {
   const item = await fetchItem(hash);
   if (item && (weaponTypes.has(item.type) || item.tier === "Exotic")) {
-    weapons[String(hash)] = { name: item.name, tier: item.tier };
+    weapons[String(hash)] = withOptionalIconPath({ name: item.name, tier: item.tier }, item);
     console.log(`weapon OK ${hash} ${item.name}`);
   } else if (item) {
     console.log(`weapon SKIP ${hash} ${item.name} (${item.type})`);
@@ -98,7 +103,7 @@ for (const hash of [...new Set(weaponHashes)]) {
 for (const hash of [...new Set(plugHashes)]) {
   const item = await fetchItem(hash);
   if (item && !weaponTypes.has(item.type)) {
-    plugs[String(hash)] = { name: item.name };
+    plugs[String(hash)] = withOptionalIconPath({ name: item.name }, item);
     console.log(`plug OK ${hash} ${item.name}`);
   } else if (item) {
     console.log(`plug SKIP ${hash} ${item.name} (${item.type})`);
@@ -109,15 +114,33 @@ for (const hash of [...new Set(plugHashes)]) {
 }
 
 // LEE-38 fixture overrides — must remain for inventory mapper tests.
-weapons["1363886209"] = { name: "Fatebringer (Timelost)", tier: "Legendary" };
-weapons["2595497736"] = { name: "Crafted Test Rifle", tier: "Legendary" };
-weapons["3687335430"] = { name: "Vault Test Shotgun", tier: "Legendary" };
+weapons["1363886209"] = {
+  name: "Fatebringer (Timelost)",
+  tier: "Legendary",
+  iconPath: weapons["1363886209"]?.iconPath,
+};
+weapons["2595497736"] = {
+  name: "Crafted Test Rifle",
+  tier: "Legendary",
+  iconPath: weapons["2595497736"]?.iconPath,
+};
+weapons["3687335430"] = {
+  name: "Vault Test Shotgun",
+  tier: "Legendary",
+  iconPath: weapons["3687335430"]?.iconPath,
+};
 
-plugs["1467527085"] = { name: "Firefly" };
-plugs["3177301540"] = { name: "Explosive Payload" };
-plugs["1820237385"] = { name: "Fourth Times the Charm" };
-plugs["1710791522"] = { name: "Rampage" };
-plugs["2847525152"] = { name: "Accurized Rounds" };
+plugs["1467527085"] = { name: "Firefly", iconPath: plugs["1467527085"]?.iconPath };
+plugs["3177301540"] = { name: "Explosive Payload", iconPath: plugs["3177301540"]?.iconPath };
+plugs["1820237385"] = {
+  name: "Fourth Times the Charm",
+  iconPath: plugs["1820237385"]?.iconPath,
+};
+plugs["1710791522"] = { name: "Rampage", iconPath: plugs["1710791522"]?.iconPath };
+plugs["2847525152"] = {
+  name: "Accurized Rounds",
+  iconPath: plugs["2847525152"]?.iconPath,
+};
 
 const sortedWeapons = Object.fromEntries(
   Object.entries(weapons).sort(([a], [b]) => Number(a) - Number(b)),

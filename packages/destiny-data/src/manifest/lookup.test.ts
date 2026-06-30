@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
 
 import { isWeaponBucket, WEAPON_BUCKET_HASHES } from "../buckets.js";
-import { getPerkName, getWeaponDefinition, getWeaponName, getWeaponTier } from "./lookup.js";
+import {
+  getBungieAssetUrl,
+  getPerkIconUrl,
+  getPerkName,
+  getWeaponDefinition,
+  getWeaponIconUrl,
+  getWeaponName,
+  getWeaponTier,
+} from "./lookup.js";
 import mvpPlugs from "./mvp-plugs.json";
 import mvpWeapons from "./mvp-weapons.json";
 
@@ -24,6 +32,26 @@ describe("manifest lookup", () => {
     expect(getPerkName(1015611457)).toBe("Kill Clip");
   });
 
+  it("resolves Bungie asset URLs for manifest entries with icons", () => {
+    expect(getWeaponIconUrl(4219826183)).toBe(
+      "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
+    );
+    expect(getPerkIconUrl(3177301540)).toBe(
+      "https://www.bungie.net/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png",
+    );
+  });
+
+  it("normalizes Bungie asset paths and leaves absolute URLs untouched", () => {
+    expect(getBungieAssetUrl("common/example.png")).toBe(
+      "https://www.bungie.net/common/example.png",
+    );
+    expect(getBungieAssetUrl("/common/example.png")).toBe(
+      "https://www.bungie.net/common/example.png",
+    );
+    expect(getBungieAssetUrl("https://cdn.example/icon.png")).toBe("https://cdn.example/icon.png");
+    expect(getBungieAssetUrl(undefined)).toBeUndefined();
+  });
+
   it("preserves LEE-38 fixture weapon names", () => {
     expect(getWeaponName(2595497736)).toBe("Crafted Test Rifle");
     expect(getWeaponName(3687335430)).toBe("Vault Test Shotgun");
@@ -40,6 +68,8 @@ describe("manifest lookup", () => {
     expect(getWeaponName(999)).toBe("Unknown Weapon (999)");
     expect(getWeaponTier(999)).toBe("Unknown");
     expect(getPerkName(999)).toBe("Unknown Perk (999)");
+    expect(getWeaponIconUrl(999)).toBeUndefined();
+    expect(getPerkIconUrl(999)).toBeUndefined();
   });
 });
 

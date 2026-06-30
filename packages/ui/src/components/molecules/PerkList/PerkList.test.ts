@@ -9,6 +9,7 @@ import { PerkList } from "./PerkList.js";
 type TestElementProps = {
   accessibilityLabel?: string;
   children?: ReactNode;
+  source?: unknown;
   style?: unknown;
   testID?: string;
 };
@@ -141,5 +142,20 @@ describe("PerkList", () => {
       backgroundColor: designTokens.colors.badge.missing.background,
       borderColor: designTokens.colors.badge.missing.border,
     });
+  });
+
+  it("renders perk icons when asset URLs are available", () => {
+    const iconUrl = "https://www.bungie.net/common/destiny2_content/icons/kill-clip.png";
+    const list = renderPerkList({
+      perks: {
+        ...perks,
+        perk1: { plugHash: 3, name: "Kill Clip", iconUrl },
+      },
+    });
+    const perkIcon = findByTestID(list, "perk-list-perk1-icon");
+
+    expect(perkIcon.props.accessibilityLabel).toBe("Kill Clip icon");
+    expect(perkIcon.props.source).toEqual({ uri: iconUrl });
+    expect(textContent(findByTestID(list, "perk-list-perk1"))).toBe("Perk 1MatchedKill Clip");
   });
 });

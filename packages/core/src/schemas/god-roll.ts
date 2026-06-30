@@ -7,6 +7,7 @@ export const matchStatusSchema = z.enum(["perfect", "partial", "missing", "unkno
 export const weaponPerkSchema = z.object({
   plugHash: z.number(),
   name: z.string(),
+  iconUrl: z.string().optional(),
 });
 
 export const godRollPerkSlotSchema = z.enum(["barrel", "magazine", "perk1", "perk2"]);

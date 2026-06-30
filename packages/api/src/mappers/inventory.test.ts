@@ -11,7 +11,12 @@ describe("extractWeaponPerks", () => {
 
     expect(perks).toEqual([
       { plugHash: 1467527085, name: "Firefly" },
-      { plugHash: 3177301540, name: "Explosive Payload" },
+      {
+        plugHash: 3177301540,
+        name: "Explosive Payload",
+        iconUrl:
+          "https://www.bungie.net/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png",
+      },
     ]);
   });
 
@@ -34,7 +39,12 @@ describe("extractWeaponPerks", () => {
 
     expect(perks).toEqual([
       { plugHash: 1467527085, name: "Firefly" },
-      { plugHash: 3177301540, name: "Explosive Payload" },
+      {
+        plugHash: 3177301540,
+        name: "Explosive Payload",
+        iconUrl:
+          "https://www.bungie.net/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png",
+      },
     ]);
   });
 });
@@ -58,7 +68,12 @@ describe("mapInventoryWeapons", () => {
       element: "kinetic",
       perks: [
         { plugHash: 1467527085, name: "Firefly" },
-        { plugHash: 3177301540, name: "Explosive Payload" },
+        {
+          plugHash: 3177301540,
+          name: "Explosive Payload",
+          iconUrl:
+            "https://www.bungie.net/common/destiny2_content/icons/d41dd918d42681c5b0ad00880274b22c.png",
+        },
       ],
       location: "character",
       bucketHash: 149531261,
@@ -86,5 +101,46 @@ describe("mapInventoryWeapons", () => {
     const weapons = mapInventoryWeapons(profile, CHARACTER_ID);
     expect(weapons.every((weapon) => weapon.location === "character")).toBe(true);
     expect(weapons).toHaveLength(3);
+  });
+
+  it("maps weapon icon URLs when curated manifest asset paths exist", () => {
+    const profile = {
+      characterInventories: {
+        [CHARACTER_ID]: {
+          items: [
+            {
+              itemHash: 4219826183,
+              itemInstanceId: "icon-weapon-instance",
+              bucketHash: 149531261,
+              quantity: 1,
+            },
+          ],
+        },
+      },
+      characterEquipment: {
+        [CHARACTER_ID]: { items: [] },
+      },
+      profileInventory: { items: [], privacy: 1 },
+      itemComponents: {
+        instances: {
+          data: {
+            "icon-weapon-instance": {
+              primaryStat: { value: 1980 },
+              damageTypeHash: 3373582085,
+            },
+          },
+        },
+        sockets: {
+          data: {},
+        },
+      },
+    };
+
+    expect(mapInventoryWeapons(profile, CHARACTER_ID)[0]).toMatchObject({
+      itemHash: 4219826183,
+      name: "Fatebringer (Timelost)",
+      iconUrl:
+        "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
+    });
   });
 });

@@ -260,6 +260,12 @@ test.describe("Weapon inventory", () => {
     await expect(
       cards.nth(0).getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-badge`),
     ).toHaveText("God Roll");
+    await expect(
+      cards.nth(0).getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-icon-image`),
+    ).toHaveAttribute(
+      "src",
+      "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
+    );
     await expect(cards.nth(1).getByTestId(`weapon-card-${BELOVED_INSTANCE_ID}-name`)).toHaveText(
       "Beloved",
     );
@@ -301,7 +307,10 @@ test.describe("Weapon inventory", () => {
     await expect(page.getByTestId("weapon-detail-page")).toBeVisible();
     await expect(page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}`)).toBeVisible();
     await expect(page.getByTestId("weapon-detail-title")).toHaveText("Fatebringer (Timelost)");
-    await expect(page.getByTestId("weapon-detail-icon")).toHaveText("K");
+    await expect(page.getByTestId("weapon-detail-icon-image")).toHaveAttribute(
+      "src",
+      "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
+    );
     await expect(page.getByTestId("weapon-detail-power")).toHaveText("Power 1980");
     await expect(page.getByTestId("weapon-detail-element")).toHaveText("Kinetic element");
     await expect(page.getByTestId("weapon-detail-tier")).toHaveText("Legendary");

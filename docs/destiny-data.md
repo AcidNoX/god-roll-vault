@@ -1,15 +1,15 @@
 # Destiny static reference data (`packages/destiny-data`)
 
-Hand-curated MVP subset of Bungie manifest hashes for weapon and perk display names. Used by `packages/api` inventory mappers and future god-roll matching — **not** a full manifest download.
+Hand-curated MVP subset of Bungie manifest hashes for weapon and perk display names/assets. Used by `packages/api` inventory mappers and future god-roll matching — **not** a full manifest download.
 
 ## Data files
 
 | File | Purpose |
 |------|---------|
-| `src/manifest/mvp-weapons.json` | `itemHash` → `{ name, tier }` |
-| `src/manifest/mvp-plugs.json` | `plugHash` → `{ name }` |
+| `src/manifest/mvp-weapons.json` | `itemHash` → `{ name, tier, iconPath? }` |
+| `src/manifest/mvp-plugs.json` | `plugHash` → `{ name, iconPath? }` |
 
-Keys are decimal hash strings (matching Bungie inventory JSON). Values are human-readable names only — no icons, stats, or socket layouts.
+Keys are decimal hash strings (matching Bungie inventory JSON). Values include human-readable names and optional Bungie `displayProperties.icon` paths. We still do not store stats, socket layouts, or the full manifest.
 
 ## Lookup API
 
@@ -18,7 +18,9 @@ Exported from `@god-roll-vault/destiny-data`:
 - `getWeaponName(itemHash)` — name or `Unknown Weapon ({hash})`
 - `getWeaponTier(itemHash)` — tier or `Unknown`
 - `getWeaponDefinition(itemHash)` — full entry or `undefined`
+- `getWeaponIconUrl(itemHash)` — full Bungie asset URL or `undefined`
 - `getPerkName(plugHash)` — name or `Unknown Perk ({hash})`
+- `getPerkIconUrl(plugHash)` — full Bungie asset URL or `undefined`
 
 ## Data sources
 
@@ -47,7 +49,7 @@ Do not change these without updating `packages/api` fixtures and mapper tests.
 ## Update process
 
 1. Find the item hash on light.gg (URL or “API ID” on the item page).
-2. Optionally verify via Bungie entity API (requires `BUNGIE_API_KEY` in `.env`).
+2. Optionally verify via Bungie entity API (requires `BUNGIE_API_KEY` in `.env`), which also captures `displayProperties.icon` when present.
 3. Add the hash to `scripts/verify-manifest-hashes.mjs` (`weaponHashes` or `plugHashes`).
 4. Run from repo root:
 
@@ -55,7 +57,7 @@ Do not change these without updating `packages/api` fixtures and mapper tests.
    node scripts/verify-manifest-hashes.mjs
    ```
 
-   This rewrites `mvp-weapons.json` and `mvp-plugs.json`, re-applies fixture overrides, and prints counts.
+   This rewrites `mvp-weapons.json` and `mvp-plugs.json`, re-applies fixture overrides, preserves fetched icon paths for those overrides, and prints counts.
 
 5. Extend `packages/destiny-data/src/manifest/lookup.test.ts` if adding hashes used in tests.
 6. Run `pnpm lint typecheck test build`.

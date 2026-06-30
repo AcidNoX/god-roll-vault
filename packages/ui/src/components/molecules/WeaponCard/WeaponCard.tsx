@@ -1,5 +1,6 @@
 import { Pressable, Text, View } from "react-native";
 
+import { Image } from "../../atoms/Image/index.js";
 import { badgePresentationByStatus, elementPresentationByType } from "./WeaponCard.constants.js";
 import { weaponCardStyles } from "./WeaponCard.styles.js";
 import type { WeaponCardProps } from "./WeaponCard.types.js";
@@ -23,13 +24,32 @@ export function WeaponCard({ weapon, matchResult, onPress }: WeaponCardProps) {
       ]}
       testID={cardTestID}
     >
-      <View
-        accessibilityLabel={`${element.label} element`}
-        style={[weaponCardStyles.elementIcon, element.containerStyle]}
-        testID={`${cardTestID}-element-icon`}
-      >
-        <Text style={[weaponCardStyles.elementIconText, element.textStyle]}>{element.icon}</Text>
-      </View>
+      {weapon.iconUrl ? (
+        <View
+          accessibilityLabel={`${weapon.name} icon`}
+          style={weaponCardStyles.assetIcon}
+          testID={`${cardTestID}-weapon-icon`}
+        >
+          <Image
+            accessibilityLabel={`${weapon.name} icon`}
+            sourceUri={weapon.iconUrl}
+            style={weaponCardStyles.weaponIconImage}
+            testID={`${cardTestID}-weapon-icon-image`}
+          />
+        </View>
+      ) : (
+        <View
+          accessibilityLabel={`${element.label} element`}
+          style={[
+            weaponCardStyles.elementIcon,
+            weaponCardStyles.fallbackElementIcon,
+            element.containerStyle,
+          ]}
+          testID={`${cardTestID}-element-icon`}
+        >
+          <Text style={[weaponCardStyles.elementIconText, element.textStyle]}>{element.icon}</Text>
+        </View>
+      )}
 
       <View style={weaponCardStyles.weaponDetails}>
         <Text numberOfLines={1} style={weaponCardStyles.weaponName} testID={`${cardTestID}-name`}>
