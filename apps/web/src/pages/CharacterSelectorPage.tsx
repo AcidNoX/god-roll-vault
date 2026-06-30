@@ -11,7 +11,6 @@ import {
   useTheme,
 } from "@god-roll-vault/ui";
 import { useCallback, useEffect, useState } from "react";
-import type { TextStyle, ViewStyle } from "react-native";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthProvider.js";
@@ -27,15 +26,22 @@ type CharacterOption = {
   character: DestinyCharacter;
 };
 
-const CLASS_PRESENTATION_BY_TYPE: Record<number, { icon: string; label: string }> = {
+type ClassPresentation = {
+  icon: string;
+  label: string;
+};
+
+const UNKNOWN_CLASS_PRESENTATION: ClassPresentation = { icon: "?", label: "Unknown" };
+
+const CLASS_PRESENTATION_BY_TYPE: Record<number, ClassPresentation> = {
   0: { icon: "T", label: "Titan" },
   1: { icon: "H", label: "Hunter" },
   2: { icon: "W", label: "Warlock" },
-  3: { icon: "?", label: "Unknown" },
+  3: UNKNOWN_CLASS_PRESENTATION,
 };
 
 function getClassPresentation(classType: number) {
-  return CLASS_PRESENTATION_BY_TYPE[classType] ?? CLASS_PRESENTATION_BY_TYPE[3];
+  return CLASS_PRESENTATION_BY_TYPE[classType] ?? UNKNOWN_CLASS_PRESENTATION;
 }
 
 function formatLastPlayed(dateLastPlayed: string): string {
@@ -81,7 +87,7 @@ function CharacterCard({ option, isSelected, onSelect }: CharacterCardProps) {
   const characterClass = getClassPresentation(character.classType);
   const cardTestID = `character-card-${character.characterId}`;
 
-  const cardStyle: ViewStyle = {
+  const cardStyle = {
     alignItems: "stretch",
     backgroundColor: theme.colors.surfaceRaised,
     borderColor: isSelected ? theme.colors.accent.gold : theme.colors.border,
@@ -92,8 +98,8 @@ function CharacterCard({ option, isSelected, onSelect }: CharacterCardProps) {
     maxWidth: 420,
     minWidth: 260,
     padding: theme.spacing.lg,
-  };
-  const iconStyle: ViewStyle = {
+  } as const;
+  const iconStyle = {
     alignItems: "center",
     backgroundColor: theme.colors.accent.voidMuted,
     borderColor: theme.colors.borderStrong,
@@ -102,17 +108,17 @@ function CharacterCard({ option, isSelected, onSelect }: CharacterCardProps) {
     height: 48,
     justifyContent: "center",
     width: 48,
-  };
-  const iconTextStyle: TextStyle = {
+  } as const;
+  const iconTextStyle = {
     color: theme.colors.text,
     fontSize: 22,
     fontWeight: "700",
-  };
-  const lightStyle: TextStyle = {
+  } as const;
+  const lightStyle = {
     color: theme.colors.accent.gold,
     fontSize: 28,
     fontWeight: "700",
-  };
+  } as const;
 
   return (
     <Pressable
