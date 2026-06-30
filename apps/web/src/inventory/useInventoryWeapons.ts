@@ -1,4 +1,4 @@
-import { BungieClient, type AuthTokens, type InventoryWeapon } from "@god-roll-vault/api";
+import { type AuthTokens, BungieClient, type InventoryWeapon } from "@god-roll-vault/api";
 import { useEffect, useState } from "react";
 
 import { getBungieApiConfig } from "../auth/config.js";
