@@ -10,6 +10,11 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Origin": "*",
 };
+const EMPTY_WEAPON_PROFILE = {
+  characterInventories: { [MOCK_CHARACTER_ID]: { items: [] } },
+  characterEquipment: { [MOCK_CHARACTER_ID]: { items: [] } },
+  profileInventory: { items: [], privacy: 1 },
+};
 
 function bungieEnvelope<T>(response: T) {
   return {
@@ -77,6 +82,19 @@ async function mockCharacterApi(page: Page) {
             },
           }),
         ),
+      });
+      return;
+    }
+
+    if (
+      url.pathname === `/Platform/Destiny2/3/Profile/${MOCK_DESTINY_MEMBERSHIP_ID}/` &&
+      url.searchParams.get("components") === "102,201,205,300,305,308"
+    ) {
+      await route.fulfill({
+        status: 200,
+        headers: CORS_HEADERS,
+        contentType: "application/json",
+        body: JSON.stringify(bungieEnvelope(EMPTY_WEAPON_PROFILE)),
       });
       return;
     }

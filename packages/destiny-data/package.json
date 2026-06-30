@@ -13,6 +13,7 @@
     "validate-data": "pnpm build && node dist/god-rolls/validate-data.js"
   },
   "dependencies": {
+    "@god-roll-vault/core": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

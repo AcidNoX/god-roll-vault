@@ -50,6 +50,7 @@ export default defineConfig(({ mode }) => {
         "@god-roll-vault/ui": path.resolve(__dirname, "../../packages/ui/src"),
         "@god-roll-vault/core": path.resolve(__dirname, "../../packages/core/src"),
         "@god-roll-vault/api": path.resolve(__dirname, "../../packages/api/src"),
+        "@god-roll-vault/destiny-data": path.resolve(__dirname, "../../packages/destiny-data/src"),
       },
     },
     server: {
