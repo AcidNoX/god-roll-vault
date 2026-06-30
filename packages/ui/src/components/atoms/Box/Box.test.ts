@@ -2,6 +2,7 @@ import type { ReactElement, ReactNode } from "react";
 import { describe, expect, it } from "vitest";
 
 import { flattenStyle, textContent } from "../../../test-utils/componentTree.js";
+import { theme } from "../../../theme/index.js";
 import { Box } from "./Box.js";
 
 type TestElementProps = {
@@ -24,10 +25,10 @@ describe("Box", () => {
     expect(box.props.testID).toBe("vault-box");
     expect(textContent(box)).toBe("Vault");
     expect(flattenStyle(box.props.style)).toMatchObject({
-      backgroundColor: "#151520",
-      borderColor: "#2a2a3a",
-      marginHorizontal: 8,
-      padding: 16,
+      backgroundColor: theme.colors.surface,
+      borderColor: theme.colors.border,
+      marginHorizontal: theme.spacing.sm,
+      padding: theme.spacing.lg,
     });
   });
 });

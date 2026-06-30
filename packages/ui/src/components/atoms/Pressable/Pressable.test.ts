@@ -2,6 +2,7 @@ import type { ReactElement, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { flattenStyle, textContent } from "../../../test-utils/componentTree.js";
+import { theme } from "../../../theme/index.js";
 import { Pressable } from "./Pressable.js";
 
 type TestElementProps = {
@@ -47,14 +48,14 @@ describe("Pressable", () => {
     expect(
       renderStyleCallback(pressable.props.style, { hovered: false, pressed: false }),
     ).toMatchObject({
-      backgroundColor: "#8b5cf6",
+      backgroundColor: theme.colors.primary,
       minHeight: 44,
-      paddingHorizontal: 16,
+      paddingHorizontal: theme.spacing.lg,
     });
     expect(
       renderStyleCallback(pressable.props.style, { hovered: true, pressed: false }),
     ).toMatchObject({
-      backgroundColor: "#7c3aed",
+      backgroundColor: theme.colors.primaryHover,
     });
     expect(
       renderStyleCallback(pressable.props.style, { hovered: false, pressed: true }),

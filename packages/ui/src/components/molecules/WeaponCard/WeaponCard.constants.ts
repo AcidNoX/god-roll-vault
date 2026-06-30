@@ -1,46 +1,47 @@
 import type { InventoryWeapon, MatchStatus } from "@god-roll-vault/core";
 
+import { designTokens } from "../../../theme/index.js";
 import type { BadgePresentation, ElementPresentation } from "./WeaponCard.types.js";
 
 export const badgePresentationByStatus = {
   perfect: {
     label: "God Roll",
     containerStyle: {
-      backgroundColor: "#123524",
-      borderColor: "#2ecc71",
+      backgroundColor: designTokens.colors.badge.perfect.background,
+      borderColor: designTokens.colors.badge.perfect.border,
     },
     textStyle: {
-      color: "#b6f7cb",
+      color: designTokens.colors.badge.perfect.text,
     },
   },
   partial: {
     label: "Partial",
     containerStyle: {
-      backgroundColor: "#3a2f12",
-      borderColor: "#f5c542",
+      backgroundColor: designTokens.colors.badge.partial.background,
+      borderColor: designTokens.colors.badge.partial.border,
     },
     textStyle: {
-      color: "#ffe7a3",
+      color: designTokens.colors.badge.partial.text,
     },
   },
   missing: {
     label: "Missing",
     containerStyle: {
-      backgroundColor: "#3a1717",
-      borderColor: "#ff6b6b",
+      backgroundColor: designTokens.colors.badge.missing.background,
+      borderColor: designTokens.colors.badge.missing.border,
     },
     textStyle: {
-      color: "#ffc1c1",
+      color: designTokens.colors.badge.missing.text,
     },
   },
   unknown: {
     label: "Unknown",
     containerStyle: {
-      backgroundColor: "#282836",
-      borderColor: "#5f6472",
+      backgroundColor: designTokens.colors.badge.unknown.background,
+      borderColor: designTokens.colors.badge.unknown.border,
     },
     textStyle: {
-      color: "#d6d9e0",
+      color: designTokens.colors.badge.unknown.text,
     },
   },
 } satisfies Record<MatchStatus, BadgePresentation>;
@@ -50,77 +51,77 @@ export const elementPresentationByType = {
     label: "Kinetic",
     icon: "K",
     containerStyle: {
-      backgroundColor: "#383835",
-      borderColor: "#d6d3c5",
+      backgroundColor: designTokens.colors.element.kinetic.background,
+      borderColor: designTokens.colors.element.kinetic.border,
     },
     textStyle: {
-      color: "#f0eee4",
+      color: designTokens.colors.element.kinetic.text,
     },
   },
   arc: {
     label: "Arc",
     icon: "A",
     containerStyle: {
-      backgroundColor: "#12313b",
-      borderColor: "#79dfff",
+      backgroundColor: designTokens.colors.element.arc.background,
+      borderColor: designTokens.colors.element.arc.border,
     },
     textStyle: {
-      color: "#bdf1ff",
+      color: designTokens.colors.element.arc.text,
     },
   },
   solar: {
     label: "Solar",
     icon: "So",
     containerStyle: {
-      backgroundColor: "#3d2412",
-      borderColor: "#ff9f43",
+      backgroundColor: designTokens.colors.element.solar.background,
+      borderColor: designTokens.colors.element.solar.border,
     },
     textStyle: {
-      color: "#ffd0a3",
+      color: designTokens.colors.element.solar.text,
     },
   },
   void: {
     label: "Void",
     icon: "V",
     containerStyle: {
-      backgroundColor: "#25183d",
-      borderColor: "#b084ff",
+      backgroundColor: designTokens.colors.element.void.background,
+      borderColor: designTokens.colors.element.void.border,
     },
     textStyle: {
-      color: "#ddccff",
+      color: designTokens.colors.element.void.text,
     },
   },
   stasis: {
     label: "Stasis",
     icon: "St",
     containerStyle: {
-      backgroundColor: "#142d45",
-      borderColor: "#86c5ff",
+      backgroundColor: designTokens.colors.element.stasis.background,
+      borderColor: designTokens.colors.element.stasis.border,
     },
     textStyle: {
-      color: "#c4e4ff",
+      color: designTokens.colors.element.stasis.text,
     },
   },
   strand: {
     label: "Strand",
     icon: "Sr",
     containerStyle: {
-      backgroundColor: "#17331e",
-      borderColor: "#7cff8a",
+      backgroundColor: designTokens.colors.element.strand.background,
+      borderColor: designTokens.colors.element.strand.border,
     },
     textStyle: {
-      color: "#c8ffce",
+      color: designTokens.colors.element.strand.text,
     },
   },
   unknown: {
     label: "Unknown",
     icon: "?",
     containerStyle: {
-      backgroundColor: "#282836",
-      borderColor: "#5f6472",
+      backgroundColor: designTokens.colors.element.unknown.background,
+      borderColor: designTokens.colors.element.unknown.border,
     },
     textStyle: {
-      color: "#d6d9e0",
+      color: designTokens.colors.element.unknown.text,
     },
   },
 } satisfies Record<InventoryWeapon["element"], ElementPresentation>;
