@@ -12,6 +12,7 @@ import {
   EmptyState,
   ErrorState,
   GodRollBadge,
+  Image,
   LoadingSpinner,
   PerkList,
   Screen,
@@ -197,31 +198,57 @@ export function WeaponDetailPage() {
           <Stack gap="lg">
             <Stack direction="horizontal" gap="lg" justify="space-between" wrap>
               <Stack direction="horizontal" gap="md" style={{ flex: 1, minWidth: 260 }}>
-                <Box
-                  accessibilityLabel={`${element.label} weapon icon`}
-                  padding="md"
-                  style={{
-                    alignItems: "center",
-                    backgroundColor: theme.colors.element[weapon.element].background,
-                    borderColor: theme.colors.element[weapon.element].border,
-                    borderRadius: theme.borderRadius.lg,
-                    borderWidth: 1,
-                    height: 48,
-                    justifyContent: "center",
-                    width: 48,
-                  }}
-                  testID="weapon-detail-icon"
-                >
-                  <Text
+                {weapon.iconUrl ? (
+                  <Box
+                    accessibilityLabel={`${weapon.name} icon`}
                     style={{
-                      color: theme.colors.element[weapon.element].text,
-                      fontWeight: "700",
+                      backgroundColor: theme.colors.surfaceMuted,
+                      borderColor: theme.colors.border,
+                      borderRadius: theme.borderRadius.lg,
+                      borderWidth: 1,
+                      height: 48,
+                      overflow: "hidden",
+                      width: 48,
                     }}
-                    variant="caption"
+                    testID="weapon-detail-icon"
                   >
-                    {element.icon}
-                  </Text>
-                </Box>
+                    <Image
+                      accessibilityLabel={`${weapon.name} icon`}
+                      sourceUri={weapon.iconUrl}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                      }}
+                      testID="weapon-detail-icon-image"
+                    />
+                  </Box>
+                ) : (
+                  <Box
+                    accessibilityLabel={`${element.label} weapon icon`}
+                    padding="md"
+                    style={{
+                      alignItems: "center",
+                      backgroundColor: theme.colors.element[weapon.element].background,
+                      borderColor: theme.colors.element[weapon.element].border,
+                      borderRadius: theme.borderRadius.lg,
+                      borderWidth: 1,
+                      height: 48,
+                      justifyContent: "center",
+                      width: 48,
+                    }}
+                    testID="weapon-detail-icon"
+                  >
+                    <Text
+                      style={{
+                        color: theme.colors.element[weapon.element].text,
+                        fontWeight: "700",
+                      }}
+                      variant="caption"
+                    >
+                      {element.icon}
+                    </Text>
+                  </Box>
+                )}
 
                 <Stack gap="xs" style={{ flex: 1, minWidth: 0 }}>
                   <Text testID="weapon-detail-title" variant="heading">

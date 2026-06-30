@@ -5,6 +5,7 @@ export type WeaponElement = "kinetic" | "arc" | "solar" | "void" | "stasis" | "s
 export type WeaponPerk = {
   plugHash: number;
   name: string;
+  iconUrl?: string;
 };
 
 export type WeaponPerks = {
@@ -19,6 +20,7 @@ export type InventoryWeapon = {
   itemHash: number;
   itemInstanceId: string;
   name: string;
+  iconUrl?: string;
   tier: string;
   power: number;
   element: WeaponElement;

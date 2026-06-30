@@ -23,8 +23,12 @@ export {
 } from "./god-rolls/schema.js";
 export type { WeaponDefinition } from "./manifest/lookup.js";
 export {
+  BUNGIE_ASSET_BASE_URL,
+  getBungieAssetUrl,
+  getPerkIconUrl,
   getPerkName,
   getWeaponDefinition,
+  getWeaponIconUrl,
   getWeaponName,
   getWeaponTier,
 } from "./manifest/lookup.js";

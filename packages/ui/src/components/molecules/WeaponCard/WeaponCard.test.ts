@@ -12,6 +12,7 @@ type TestElementProps = {
   children?: ReactNode;
   disabled?: boolean;
   onPress?: unknown;
+  sourceUri?: string;
   style?: unknown;
   testID?: string;
 };
@@ -67,7 +68,7 @@ function findByTestID(node: ReactNode, testID: string): ReactElement<TestElement
 }
 
 describe("WeaponCard", () => {
-  it("renders compact weapon details with an element icon and default unknown badge", () => {
+  it("renders compact weapon details with an element fallback and default unknown badge", () => {
     const card = renderWeaponCard();
     const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
 
@@ -80,6 +81,21 @@ describe("WeaponCard", () => {
     expect(textContent(elementIcon)).toBe("A");
 
     expect(textContent(findByTestID(card, `${cardTestID}-badge`))).toBe("Unknown");
+  });
+
+  it("renders a weapon icon image when an asset URL is available", () => {
+    const iconUrl = "https://www.bungie.net/common/destiny2_content/icons/fatebringer.jpg";
+    const card = renderWeaponCard({ weapon: { ...weapon, iconUrl } });
+    const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
+    const weaponIcon = findByTestID(card, `${cardTestID}-weapon-icon`);
+    const weaponIconImage = findByTestID(card, `${cardTestID}-weapon-icon-image`);
+
+    expect(weaponIcon.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
+    expect(weaponIconImage.props.sourceUri).toBe(iconUrl);
+    expect(weaponIconImage.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
+    expect(() => findByTestID(card, `${cardTestID}-element-icon`)).toThrow(
+      `Unable to find testID ${cardTestID}-element-icon`,
+    );
   });
 
   it("wires optional press behavior as an accessible button", () => {

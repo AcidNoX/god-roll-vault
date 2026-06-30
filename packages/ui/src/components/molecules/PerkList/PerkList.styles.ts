@@ -1,4 +1,4 @@
-import type { TextStyle, ViewStyle } from "react-native";
+import type { ImageStyle, TextStyle, ViewStyle } from "react-native";
 
 import { designTokens } from "../../../theme/index.js";
 
@@ -35,8 +35,18 @@ export const perkListStyles = {
     fontSize: designTokens.typography.fontSize.body,
     fontWeight: designTokens.typography.fontWeight.semibold,
     lineHeight: designTokens.typography.lineHeight.body,
-    marginTop: designTokens.spacing.xs,
   } satisfies TextStyle,
+  valueRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: designTokens.spacing.sm,
+    marginTop: designTokens.spacing.xs,
+  } satisfies ViewStyle,
+  perkIcon: {
+    borderRadius: designTokens.borderRadius.sm,
+    height: 24,
+    width: 24,
+  } satisfies ImageStyle,
   target: {
     color: designTokens.colors.textMuted,
     fontSize: designTokens.typography.fontSize.small,

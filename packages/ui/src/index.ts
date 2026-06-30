@@ -1,6 +1,7 @@
 export type {
   AppTextProps,
   BoxProps,
+  ImageProps,
   LoadingSpinnerProps,
   PressableProps,
   PressableState,
@@ -8,7 +9,15 @@ export type {
   StackProps,
   TextProps,
 } from "./components/atoms/index.js";
-export { AppText, Box, LoadingSpinner, Pressable, Stack, Text } from "./components/atoms/index.js";
+export {
+  AppText,
+  Box,
+  Image,
+  LoadingSpinner,
+  Pressable,
+  Stack,
+  Text,
+} from "./components/atoms/index.js";
 export type {
   EmptyStateProps,
   ErrorStateProps,

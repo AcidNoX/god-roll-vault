@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 
+import { Image } from "../../atoms/Image/index.js";
 import { perkListPresentationByStatus } from "./PerkList.constants.js";
 import { perkListStyles } from "./PerkList.styles.js";
 import type { PerkListItem, PerkListProps } from "./PerkList.types.js";
@@ -50,7 +51,17 @@ export function PerkList({
                 {presentation.statusLabel}
               </Text>
             </View>
-            <Text style={[perkListStyles.value, presentation.valueStyle]}>{value}</Text>
+            <View style={perkListStyles.valueRow}>
+              {item.perk?.iconUrl ? (
+                <Image
+                  accessibilityLabel={`${item.perk.name} icon`}
+                  sourceUri={item.perk.iconUrl}
+                  style={perkListStyles.perkIcon}
+                  testID={`${testID}-${item.key}-icon`}
+                />
+              ) : null}
+              <Text style={[perkListStyles.value, presentation.valueStyle]}>{value}</Text>
+            </View>
             {targetLabel ? <Text style={perkListStyles.target}>{targetLabel}</Text> : null}
           </View>
         );

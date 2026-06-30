@@ -1,6 +1,8 @@
 import type { InventoryWeapon, WeaponPerk } from "@god-roll-vault/core";
 import {
+  getPerkIconUrl,
   getPerkName,
+  getWeaponIconUrl,
   getWeaponName,
   getWeaponTier,
   isWeaponBucket,
@@ -35,6 +37,16 @@ function mapDamageTypeHashToElement(
   }
 
   return DAMAGE_TYPE_HASH_TO_ELEMENT[damageTypeHash] ?? "unknown";
+}
+
+function createWeaponPerk(plugHash: number): WeaponPerk {
+  const iconUrl = getPerkIconUrl(plugHash);
+  const perk = {
+    plugHash,
+    name: getPerkName(plugHash),
+  };
+
+  return iconUrl ? { ...perk, iconUrl } : perk;
 }
 
 function collectCharacterItems(profile: DestinyProfileResponse, characterId: string): ItemSource[] {
@@ -80,10 +92,7 @@ export function extractWeaponPerks(
     }
 
     seenPlugHashes.add(socket.plugHash);
-    perks.push({
-      plugHash: socket.plugHash,
-      name: getPerkName(socket.plugHash),
-    });
+    perks.push(createWeaponPerk(socket.plugHash));
   }
 
   const reusablePlugs = profile.itemComponents?.reusablePlugs?.data[itemInstanceId]?.plugs;
@@ -95,10 +104,7 @@ export function extractWeaponPerks(
         }
 
         seenPlugHashes.add(plug.plugItemHash);
-        perks.push({
-          plugHash: plug.plugItemHash,
-          name: getPerkName(plug.plugItemHash),
-        });
+        perks.push(createWeaponPerk(plug.plugItemHash));
       }
     }
   }
@@ -118,8 +124,9 @@ function mapItemToWeapon(
 
   const instance = profile.itemComponents?.instances?.data[item.itemInstanceId];
   const equipped = isEquipped || instance?.isEquipped === true;
+  const iconUrl = getWeaponIconUrl(item.itemHash);
 
-  return {
+  const weapon: InventoryWeapon = {
     itemHash: item.itemHash,
     itemInstanceId: item.itemInstanceId,
     name: getWeaponName(item.itemHash),
@@ -131,6 +138,8 @@ function mapItemToWeapon(
     bucketHash: item.bucketHash,
     isEquipped: equipped,
   };
+
+  return iconUrl ? { ...weapon, iconUrl } : weapon;
 }
 
 export function mapInventoryWeapons(

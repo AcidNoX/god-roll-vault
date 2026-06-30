@@ -100,7 +100,7 @@ Weapon perks are **not** plain strings in the inventory response. They live in `
 - **`ItemInstances` (300):** `primaryStat.value` → power level; `damageTypeHash` → element
 - **`ItemReusablePlugs` (308):** selectable perk columns for crafted weapons
 
-Join `plugHash` / `itemHash` with **Destiny manifest** (or our curated `packages/destiny-data` subset) to get display names.
+Join `plugHash` / `itemHash` with **Destiny manifest** (or our curated `packages/destiny-data` subset) to get display names and optional `displayProperties.icon` asset paths.
 
 ### Privacy behavior
 
