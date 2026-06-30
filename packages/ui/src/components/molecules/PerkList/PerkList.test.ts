@@ -113,14 +113,15 @@ describe("PerkList", () => {
   });
 
   it("highlights unmatched perks red and shows the missing target", () => {
-    const partialDetails = matchedDetails.map((detail) =>
-      detail.slot === "perk2"
-        ? {
-            slot: "perk2",
-            target: "Rampage",
-            matched: false,
-          }
-        : detail,
+    const partialDetails: RollMatchPerkDetail[] = matchedDetails.map(
+      (detail): RollMatchPerkDetail =>
+        detail.slot === "perk2"
+          ? {
+              slot: "perk2",
+              target: "Rampage",
+              matched: false,
+            }
+          : detail,
     );
     const list = renderPerkList({
       perks: {

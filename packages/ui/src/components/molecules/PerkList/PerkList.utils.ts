@@ -5,7 +5,7 @@ import type { PerkListItem, PerkListSlotKey, PerkListSlotStatus } from "./PerkLi
 
 function getStatusForSlot(
   slot: PerkListSlotKey,
-  detailBySlot: Map<string, RollMatchResult["details"][number]>,
+  detailBySlot: Map<PerkListSlotKey, RollMatchResult["details"][number]>,
 ): PerkListSlotStatus {
   const detail = detailBySlot.get(slot);
 
@@ -20,7 +20,9 @@ export function createPerkListItems(
   perks: WeaponPerks,
   matchResult: RollMatchResult,
 ): PerkListItem[] {
-  const detailBySlot = new Map(matchResult.details.map((detail) => [detail.slot, detail]));
+  const detailBySlot: Map<PerkListSlotKey, RollMatchResult["details"][number]> = new Map(
+    matchResult.details.map((detail) => [detail.slot, detail]),
+  );
 
   return perkListSlots.map((slot) => {
     const detail = detailBySlot.get(slot.key);
