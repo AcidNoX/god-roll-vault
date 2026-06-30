@@ -179,4 +179,9 @@ test.describe("Bungie OAuth login", () => {
     await page.goto("/inventory");
     await expect(page.getByTestId("login-page")).toBeVisible();
   });
+
+  test("unauthenticated users cannot access weapon details", async ({ page }) => {
+    await page.goto("/weapons/1000000000000000001");
+    await expect(page.getByTestId("login-page")).toBeVisible();
+  });
 });

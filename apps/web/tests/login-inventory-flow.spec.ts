@@ -267,8 +267,13 @@ test.describe("Login to inventory flow", () => {
     await page.getByTestId("inventory-mode-pve").click();
     await page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}`).click();
 
+    await expect(page).toHaveURL(new RegExp(`/weapons/${FATEBRINGER_INSTANCE_ID}`));
     await expect(page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}`)).toBeVisible();
     await expect(page.getByTestId("weapon-detail-title")).toHaveText("Fatebringer (Timelost)");
+    await expect(page.getByTestId("weapon-detail-power")).toHaveText("Power 1980");
+    await expect(page.getByTestId("weapon-detail-element")).toHaveText("Kinetic element");
+    await expect(page.getByTestId("weapon-detail-tier")).toHaveText("Legendary");
+    await expect(page.getByTestId("weapon-detail-god-roll-badge")).toHaveText("PVEGod Roll100%");
     await expect(page.getByTestId("weapon-detail-status")).toHaveText(
       "God Roll in PVE (100% match)",
     );
@@ -284,5 +289,13 @@ test.describe("Login to inventory flow", () => {
     await expect(
       page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}-perk-list-perk2`),
     ).toContainText("Firefly");
+    await expect(page.getByTestId("weapon-detail-target-barrel")).toContainText(
+      "Hammer-Forged Rifling",
+    );
+    await expect(page.getByTestId("weapon-detail-target-perk1")).toContainText("Explosive Payload");
+
+    await page.getByTestId("weapon-detail-back-button").click();
+
+    await expect(page.getByTestId("inventory-page")).toBeVisible();
   });
 });

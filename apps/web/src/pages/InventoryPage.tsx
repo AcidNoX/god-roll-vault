@@ -1,58 +1,27 @@
-import { BungieClient, type InventoryWeapon } from "@god-roll-vault/api";
-import {
-  evaluateInventory,
-  type GameMode,
-  type InventoryEvaluation,
-  type MatchStatus,
-  type WeaponPerks,
-} from "@god-roll-vault/core";
+import { evaluateInventory, type GameMode, type InventoryEvaluation } from "@god-roll-vault/core";
 import { godRollDefinitions } from "@god-roll-vault/destiny-data";
 import {
   Box,
   EmptyState,
   ErrorState,
   LoadingSpinner,
-  PerkList,
   Screen,
   Stack,
   Text,
   useTheme,
   WeaponCard,
 } from "@god-roll-vault/ui";
-import {
-  type ChangeEvent,
-  type CSSProperties,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { type ChangeEvent, type CSSProperties, useCallback, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthProvider.js";
-import { getBungieApiConfig } from "../auth/config.js";
-import { readSelectedCharacter, type SelectedCharacter } from "../characters/selected-character.js";
-
-const GAME_MODE_OPTIONS: Array<{ mode: GameMode; label: string }> = [
-  { mode: "pve", label: "PVE" },
-  { mode: "pvp", label: "PVP" },
-];
-
-function readSelectionFromSearchParams(searchParams: URLSearchParams): SelectedCharacter | null {
-  const membershipType = Number(searchParams.get("membershipType"));
-  const membershipId = searchParams.get("membershipId");
-  const characterId = searchParams.get("characterId");
-
-  if (!Number.isFinite(membershipType) || !membershipId || !characterId) {
-    return null;
-  }
-
-  return {
-    membershipType,
-    membershipId,
-    characterId,
-  };
-}
+import {
+  createWeaponDetailPath,
+  GAME_MODE_OPTIONS,
+  readGameModeFromSearchParams,
+  resolveSelectedCharacter,
+} from "../inventory/routes.js";
+import { useInventoryWeapons } from "../inventory/useInventoryWeapons.js";
 
 function sortInventoryEvaluations(evaluations: InventoryEvaluation[]): InventoryEvaluation[] {
   return [...evaluations].sort((left, right) => {
@@ -85,48 +54,20 @@ function filterInventoryEvaluations(
   );
 }
 
-function toWeaponPerks(perks: InventoryWeapon["perks"]): WeaponPerks {
-  const [barrel, magazine, perk1, perk2, originTrait] = perks;
-
-  return {
-    barrel,
-    magazine,
-    perk1,
-    perk2,
-    originTrait,
-  };
-}
-
-function formatMatchStatus(status: MatchStatus): string {
-  switch (status) {
-    case "perfect":
-      return "God Roll";
-    case "partial":
-      return "Partial";
-    case "missing":
-      return "Missing";
-    case "unknown":
-      return "Unknown";
-  }
-}
-
 export function InventoryPage() {
   const { logout, tokens } = useAuth();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
-  const selectedCharacter = useMemo(
-    () => readSelectionFromSearchParams(searchParams) ?? readSelectedCharacter(),
-    [searchParams],
-  );
-  const [mode, setMode] = useState<GameMode>("pve");
+  const selectedCharacter = useMemo(() => resolveSelectedCharacter(searchParams), [searchParams]);
+  const mode = useMemo(() => readGameModeFromSearchParams(searchParams), [searchParams]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [weapons, setWeapons] = useState<InventoryWeapon[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
-  const [selectedWeaponId, setSelectedWeaponId] = useState<string | null>(null);
+  const { error, isLoading, isRefreshing, weapons } = useInventoryWeapons({
+    reloadToken,
+    selectedCharacter,
+    tokens,
+  });
 
   const buttonStyle: CSSProperties = {
     backgroundColor: theme.colors.surfaceMuted,
@@ -153,68 +94,6 @@ export function InventoryPage() {
     padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
   };
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadWeapons() {
-      if (!selectedCharacter) {
-        setWeapons([]);
-        setError(null);
-        setIsLoading(false);
-        setIsRefreshing(false);
-        return;
-      }
-
-      if (!tokens) {
-        setWeapons([]);
-        setError("Sign in again to load your Destiny weapons.");
-        setIsLoading(false);
-        setIsRefreshing(false);
-        return;
-      }
-
-      if (reloadToken === 0) {
-        setIsLoading(true);
-      } else {
-        setIsRefreshing(true);
-      }
-      setError(null);
-
-      try {
-        const { apiKey } = getBungieApiConfig();
-        const client = new BungieClient({
-          apiKey,
-          accessToken: tokens.accessToken,
-        });
-        const inventoryWeapons = await client.getWeapons(
-          selectedCharacter.membershipType,
-          selectedCharacter.membershipId,
-          selectedCharacter.characterId,
-        );
-
-        if (!cancelled) {
-          setWeapons(inventoryWeapons);
-        }
-      } catch (loadError) {
-        if (!cancelled) {
-          setError(loadError instanceof Error ? loadError.message : "Unable to load weapons.");
-          setWeapons([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-          setIsRefreshing(false);
-        }
-      }
-    }
-
-    void loadWeapons();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [tokens, selectedCharacter, reloadToken]);
-
   const evaluations = useMemo(
     () => evaluateInventory(weapons, godRollDefinitions, mode),
     [weapons, mode],
@@ -227,33 +106,19 @@ export function InventoryPage() {
     (evaluation) => evaluation.result.status === "perfect",
   ).length;
   const godRollLabel = godRollCount === 1 ? "god roll" : "god rolls";
-  const selectedEvaluation = useMemo(
-    () =>
-      selectedWeaponId
-        ? (evaluations.find(
-            (evaluation) => evaluation.weapon.itemInstanceId === selectedWeaponId,
-          ) ?? null)
-        : null,
-    [evaluations, selectedWeaponId],
-  );
-
-  useEffect(() => {
-    if (!selectedWeaponId) {
-      return;
-    }
-
-    const selectedWeaponStillExists = weapons.some(
-      (weapon) => weapon.itemInstanceId === selectedWeaponId,
-    );
-
-    if (!selectedWeaponStillExists) {
-      setSelectedWeaponId(null);
-    }
-  }, [selectedWeaponId, weapons]);
 
   const handleRefresh = useCallback(() => {
     setReloadToken((current) => current + 1);
   }, []);
+
+  const handleModeChange = useCallback(
+    (nextMode: GameMode) => {
+      const nextSearchParams = new URLSearchParams(searchParams);
+      nextSearchParams.set("mode", nextMode);
+      setSearchParams(nextSearchParams, { replace: true });
+    },
+    [searchParams, setSearchParams],
+  );
 
   const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -328,7 +193,7 @@ export function InventoryPage() {
                   aria-pressed={selected}
                   data-testid={`inventory-mode-${option.mode}`}
                   key={option.mode}
-                  onClick={() => setMode(option.mode)}
+                  onClick={() => handleModeChange(option.mode)}
                   style={{
                     ...compactButtonStyle,
                     backgroundColor: selected
@@ -401,44 +266,21 @@ export function InventoryPage() {
                 <WeaponCard
                   key={evaluation.weapon.itemInstanceId}
                   matchResult={evaluation.result}
-                  onPress={() => setSelectedWeaponId(evaluation.weapon.itemInstanceId)}
+                  onPress={() =>
+                    navigate(
+                      createWeaponDetailPath(
+                        evaluation.weapon.itemInstanceId,
+                        selectedCharacter,
+                        mode,
+                      ),
+                    )
+                  }
                   weapon={evaluation.weapon}
                 />
               ))}
             </Stack>
           </Box>
         )}
-
-        {selectedEvaluation ? (
-          <Box
-            padding="lg"
-            style={{
-              backgroundColor: theme.colors.surfaceRaised,
-              borderColor: theme.colors.border,
-              borderRadius: theme.borderRadius.lg,
-              borderWidth: 1,
-            }}
-            testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}`}
-          >
-            <Stack gap="md">
-              <Stack gap="xs">
-                <Text testID="weapon-detail-title" variant="heading">
-                  {selectedEvaluation.weapon.name}
-                </Text>
-                <Text color="textMuted" testID="weapon-detail-status" variant="caption">
-                  {formatMatchStatus(selectedEvaluation.result.status)} in {mode.toUpperCase()} (
-                  {selectedEvaluation.result.score}% match)
-                </Text>
-              </Stack>
-
-              <PerkList
-                matchResult={selectedEvaluation.result}
-                perks={toWeaponPerks(selectedEvaluation.weapon.perks)}
-                testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}-perk-list`}
-              />
-            </Stack>
-          </Box>
-        ) : null}
       </Stack>
     </Screen>
   );

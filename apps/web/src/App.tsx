@@ -7,6 +7,7 @@ import { CharacterSelectorPage } from "./pages/CharacterSelectorPage.js";
 import { HomePage } from "./pages/HomePage.js";
 import { InventoryPage } from "./pages/InventoryPage.js";
 import { LoginPage } from "./pages/LoginPage.js";
+import { WeaponDetailPage } from "./pages/WeaponDetailPage.js";
 
 export function App() {
   return (
@@ -30,6 +31,14 @@ export function App() {
             </ProtectedRoute>
           }
           path="/inventory"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <WeaponDetailPage />
+            </ProtectedRoute>
+          }
+          path="/weapons/:itemInstanceId"
         />
       </Routes>
     </AuthProvider>
