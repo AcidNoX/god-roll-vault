@@ -1,7 +1,8 @@
 import {
-  evaluateInventory,
   type GameMode,
   type GodRollPerkSlot,
+  groupInventoryByWeapon,
+  type InstanceDisposition,
   type InventoryEvaluation,
   type MatchStatus,
   type WeaponElement,
@@ -26,6 +27,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider.js";
 import {
   createInventoryPath,
+  createWeaponDetailPath,
   GAME_MODE_OPTIONS,
   readGameModeFromSearchParams,
   resolveSelectedCharacter,
@@ -63,6 +65,19 @@ function formatMatchStatus(status: MatchStatus): string {
   }
 }
 
+function formatDisposition(disposition: InstanceDisposition): string {
+  switch (disposition) {
+    case "keep":
+      return "Keep";
+    case "dismantle":
+      return "Dismantle";
+    case "consider":
+      return "Consider";
+    case "only":
+      return "Only copy";
+  }
+}
+
 function findEvaluation(
   evaluations: InventoryEvaluation[],
   itemInstanceId: string | undefined,
@@ -91,9 +106,25 @@ export function WeaponDetailPage() {
     tokens,
   });
   const evaluations = useMemo(
-    () => evaluateInventory(weapons, godRollDefinitions, mode),
+    () =>
+      groupInventoryByWeapon(weapons, godRollDefinitions, mode).flatMap((group) =>
+        group.instances.map((instance) => instance.evaluation),
+      ),
     [weapons, mode],
   );
+  const weaponGroup = useMemo(() => {
+    if (!itemInstanceId) {
+      return null;
+    }
+
+    return (
+      groupInventoryByWeapon(weapons, godRollDefinitions, mode).find((group) =>
+        group.instances.some(
+          (instance) => instance.evaluation.weapon.itemInstanceId === itemInstanceId,
+        ),
+      ) ?? null
+    );
+  }, [itemInstanceId, mode, weapons]);
   const evaluation = useMemo(
     () => findEvaluation(evaluations, itemInstanceId),
     [evaluations, itemInstanceId],
@@ -120,6 +151,17 @@ export function WeaponDetailPage() {
       setSearchParams(nextSearchParams, { replace: true });
     },
     [searchParams, setSearchParams],
+  );
+
+  const handleSelectCopy = useCallback(
+    (nextInstanceId: string) => {
+      if (!selectedCharacter || nextInstanceId === itemInstanceId) {
+        return;
+      }
+
+      navigate(createWeaponDetailPath(nextInstanceId, selectedCharacter, mode));
+    },
+    [itemInstanceId, mode, navigate, selectedCharacter],
   );
 
   const handleRefresh = useCallback(() => {
@@ -286,6 +328,80 @@ export function WeaponDetailPage() {
             </Stack>
           </Stack>
         </Box>
+
+        {weaponGroup && weaponGroup.copyCount > 1 ? (
+          <Box
+            padding="lg"
+            style={{
+              backgroundColor: theme.colors.surfaceRaised,
+              borderColor: theme.colors.border,
+              borderRadius: theme.borderRadius.lg,
+              borderWidth: 1,
+            }}
+            testID="weapon-detail-copies"
+          >
+            <Stack gap="md">
+              <Text variant="heading">Your copies</Text>
+              <Text color="textMuted" testID="weapon-detail-copies-summary" variant="caption">
+                Recommended keeper:{" "}
+                {weaponGroup.keeper.weapon.itemInstanceId === itemInstanceId
+                  ? "this roll"
+                  : `power ${weaponGroup.keeper.weapon.power}`}
+              </Text>
+              <Stack gap="sm">
+                {weaponGroup.instances.map((instance) => {
+                  const copy = instance.evaluation;
+                  const selected = copy.weapon.itemInstanceId === weapon.itemInstanceId;
+                  const isKeeper =
+                    copy.weapon.itemInstanceId === weaponGroup.keeper.weapon.itemInstanceId;
+
+                  return (
+                    <button
+                      data-testid={`weapon-detail-copy-${copy.weapon.itemInstanceId}`}
+                      key={copy.weapon.itemInstanceId}
+                      onClick={() => handleSelectCopy(copy.weapon.itemInstanceId)}
+                      style={{
+                        ...buttonStyle,
+                        backgroundColor: selected
+                          ? theme.colors.surface
+                          : theme.colors.surfaceMuted,
+                        borderColor: selected
+                          ? theme.colors.accent.gold
+                          : theme.colors.borderStrong,
+                        textAlign: "left",
+                        width: "100%",
+                      }}
+                      type="button"
+                    >
+                      <Stack gap="xs">
+                        <Stack direction="horizontal" gap="sm" wrap>
+                          <Text>#{instance.rank}</Text>
+                          <Text>Power {copy.weapon.power}</Text>
+                          <Text color="textMuted" variant="caption">
+                            {formatMatchStatus(copy.result.status)} ({copy.result.score}%)
+                          </Text>
+                          <Text color="textMuted" variant="caption">
+                            {formatDisposition(instance.disposition)}
+                          </Text>
+                          {isKeeper ? (
+                            <Text color="textMuted" variant="caption">
+                              Recommended keeper
+                            </Text>
+                          ) : null}
+                          {selected ? (
+                            <Text color="textMuted" variant="caption">
+                              Inspecting
+                            </Text>
+                          ) : null}
+                        </Stack>
+                      </Stack>
+                    </button>
+                  );
+                })}
+              </Stack>
+            </Stack>
+          </Box>
+        ) : null}
 
         <Box
           padding="lg"
