@@ -269,7 +269,10 @@ test.describe("Weapon inventory", () => {
       "src",
       "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
     );
-    await expect(cards.nth(1).getByTestId(`weapon-card-${BELOVED_INSTANCE_ID}-name`)).toHaveText(
+    await expect(cards.nth(1).getByTestId(`weapon-card-${AUSTRINGER_INSTANCE_ID}-name`)).toHaveText(
+      "Austringer",
+    );
+    await expect(cards.nth(2).getByTestId(`weapon-card-${BELOVED_INSTANCE_ID}-name`)).toHaveText(
       "Beloved",
     );
     await expect(page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-power`)).toHaveText(
