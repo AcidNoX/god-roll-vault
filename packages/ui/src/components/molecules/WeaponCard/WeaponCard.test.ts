@@ -2,7 +2,8 @@ import type { InventoryWeapon, MatchStatus, RollMatchResult } from "@god-roll-va
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { designTokens } from "./theme.js";
+import { flattenStyle, textContent } from "../../../test-utils/componentTree.js";
+import { designTokens } from "../../../theme/index.js";
 import { WeaponCard } from "./WeaponCard.js";
 
 type TestElementProps = {
@@ -63,44 +64,6 @@ function findByTestID(node: ReactNode, testID: string): ReactElement<TestElement
   }
 
   throw new Error(`Unable to find testID ${testID}`);
-}
-
-function textContent(node: ReactNode): string {
-  if (typeof node === "string" || typeof node === "number") {
-    return String(node);
-  }
-
-  if (Array.isArray(node)) {
-    return node.map(textContent).join("");
-  }
-
-  if (isValidElement<TestElementProps>(node)) {
-    return textContent(node.props.children);
-  }
-
-  return "";
-}
-
-function flattenStyle(style: unknown): Record<string, unknown> {
-  if (!style) {
-    return {};
-  }
-
-  if (Array.isArray(style)) {
-    const merged: Record<string, unknown> = {};
-
-    for (const stylePart of style) {
-      Object.assign(merged, flattenStyle(stylePart));
-    }
-
-    return merged;
-  }
-
-  if (typeof style === "object") {
-    return style as Record<string, unknown>;
-  }
-
-  return {};
 }
 
 describe("WeaponCard", () => {
