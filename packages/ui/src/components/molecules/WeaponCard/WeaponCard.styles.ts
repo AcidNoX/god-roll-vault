@@ -1,4 +1,4 @@
-import type { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import type { TextStyle, ViewStyle } from "react-native";
 
 import { designTokens } from "../../../theme/index.js";
 
@@ -20,38 +20,9 @@ export const weaponCardStyles = {
   pressedCard: {
     opacity: 0.82,
   } satisfies ViewStyle,
-  assetIcon: {
-    backgroundColor: designTokens.colors.surfaceMuted,
-    borderColor: designTokens.colors.border,
-    borderRadius: designTokens.borderRadius.lg,
-    borderWidth: 1,
-    height: 40,
+  tileContainer: {
     marginRight: designTokens.spacing.md,
-    width: 40,
   } satisfies ViewStyle,
-  elementIcon: {
-    alignItems: "center",
-    borderRadius: designTokens.borderRadius.lg,
-    borderWidth: 1,
-    height: 32,
-    justifyContent: "center",
-    marginRight: designTokens.spacing.md,
-    width: 32,
-  } satisfies ViewStyle,
-  fallbackElementIcon: {
-    height: 40,
-    width: 40,
-  } satisfies ViewStyle,
-  weaponIconImage: {
-    borderRadius: designTokens.borderRadius.lg,
-    height: "100%",
-    width: "100%",
-  } satisfies ImageStyle,
-  elementIconText: {
-    fontSize: designTokens.typography.fontSize.caption,
-    fontWeight: designTokens.typography.fontWeight.bold,
-    lineHeight: designTokens.typography.lineHeight.caption,
-  } satisfies TextStyle,
   weaponDetails: {
     flex: 1,
     minWidth: 0,

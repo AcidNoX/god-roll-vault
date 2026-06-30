@@ -25,6 +25,7 @@ export type {
   PerkListProps,
   WeaponCardProps,
   WeaponGroupCardProps,
+  WeaponTileProps,
 } from "./components/molecules/index.js";
 export {
   EmptyState,
@@ -33,6 +34,7 @@ export {
   PerkList,
   WeaponCard,
   WeaponGroupCard,
+  WeaponTile,
 } from "./components/molecules/index.js";
 export type { ScreenProps } from "./components/templates/index.js";
 export { Screen } from "./components/templates/index.js";

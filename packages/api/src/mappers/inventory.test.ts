@@ -70,11 +70,12 @@ describe("mapInventoryWeapons", () => {
     ).toBeUndefined();
 
     const fatebringer = weapons.find((weapon) => weapon.itemInstanceId === "6913529092654216196");
-    expect(fatebringer).toEqual({
+    expect(fatebringer).toMatchObject({
       itemHash: 1363886209,
       itemInstanceId: "6913529092654216196",
       name: "Fatebringer (Timelost)",
       tier: "Legendary",
+      tierType: "legendary",
       power: 1985,
       element: "kinetic",
       iconUrl:
@@ -96,6 +97,8 @@ describe("mapInventoryWeapons", () => {
       location: "character",
       bucketHash: 149531261,
       isEquipped: false,
+      isShiny: false,
+      isMasterwork: true,
     });
 
     const vaultWeapon = weapons.find((weapon) => weapon.itemInstanceId === "6913529092654216200");

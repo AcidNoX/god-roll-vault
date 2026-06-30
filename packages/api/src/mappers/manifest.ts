@@ -10,5 +10,10 @@ export function mapInventoryItemDefinition(
     tier: definition.inventory?.tierTypeName ?? "Unknown",
     iconPath: definition.displayProperties.icon,
     itemType: definition.itemType,
+    tierType: definition.inventory?.tierType,
+    seasonHash: definition.seasonHash,
+    watermarkIconPath:
+      definition.displayProperties.iconWatermark ??
+      definition.displayProperties.iconWatermarkShelved,
   };
 }

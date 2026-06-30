@@ -1,10 +1,8 @@
 import { Pressable, Text, View } from "react-native";
-
-import { Image } from "../../atoms/Image/index.js";
+import { WeaponTile } from "../WeaponTile/WeaponTile.js";
 import {
   badgePresentationByStatus,
   dispositionPresentationByType,
-  elementPresentationByType,
 } from "./WeaponCard.constants.js";
 import { weaponCardStyles } from "./WeaponCard.styles.js";
 import type { WeaponCardProps } from "./WeaponCard.types.js";
@@ -14,12 +12,11 @@ export function WeaponCard({ weapon, matchResult, disposition, onPress }: Weapon
   const badge = badgePresentationByStatus[status];
   const dispositionBadge =
     disposition && disposition !== "only" ? dispositionPresentationByType[disposition] : undefined;
-  const element = elementPresentationByType[weapon.element] ?? elementPresentationByType.unknown;
   const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
 
   return (
     <Pressable
-      accessibilityLabel={`${weapon.name}, power ${weapon.power}, ${element.label} element, ${badge.label}`}
+      accessibilityLabel={`${weapon.name}, power ${weapon.power}, ${badge.label}`}
       accessibilityRole={onPress ? "button" : undefined}
       disabled={!onPress}
       onPress={onPress}
@@ -30,41 +27,15 @@ export function WeaponCard({ weapon, matchResult, disposition, onPress }: Weapon
       ]}
       testID={cardTestID}
     >
-      {weapon.iconUrl ? (
-        <View
-          accessibilityLabel={`${weapon.name} icon`}
-          style={weaponCardStyles.assetIcon}
-          testID={`${cardTestID}-weapon-icon`}
-        >
-          <Image
-            accessibilityLabel={`${weapon.name} icon`}
-            sourceUri={weapon.iconUrl}
-            style={weaponCardStyles.weaponIconImage}
-            testID={`${cardTestID}-weapon-icon-image`}
-          />
-        </View>
-      ) : (
-        <View
-          accessibilityLabel={`${element.label} element`}
-          style={[
-            weaponCardStyles.elementIcon,
-            weaponCardStyles.fallbackElementIcon,
-            element.containerStyle,
-          ]}
-          testID={`${cardTestID}-element-icon`}
-        >
-          <Text style={[weaponCardStyles.elementIconText, element.textStyle]}>{element.icon}</Text>
-        </View>
-      )}
+      <View style={weaponCardStyles.tileContainer} testID={`${cardTestID}-tile`}>
+        <WeaponTile testID={`${cardTestID}-weapon-tile`} weapon={weapon} />
+      </View>
 
       <View style={weaponCardStyles.weaponDetails}>
         <Text numberOfLines={1} style={weaponCardStyles.weaponName} testID={`${cardTestID}-name`}>
           {weapon.name}
         </Text>
         <View style={weaponCardStyles.metadataRow}>
-          <Text style={weaponCardStyles.powerText} testID={`${cardTestID}-power`}>
-            Power {weapon.power}
-          </Text>
           {status !== "unknown" ? (
             <View
               accessibilityLabel={`${badge.label} match status`}
