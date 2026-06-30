@@ -1,3 +1,4 @@
+import { mapBungieTierType, mapTierNameToType, type WeaponTierType } from "../tiers.js";
 import mvpPlugs from "./mvp-plugs.json";
 import mvpWeapons from "./mvp-weapons.json";
 
@@ -8,6 +9,9 @@ export type WeaponDefinition = {
   tier: string;
   iconPath?: string;
   itemType?: number;
+  tierType?: number;
+  seasonHash?: number;
+  watermarkIconPath?: string;
 };
 
 /** Bungie `DestinyItemType.Weapon` */
@@ -72,6 +76,23 @@ export function getBungieAssetUrl(path: string | undefined): string | undefined 
 
 export function getWeaponIconUrl(itemHash: number): string | undefined {
   return getBungieAssetUrl(getWeaponDefinition(itemHash)?.iconPath);
+}
+
+export function getWeaponWatermarkIconUrl(itemHash: number): string | undefined {
+  return getBungieAssetUrl(getWeaponDefinition(itemHash)?.watermarkIconPath);
+}
+
+export function getWeaponTierType(itemHash: number): WeaponTierType {
+  const definition = getWeaponDefinition(itemHash);
+  if (definition?.tierType !== undefined) {
+    return mapBungieTierType(definition.tierType);
+  }
+
+  return mapTierNameToType(definition?.tier);
+}
+
+export function getWeaponSeasonHash(itemHash: number): number | undefined {
+  return getWeaponDefinition(itemHash)?.seasonHash;
 }
 
 export function getPerkName(plugHash: number): string {

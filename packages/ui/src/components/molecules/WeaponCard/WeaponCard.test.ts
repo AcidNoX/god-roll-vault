@@ -15,6 +15,7 @@ type TestElementProps = {
   sourceUri?: string;
   style?: unknown;
   testID?: string;
+  weapon?: InventoryWeapon;
 };
 
 const weapon: InventoryWeapon = {
@@ -22,6 +23,7 @@ const weapon: InventoryWeapon = {
   itemInstanceId: "6913529092654216196",
   name: "Fatebringer (Timelost)",
   tier: "Legendary",
+  tierType: "legendary",
   power: 1985,
   element: "arc",
   perks: [],
@@ -67,37 +69,42 @@ function findByTestID(node: ReactNode, testID: string): ReactElement<TestElement
   throw new Error(`Unable to find testID ${testID}`);
 }
 
+function getWeaponTileElement(card: ReactElement<TestElementProps>, cardTestID: string) {
+  const tileContainer = findByTestID(card, `${cardTestID}-tile`);
+  const weaponTile = Children.toArray(tileContainer.props.children).find(
+    (child): child is ReactElement<TestElementProps> =>
+      isValidElement<TestElementProps>(child) && child.props.testID === `${cardTestID}-weapon-tile`,
+  );
+
+  if (!weaponTile) {
+    throw new Error(`Unable to find WeaponTile in ${cardTestID}`);
+  }
+
+  return weaponTile;
+}
+
 describe("WeaponCard", () => {
-  it("renders compact weapon details with an element fallback and no badge without roll data", () => {
+  it("renders compact weapon details with a DIM-style tile and no badge without roll data", () => {
     const card = renderWeaponCard();
     const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
+    const weaponTile = getWeaponTileElement(card, cardTestID);
 
     expect(card.props.testID).toBe(cardTestID);
     expect(textContent(findByTestID(card, `${cardTestID}-name`))).toBe("Fatebringer (Timelost)");
-    expect(textContent(findByTestID(card, `${cardTestID}-power`))).toBe("Power 1985");
-
-    const elementIcon = findByTestID(card, `${cardTestID}-element-icon`);
-    expect(elementIcon.props.accessibilityLabel).toBe("Arc element");
-    expect(textContent(elementIcon)).toBe("A");
+    expect(weaponTile.props.weapon?.power).toBe(1985);
 
     expect(() => findByTestID(card, `${cardTestID}-badge`)).toThrow(
       `Unable to find testID ${cardTestID}-badge`,
     );
   });
 
-  it("renders a weapon icon image when an asset URL is available", () => {
+  it("renders a weapon icon image inside the tile when an asset URL is available", () => {
     const iconUrl = "https://www.bungie.net/common/destiny2_content/icons/fatebringer.jpg";
     const card = renderWeaponCard({ weapon: { ...weapon, iconUrl } });
     const cardTestID = `weapon-card-${weapon.itemInstanceId}`;
-    const weaponIcon = findByTestID(card, `${cardTestID}-weapon-icon`);
-    const weaponIconImage = findByTestID(card, `${cardTestID}-weapon-icon-image`);
+    const weaponTile = getWeaponTileElement(card, cardTestID);
 
-    expect(weaponIcon.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
-    expect(weaponIconImage.props.sourceUri).toBe(iconUrl);
-    expect(weaponIconImage.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
-    expect(() => findByTestID(card, `${cardTestID}-element-icon`)).toThrow(
-      `Unable to find testID ${cardTestID}-element-icon`,
-    );
+    expect(weaponTile.props.weapon?.iconUrl).toBe(iconUrl);
   });
 
   it("wires optional press behavior as an accessible button", () => {

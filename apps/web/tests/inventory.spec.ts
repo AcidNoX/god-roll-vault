@@ -312,7 +312,7 @@ test.describe("Weapon inventory", () => {
     await expect(
       cards
         .nth(0)
-        .getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-icon-image`)
+        .getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-tile-weapon-icon`)
         .locator("img"),
     ).toHaveAttribute(
       "src",
@@ -324,14 +324,14 @@ test.describe("Weapon inventory", () => {
     await expect(cards.nth(2).getByTestId(`weapon-card-${BELOVED_INSTANCE_ID}-name`)).toHaveText(
       "Beloved",
     );
-    await expect(page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-power`)).toHaveText(
-      "Power 1980",
-    );
+    await expect(
+      page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-tile-power`),
+    ).toHaveText("1980");
 
     await page.getByTestId("inventory-refresh-button").click();
-    await expect(page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-power`)).toHaveText(
-      "Power 1988",
-    );
+    await expect(
+      page.getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-tile-power`),
+    ).toHaveText("1988");
 
     await page.getByTestId("inventory-mode-pvp").click();
     await expect(page.getByTestId("inventory-summary")).toHaveText("3 weapons, 1 god roll in PVP");

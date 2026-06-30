@@ -1,3 +1,12 @@
+export type WeaponTierType =
+  | "exotic"
+  | "legendary"
+  | "rare"
+  | "uncommon"
+  | "common"
+  | "basic"
+  | "unknown";
+
 export type ItemLocation = "vault" | "character";
 
 export type WeaponElement = "kinetic" | "arc" | "solar" | "void" | "stasis" | "strand" | "unknown";
@@ -22,10 +31,15 @@ export type InventoryWeapon = {
   name: string;
   iconUrl?: string;
   tier: string;
+  tierType?: WeaponTierType;
   power: number;
   element: WeaponElement;
   perks: WeaponPerk[];
   location: ItemLocation;
   bucketHash: number;
   isEquipped: boolean;
+  isShiny?: boolean;
+  isMasterwork?: boolean;
+  seasonIconUrl?: string;
+  watermarkIconUrl?: string;
 };

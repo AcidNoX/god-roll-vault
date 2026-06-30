@@ -43,4 +43,5 @@ export type {
   WeaponElement,
   WeaponPerk,
   WeaponPerks,
+  WeaponTierType,
 } from "./types/inventory.js";

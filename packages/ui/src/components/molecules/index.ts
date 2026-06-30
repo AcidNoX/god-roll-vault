@@ -10,3 +10,5 @@ export type { WeaponCardProps } from "./WeaponCard/index.js";
 export { WeaponCard } from "./WeaponCard/index.js";
 export type { WeaponGroupCardProps } from "./WeaponGroupCard/index.js";
 export { WeaponGroupCard } from "./WeaponGroupCard/index.js";
+export type { WeaponTileProps } from "./WeaponTile/index.js";
+export { WeaponTile } from "./WeaponTile/index.js";

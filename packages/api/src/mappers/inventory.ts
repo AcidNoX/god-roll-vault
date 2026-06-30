@@ -1,11 +1,18 @@
 import type { InventoryWeapon, WeaponPerk } from "@god-roll-vault/core";
 import {
+  DESTINY_ITEM_STATE_HAS_SHINY,
+  DESTINY_ITEM_STATE_MASTERWORK,
   getPerkIconUrl,
   getPerkName,
+  getSeasonIconUrl,
   getWeaponDefinition,
   getWeaponIconUrl,
   getWeaponName,
+  getWeaponSeasonHash,
   getWeaponTier,
+  getWeaponTierType,
+  getWeaponWatermarkIconUrl,
+  hasItemStateFlag,
   isWeaponBucket,
   isWeaponItemHash,
 } from "@god-roll-vault/destiny-data";
@@ -13,6 +20,7 @@ import {
 import type { BungieClient } from "../client.js";
 import type { DestinyItemComponent, DestinyProfileResponse } from "../schemas/profile.js";
 import { prefetchInventoryItemDefinitions } from "./prefetch-manifest.js";
+import { prefetchSeasonDefinitions } from "./prefetch-seasons.js";
 
 type ItemSource = {
   item: DestinyItemComponent;
@@ -152,18 +160,25 @@ function mapItemToWeapon(
   const instance = profile.itemComponents?.instances?.data[item.itemInstanceId];
   const equipped = isEquipped || instance?.isEquipped === true;
   const iconUrl = getWeaponIconUrl(item.itemHash);
+  const seasonHash = getWeaponSeasonHash(item.itemHash);
+  const tierType = getWeaponTierType(item.itemHash);
 
   const weapon: InventoryWeapon = {
     itemHash: item.itemHash,
     itemInstanceId: item.itemInstanceId,
     name: getWeaponName(item.itemHash),
     tier: getWeaponTier(item.itemHash),
+    tierType,
     power: instance?.primaryStat?.value ?? 0,
     element: mapDamageTypeHashToElement(instance?.damageTypeHash),
     perks: extractWeaponPerks(item.itemInstanceId, profile),
     location,
     bucketHash: item.bucketHash,
     isEquipped: equipped,
+    isShiny: hasItemStateFlag(item.state, DESTINY_ITEM_STATE_HAS_SHINY),
+    isMasterwork: hasItemStateFlag(item.state, DESTINY_ITEM_STATE_MASTERWORK),
+    seasonIconUrl: getSeasonIconUrl(seasonHash),
+    watermarkIconUrl: getWeaponWatermarkIconUrl(item.itemHash),
   };
 
   return iconUrl ? { ...weapon, iconUrl } : weapon;
@@ -205,5 +220,11 @@ export async function buildInventoryWeapons(
     .map((source) => source.item.itemHash);
 
   await prefetchInventoryItemDefinitions(client, itemHashes);
+
+  const seasonHashes = itemHashes
+    .map((itemHash) => getWeaponDefinition(itemHash)?.seasonHash)
+    .filter((seasonHash): seasonHash is number => seasonHash !== undefined);
+  await prefetchSeasonDefinitions(client, seasonHashes);
+
   return mapInventoryWeapons(profile);
 }

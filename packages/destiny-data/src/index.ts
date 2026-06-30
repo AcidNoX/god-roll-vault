@@ -21,6 +21,12 @@ export {
   godRollPerksSchema,
   godRollRollSchema,
 } from "./god-rolls/schema.js";
+export {
+  DESTINY_ITEM_STATE_CRAFTED,
+  DESTINY_ITEM_STATE_HAS_SHINY,
+  DESTINY_ITEM_STATE_MASTERWORK,
+  hasItemStateFlag,
+} from "./item-state.js";
 export type { WeaponDefinition } from "./manifest/lookup.js";
 export {
   BUNGIE_ASSET_BASE_URL,
@@ -32,8 +38,25 @@ export {
   getWeaponDefinition,
   getWeaponIconUrl,
   getWeaponName,
+  getWeaponSeasonHash,
   getWeaponTier,
+  getWeaponTierType,
+  getWeaponWatermarkIconUrl,
   isWeaponItemHash,
   registerPlugDefinition,
   registerWeaponDefinition,
 } from "./manifest/lookup.js";
+export type { SeasonDefinition } from "./seasons/lookup.js";
+export {
+  getSeasonDefinition,
+  getSeasonIconUrl,
+  registerSeasonDefinition,
+} from "./seasons/lookup.js";
+export type { WeaponTierType } from "./tiers.js";
+export {
+  BUNGIE_TIER_TYPE,
+  getTierBackgroundColor,
+  getTierDiamondCount,
+  mapBungieTierType,
+  mapTierNameToType,
+} from "./tiers.js";

@@ -1,13 +1,15 @@
 import type { DestinyCharacter, DestinyMembership, InventoryWeapon } from "@god-roll-vault/core";
-import type { WeaponDefinition } from "@god-roll-vault/destiny-data";
+import type { SeasonDefinition, WeaponDefinition } from "@god-roll-vault/destiny-data";
 import type { z } from "zod";
 import { BungieApiError } from "./errors.js";
 import { mapCharacters, mapMemberships, resolvePlayableMemberships } from "./mappers/destiny.js";
 import { buildInventoryWeapons, WEAPON_PROFILE_COMPONENT_IDS } from "./mappers/inventory.js";
 import { mapInventoryItemDefinition } from "./mappers/manifest.js";
+import { mapSeasonDefinition } from "./mappers/manifest-season.js";
 import { destinyCharacterResponseSchema, destinyItemResponseSchema } from "./schemas/character.js";
 import { BUNGIE_SUCCESS_ERROR_CODE, bungieEnvelopeMetaSchema } from "./schemas/envelope.js";
 import { destinyInventoryItemDefinitionSchema } from "./schemas/manifest-item.js";
+import { destinySeasonDefinitionSchema } from "./schemas/manifest-season.js";
 import { type UserMembershipData, userMembershipDataSchema } from "./schemas/memberships.js";
 import { type DestinyProfileResponse, destinyProfileResponseSchema } from "./schemas/profile.js";
 
@@ -24,6 +26,7 @@ export class BungieClient {
   private readonly baseUrl: string;
   private readonly fetchFn: typeof fetch;
   private readonly inventoryItemDefinitionCache = new Map<number, WeaponDefinition | null>();
+  private readonly seasonDefinitionCache = new Map<number, SeasonDefinition | null>();
 
   constructor(private readonly config: BungieClientConfig) {
     this.baseUrl = config.baseUrl ?? BUNGIE_API_BASE_URL;
@@ -81,6 +84,25 @@ export class BungieClient {
       return mapped;
     } catch {
       this.inventoryItemDefinitionCache.set(itemHash, null);
+      return null;
+    }
+  }
+
+  async getSeasonDefinition(seasonHash: number): Promise<SeasonDefinition | null> {
+    if (this.seasonDefinitionCache.has(seasonHash)) {
+      return this.seasonDefinitionCache.get(seasonHash) ?? null;
+    }
+
+    try {
+      const definition = await this.request(
+        `/Destiny2/Manifest/DestinySeasonDefinition/${seasonHash}/`,
+        destinySeasonDefinitionSchema,
+      );
+      const mapped = mapSeasonDefinition(definition);
+      this.seasonDefinitionCache.set(seasonHash, mapped);
+      return mapped;
+    } catch {
+      this.seasonDefinitionCache.set(seasonHash, null);
       return null;
     }
   }
