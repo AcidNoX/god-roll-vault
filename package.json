@@ -11,7 +11,8 @@
     "test:coverage": "turbo test -- --coverage",
     "test:e2e": "turbo test:e2e",
     "test:e2e:mobile": "turbo test:e2e:mobile",
-    "validate-data": "pnpm --filter @god-roll-vault/destiny-data validate-data"
+    "validate-data": "pnpm --filter @god-roll-vault/destiny-data validate-data",
+    "validate-design-tokens": "node scripts/validate-design-tokens.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.1",

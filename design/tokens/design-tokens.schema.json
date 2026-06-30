@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["meta", "color", "typography", "spacing", "radius", "size", "grid"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["name", "figma"],
+      "properties": {
+        "name": { "type": "string" },
+        "figma": { "type": "string", "format": "uri" }
+      }
+    },
+    "color": {
+      "type": "object",
+      "required": ["app", "border", "text", "brand", "rarity", "element", "godRoll"]
+    },
+    "typography": { "type": "object" },
+    "spacing": { "type": "object", "minProperties": 1 },
+    "radius": { "type": "object" },
+    "size": { "type": "object" },
+    "grid": { "type": "object" }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "global": {
+    "color": {
+      "app": {
+        "background": { "value": "#313233", "type": "color", "description": "DIM classic app bg" },
+        "backgroundDeep": { "value": "#222222", "type": "color" },
+        "surface": { "value": "#252627", "type": "color" },
+        "surfaceRaised": { "value": "#2d2e2f", "type": "color" },
+        "surfaceMuted": { "value": "#1a1a1a", "type": "color" },
+        "header": { "value": "#000000", "type": "color" },
+        "section": { "value": "#222222", "type": "color" }
+      },
+      "border": {
+        "default": { "value": "#48494a", "type": "color" },
+        "subtle": { "value": "#3a3b3c", "type": "color" },
+        "strong": { "value": "#6d6e70", "type": "color" },
+        "focus": { "value": "#4887ba", "type": "color", "description": "DIM selection blue" }
+      },
+      "text": {
+        "primary": { "value": "#ffffff", "type": "color" },
+        "secondary": { "value": "#cccccc", "type": "color" },
+        "muted": { "value": "#999999", "type": "color" },
+        "subtle": { "value": "#777777", "type": "color" }
+      },
+      "brand": {
+        "primary": {
+          "value": "#e8a534",
+          "type": "color",
+          "description": "DIM brand / gold accent"
+        },
+        "community": { "value": "#0d7fad", "type": "color" },
+        "success": { "value": "#51a351", "type": "color" },
+        "error": { "value": "#ff3232", "type": "color" }
+      },
+      "rarity": {
+        "common": { "value": "#dcdcdc", "type": "color" },
+        "uncommon": { "value": "#366e42", "type": "color" },
+        "rare": { "value": "#5076a3", "type": "color" },
+        "legendary": { "value": "#513065", "type": "color" },
+        "exotic": { "value": "#c3a019", "type": "color" }
+      },
+      "element": {
+        "arc": { "value": "#79bbe8", "type": "color" },
+        "solar": { "value": "#f0631e", "type": "color" },
+        "void": { "value": "#8e749e", "type": "color" },
+        "stasis": { "value": "#4d88ff", "type": "color" },
+        "strand": { "value": "#35e366", "type": "color" },
+        "kinetic": { "value": "#d6d3c5", "type": "color" },
+        "prismatic": { "value": "#e3619b", "type": "color" }
+      },
+      "godRoll": {
+        "perfectBorder": { "value": "#f5dc56", "type": "color" },
+        "partialBorder": { "value": "#c7ccd8", "type": "color" },
+        "missingBorder": { "value": "#ff3232", "type": "color" },
+        "unknownBorder": { "value": "#6d6e70", "type": "color" }
+      },
+      "item": {
+        "masterworkBorder": { "value": "#eade8b", "type": "color" },
+        "enhancedPerk": { "value": "#f3cf55", "type": "color" },
+        "power": { "value": "#f5dc56", "type": "color" }
+      }
+    },
+    "fontFamilies": {
+      "ui": { "value": "Inter", "type": "fontFamilies" },
+      "destinyHeader": { "value": "Helvetica", "type": "fontFamilies" }
+    },
+    "fontSize": {
+      "caption": { "value": "11", "type": "fontSizes" },
+      "small": { "value": "12", "type": "fontSizes" },
+      "body": { "value": "14", "type": "fontSizes" },
+      "subtitle": { "value": "16", "type": "fontSizes" },
+      "title": { "value": "18", "type": "fontSizes" },
+      "heading": { "value": "24", "type": "fontSizes" }
+    },
+    "fontWeights": {
+      "regular": { "value": "400", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" }
+    },
+    "lineHeights": {
+      "caption": { "value": "14", "type": "lineHeights" },
+      "body": { "value": "20", "type": "lineHeights" },
+      "title": { "value": "24", "type": "lineHeights" }
+    },
+    "spacing": {
+      "1": { "value": "4", "type": "spacing" },
+      "2": { "value": "8", "type": "spacing" },
+      "3": { "value": "12", "type": "spacing" },
+      "4": { "value": "16", "type": "spacing" },
+      "6": { "value": "24", "type": "spacing" }
+    },
+    "borderRadius": {
+      "sm": { "value": "4", "type": "borderRadius" },
+      "md": { "value": "6", "type": "borderRadius" },
+      "lg": { "value": "8", "type": "borderRadius" }
+    },
+    "sizing": {
+      "itemTile": { "value": "50", "type": "sizing", "description": "DIM default --item-size" },
+      "itemTileCompact": { "value": "40", "type": "sizing" },
+      "headerHeight": { "value": "48", "type": "sizing" },
+      "searchBarHeight": { "value": "28", "type": "sizing" }
+    }
+  }
+}
