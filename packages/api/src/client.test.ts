@@ -43,6 +43,31 @@ describe("bungieEnvelopeSchema", () => {
 });
 
 describe("BungieClient", () => {
+  it("binds the default global fetch before making requests", async () => {
+    const originalFetch = globalThis.fetch;
+    let capturedThis: unknown = null;
+
+    globalThis.fetch = function fetchWithCapturedThis(this: unknown) {
+      capturedThis = this;
+
+      return Promise.resolve(
+        new Response(JSON.stringify(wrapBungieResponse(membershipsFixture)), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }),
+      );
+    } as unknown as typeof fetch;
+
+    try {
+      await createClient().getMembershipsForCurrentUser();
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+
+    expect(capturedThis).toBe(globalThis);
+  });
+
   it("sends the API key header", async () => {
     let capturedApiKey: string | null = null;
 

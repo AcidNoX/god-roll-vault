@@ -49,7 +49,7 @@ export function AuthCallbackPage() {
   }, [searchParams, completeLogin]);
 
   if (completed) {
-    return <Navigate replace to="/inventory" />;
+    return <Navigate replace to="/characters" />;
   }
 
   if (error) {

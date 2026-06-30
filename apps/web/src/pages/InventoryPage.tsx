@@ -2,10 +2,12 @@ import { AppText, Screen, useTheme } from "@god-roll-vault/ui";
 import type { CSSProperties } from "react";
 
 import { useAuth } from "../auth/AuthProvider.js";
+import { readSelectedCharacter } from "../characters/selected-character.js";
 
 export function InventoryPage() {
   const { logout, tokens } = useAuth();
   const theme = useTheme();
+  const selectedCharacter = readSelectedCharacter();
   const buttonStyle: CSSProperties = {
     backgroundColor: theme.colors.surfaceMuted,
     border: `1px solid ${theme.colors.borderStrong}`,
@@ -23,6 +25,11 @@ export function InventoryPage() {
       <AppText testID="inventory-subtitle">Your weapons will appear here.</AppText>
       {tokens?.membershipId ? (
         <AppText testID="inventory-membership-id">Membership: {tokens.membershipId}</AppText>
+      ) : null}
+      {selectedCharacter ? (
+        <AppText testID="inventory-selected-character">
+          Character: {selectedCharacter.characterId}
+        </AppText>
       ) : null}
       <button
         data-testid="sign-out"

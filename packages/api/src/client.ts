@@ -24,7 +24,7 @@ export class BungieClient {
 
   constructor(private readonly config: BungieClientConfig) {
     this.baseUrl = config.baseUrl ?? BUNGIE_API_BASE_URL;
-    this.fetchFn = config.fetch ?? fetch;
+    this.fetchFn = config.fetch ?? globalThis.fetch.bind(globalThis);
   }
 
   getApiKey(): string {

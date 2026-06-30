@@ -29,6 +29,7 @@ export default defineConfig({
     timeout: 120_000,
     ignoreHTTPSErrors: true,
     env: {
+      VITE_BUNGIE_API_KEY: "e2e-test-api-key",
       VITE_BUNGIE_CLIENT_ID: "e2e-test-client-id",
       VITE_BUNGIE_CLIENT_SECRET: "e2e-test-client-secret",
       VITE_OAUTH_REDIRECT_URI: `${baseURL}/auth/callback`,

@@ -29,6 +29,7 @@ type AuthContextValue = {
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+const defaultTokenStore = new LocalStorageTokenStore();
 
 function createOAuthState(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(16));
@@ -40,10 +41,7 @@ type AuthProviderProps = {
   tokenStore?: TokenStore;
 };
 
-export function AuthProvider({
-  children,
-  tokenStore = new LocalStorageTokenStore(),
-}: AuthProviderProps) {
+export function AuthProvider({ children, tokenStore = defaultTokenStore }: AuthProviderProps) {
   const [tokens, setTokens] = useState<AuthTokens | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
