@@ -20,23 +20,49 @@
 
   function badgeHtml(badge) {
     if (!badge) return "";
-    const label = badge === "perfect" ? "GR" : badge === "partial" ? "GR" : "GR";
-    return `<span class="badge badge-${badge}">${label}</span>`;
+    return `<span class="badge badge-${badge}">GR</span>`;
   }
 
-  function tileHtml(weapon, selected) {
-    const exoticClass = weapon.tier === "Exotic" ? " exotic" : "";
+  function dispositionHtml(disposition, label) {
+    if (disposition === "only") {
+      return "";
+    }
+    return `<span class="disposition disposition-${disposition}">${label}</span>`;
+  }
+
+  function tileHtml(copy, selected) {
+    const exoticClass = copy.tier === "Exotic" ? " exotic" : "";
     const selectedClass = selected ? " selected" : "";
-    const icon = weapon.iconUrl
-      ? `<img class="item-icon-img" src="${weapon.iconUrl}" alt="${weapon.name}" width="38" height="38" loading="lazy" />`
+    const icon = copy.iconUrl
+      ? `<img class="item-icon-img" src="${copy.iconUrl}" alt="${copy.name}" width="38" height="38" loading="lazy" />`
       : `<div class="item-icon"></div>`;
 
     return `
-      <div class="item-tile${exoticClass}${selectedClass}" data-instance-id="${weapon.itemInstanceId}" title="${weapon.name}">
-        <div class="element element-${weapon.element}"></div>
+      <div class="item-tile disposition-${copy.disposition}${exoticClass}${selectedClass}" data-instance-id="${copy.itemInstanceId}" title="${copy.name} · ${copy.dispositionLabel}">
+        <div class="element element-${copy.element}"></div>
         ${icon}
-        <span class="power">${weapon.power}</span>
-        ${badgeHtml(weapon.badge)}
+        <span class="power">${copy.power}</span>
+        ${badgeHtml(copy.badge)}
+        ${dispositionHtml(copy.disposition, copy.dispositionLabel)}
+      </div>`;
+  }
+
+  function groupHtml(group) {
+    const isDuplicate = group.copyCount > 1;
+    const header = isDuplicate
+      ? `
+      <div class="weapon-group-header">
+        <span class="weapon-group-name">${group.name}</span>
+        <span class="weapon-group-meta">${group.dispositionSummary}</span>
+      </div>`
+      : "";
+
+    return `
+      <div class="weapon-group${isDuplicate ? " weapon-group-duplicates" : ""}" data-item-hash="${group.itemHash}">
+        ${header}
+        <div class="item-grid">
+          ${group.copies.map((copy) => tileHtml(copy, copy.itemInstanceId === data.selectedInstanceId)).join("")}
+        </div>
       </div>`;
   }
 
@@ -48,8 +74,8 @@
           <span class="slot-dot ${SLOT_DOT_CLASS[section.key]}" aria-hidden="true"></span>
           ${section.label}
         </h2>
-        <div class="item-grid">
-          ${section.weapons.map((weapon) => tileHtml(weapon, weapon.itemInstanceId === data.selectedInstanceId)).join("")}
+        <div class="weapon-groups">
+          ${section.groups.map((group) => groupHtml(group)).join("")}
         </div>
       </div>`,
     )
@@ -86,6 +112,35 @@
     })
     .join("");
 
+  const duplicateCopiesHtml =
+    detail.duplicateCopies.length > 1
+      ? `
+      <div class="copy-compare">
+        <h3 class="copy-compare-title">Your copies</h3>
+        <div class="copy-compare-list">
+          ${detail.duplicateCopies
+            .map((copy) => {
+              const selected = copy.itemInstanceId === detail.weapon.itemInstanceId;
+              const keeper = copy.itemInstanceId === detail.keeperInstanceId;
+              return `
+            <div class="copy-row${selected ? " copy-row-selected" : ""}">
+              <div class="copy-row-rank">#${copy.rank}</div>
+              <div class="copy-row-body">
+                <div class="copy-row-top">
+                  <span class="copy-row-power">${copy.power}</span>
+                  ${dispositionHtml(copy.disposition, copy.dispositionLabel)}
+                  ${keeper ? '<span class="copy-row-keeper">Recommended keeper</span>' : ""}
+                  ${selected ? '<span class="copy-row-inspecting">Inspecting</span>' : ""}
+                </div>
+                <div class="copy-row-status">${copy.matchStatus} · ${copy.badge ? "god roll match" : "off target"}</div>
+              </div>
+            </div>`;
+            })
+            .join("")}
+        </div>
+      </div>`
+      : "";
+
   const heroStyle = detail.weapon.iconUrl
     ? ` style="background-image: url('${detail.weapon.iconUrl}')"`
     : "";
@@ -108,7 +163,7 @@
       <div class="detail-title-row">
         <div>
           <h2 class="weapon-name legendary">${detail.weapon.name}</h2>
-          <p class="weapon-sub">${detail.weapon.tier} · ${detail.weapon.element} · equipped</p>
+          <p class="weapon-sub">${detail.weapon.tier} · ${detail.weapon.element} · inspecting selected copy</p>
           <p class="weapon-power-row">
             <span class="power-level">${detail.weapon.power}</span>
             <span class="element-tag element-${detail.weapon.element}">${detail.weapon.element}</span>
@@ -116,6 +171,7 @@
         </div>
         <span class="god-roll-pill">${statusLabel}</span>
       </div>
+      ${duplicateCopiesHtml}
       <div class="perk-compare">
         <div class="perk-compare-header">
           <span>Your roll</span>
@@ -136,8 +192,12 @@
   document
     .querySelector(".character-name")
     ?.replaceChildren(document.createTextNode(data.character.className));
-  const powerEl = document.querySelector(".power-level");
+  const powerEl = document.querySelector(".character-strip .power-level");
   if (powerEl) {
     powerEl.textContent = String(data.character.power);
+  }
+  const detailEl = document.querySelector(".character-detail");
+  if (detailEl && data.summary) {
+    detailEl.innerHTML = `<strong>${data.summary.duplicateGroups}</strong> duplicate weapons · <strong>${data.summary.dismantleCandidates}</strong> to dismantle · PVP targets`;
   }
 })();

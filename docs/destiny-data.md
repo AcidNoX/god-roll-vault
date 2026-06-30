@@ -33,8 +33,8 @@ We do **not** ship or cache the full Destiny manifest (~hundreds of MB). Only ha
 
 The inventory HTML mock is generated from the same fixture and matchers as the app:
 
-- Fixture loadout: `src/preview/inventory-fixture.ts`
-- God roll evaluation: `evaluateInventory` from `@god-roll-vault/core`
+- Fixture loadout: `src/preview/inventory-fixture.ts` (includes duplicate Fatebringer copies)
+- God roll evaluation: `groupInventoryByWeapon()` from `@god-roll-vault/core`
 - Bungie icons: `getWeaponIconUrl` / `getPerkIconUrl` from this package
 
 Regenerate after changing god rolls, manifest icons, or the fixture:

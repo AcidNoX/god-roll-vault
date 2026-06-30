@@ -64,11 +64,23 @@ function weapon(
 
 /** Static equipped loadout for design/previews — perk order matches `toWeaponPerks` in the web app. */
 export const previewInventoryWeapons: InventoryWeapon[] = [
+  weapon(4219826183, "preview-fatebringer-keeper", KINETIC_WEAPON_BUCKET, "kinetic", 1812, [
+    perk(1482024992), // Smallbore
+    perk(3142289711), // Accurized Rounds
+    perk(1015611457), // Kill Clip
+    perk(3824105627), // Firefly
+  ]),
   weapon(4219826183, PREVIEW_SELECTED_INSTANCE_ID, KINETIC_WEAPON_BUCKET, "kinetic", 1810, [
     perk(4090651448), // Corkscrew Rifling
     perk(3142289711), // Accurized Rounds
     perk(1015611457), // Kill Clip
     perk(3824105627), // Firefly
+  ]),
+  weapon(4219826183, "preview-fatebringer-junk", KINETIC_WEAPON_BUCKET, "kinetic", 1802, [
+    perk(4090651448), // Corkscrew Rifling
+    perk(3142289711), // Accurized Rounds
+    perk(1015611457), // Kill Clip
+    perkByName("Rampage"),
   ]),
   weapon(2429822977, "preview-austringer", KINETIC_WEAPON_BUCKET, "void", 1805, [
     perkByName("Arrowhead Brake"),
