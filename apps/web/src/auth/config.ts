@@ -27,7 +27,7 @@ export function getAuthConfig(): AuthConfig {
 
   if (!clientId || !redirectUri) {
     throw new Error(
-      "Missing Bungie OAuth config. Add BUNGIE_CLIENT_ID and BUNGIE_CLIENT_SECRET to the repo root .env (see docs/bungie-setup.md), then restart the dev server.",
+      "Missing Bungie OAuth config. Set BUNGIE_CLIENT_ID and OAUTH_REDIRECT_URI_WEB (local: repo root .env; Vercel: project env vars), then rebuild. See docs/bungie-setup.md.",
     );
   }
 
