@@ -4,6 +4,7 @@ export function add(a: number, b: number): number {
   return a + b;
 }
 
+export { groupInventoryByWeapon } from "./matching/group-inventory.js";
 export { evaluateInventory, findBestRoll, matchGodRoll } from "./matching/match-god-roll.js";
 export { perkNamesMatch } from "./matching/perk-names.js";
 export {
@@ -26,11 +27,14 @@ export type {
   GodRollFlexSlot,
   GodRollPerkSlot,
   GodRollSlots,
+  InstanceDisposition,
   InventoryEvaluation,
   InventoryWeaponRef,
   MatchStatus,
+  RankedWeaponInstance,
   RollMatchPerkDetail,
   RollMatchResult,
+  WeaponDuplicateGroup,
 } from "./types/god-roll.js";
 export { GOD_ROLL_PERK_SLOTS } from "./types/god-roll.js";
 export type {

@@ -57,6 +57,27 @@ export type InventoryEvaluation = {
   result: RollMatchResult;
 };
 
+/** What to do with a specific owned copy when you have duplicates of the same weapon. */
+export type InstanceDisposition = "keep" | "dismantle" | "consider" | "only";
+
+export type RankedWeaponInstance = {
+  rank: number;
+  disposition: InstanceDisposition;
+  evaluation: InventoryEvaluation;
+};
+
+/** Same weapon archetype (`itemHash`) with one or more owned copies ranked for the active mode. */
+export type WeaponDuplicateGroup = {
+  itemHash: number;
+  weaponName: string;
+  iconUrl?: string;
+  mode: GameMode;
+  copyCount: number;
+  /** Copies best-first; rank 1 is the recommended keeper. */
+  instances: RankedWeaponInstance[];
+  keeper: InventoryEvaluation;
+};
+
 /** Minimal weapon shape used by matching functions. */
 export type InventoryWeaponRef = {
   itemHash: number;
