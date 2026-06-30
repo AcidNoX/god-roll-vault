@@ -96,6 +96,9 @@ importers:
       '@god-roll-vault/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@god-roll-vault/destiny-data':
+        specifier: workspace:*
+        version: link:../../packages/destiny-data
       '@god-roll-vault/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -185,6 +188,9 @@ importers:
 
   packages/destiny-data:
     dependencies:
+      '@god-roll-vault/core':
+        specifier: workspace:*
+        version: link:../core
       zod:
         specifier: 'catalog:'
         version: 3.24.4
