@@ -156,7 +156,7 @@ export function InventoryPage() {
   };
   const metadataTextStyle = {
     display: "block",
-    lineHeight: theme.typography.caption.lineHeight + 2,
+    lineHeight: theme.typography.lineHeight.caption + 2,
   } as TextStyle;
 
   useEffect(() => {
