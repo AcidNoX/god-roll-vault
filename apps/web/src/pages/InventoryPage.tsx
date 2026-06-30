@@ -1,11 +1,18 @@
 import { BungieClient, type InventoryWeapon } from "@god-roll-vault/api";
-import { evaluateInventory, type GameMode, type InventoryEvaluation } from "@god-roll-vault/core";
+import {
+  evaluateInventory,
+  type GameMode,
+  type InventoryEvaluation,
+  type MatchStatus,
+  type WeaponPerks,
+} from "@god-roll-vault/core";
 import { godRollDefinitions } from "@god-roll-vault/destiny-data";
 import {
   Box,
   EmptyState,
   ErrorState,
   LoadingSpinner,
+  PerkList,
   Screen,
   Stack,
   Text,
@@ -78,6 +85,31 @@ function filterInventoryEvaluations(
   );
 }
 
+function toWeaponPerks(perks: InventoryWeapon["perks"]): WeaponPerks {
+  const [barrel, magazine, perk1, perk2, originTrait] = perks;
+
+  return {
+    barrel,
+    magazine,
+    perk1,
+    perk2,
+    originTrait,
+  };
+}
+
+function formatMatchStatus(status: MatchStatus): string {
+  switch (status) {
+    case "perfect":
+      return "God Roll";
+    case "partial":
+      return "Partial";
+    case "missing":
+      return "Missing";
+    case "unknown":
+      return "Unknown";
+  }
+}
+
 export function InventoryPage() {
   const { logout, tokens } = useAuth();
   const navigate = useNavigate();
@@ -94,6 +126,7 @@ export function InventoryPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
+  const [selectedWeaponId, setSelectedWeaponId] = useState<string | null>(null);
 
   const buttonStyle: CSSProperties = {
     backgroundColor: theme.colors.surfaceMuted,
@@ -194,6 +227,29 @@ export function InventoryPage() {
     (evaluation) => evaluation.result.status === "perfect",
   ).length;
   const godRollLabel = godRollCount === 1 ? "god roll" : "god rolls";
+  const selectedEvaluation = useMemo(
+    () =>
+      selectedWeaponId
+        ? (evaluations.find(
+            (evaluation) => evaluation.weapon.itemInstanceId === selectedWeaponId,
+          ) ?? null)
+        : null,
+    [evaluations, selectedWeaponId],
+  );
+
+  useEffect(() => {
+    if (!selectedWeaponId) {
+      return;
+    }
+
+    const selectedWeaponStillExists = weapons.some(
+      (weapon) => weapon.itemInstanceId === selectedWeaponId,
+    );
+
+    if (!selectedWeaponStillExists) {
+      setSelectedWeaponId(null);
+    }
+  }, [selectedWeaponId, weapons]);
 
   const handleRefresh = useCallback(() => {
     setReloadToken((current) => current + 1);
@@ -345,12 +401,44 @@ export function InventoryPage() {
                 <WeaponCard
                   key={evaluation.weapon.itemInstanceId}
                   matchResult={evaluation.result}
+                  onPress={() => setSelectedWeaponId(evaluation.weapon.itemInstanceId)}
                   weapon={evaluation.weapon}
                 />
               ))}
             </Stack>
           </Box>
         )}
+
+        {selectedEvaluation ? (
+          <Box
+            padding="lg"
+            style={{
+              backgroundColor: theme.colors.surfaceRaised,
+              borderColor: theme.colors.border,
+              borderRadius: theme.borderRadius.lg,
+              borderWidth: 1,
+            }}
+            testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}`}
+          >
+            <Stack gap="md">
+              <Stack gap="xs">
+                <Text testID="weapon-detail-title" variant="heading">
+                  {selectedEvaluation.weapon.name}
+                </Text>
+                <Text color="textMuted" testID="weapon-detail-status" variant="caption">
+                  {formatMatchStatus(selectedEvaluation.result.status)} in {mode.toUpperCase()} (
+                  {selectedEvaluation.result.score}% match)
+                </Text>
+              </Stack>
+
+              <PerkList
+                matchResult={selectedEvaluation.result}
+                perks={toWeaponPerks(selectedEvaluation.weapon.perks)}
+                testID={`weapon-detail-${selectedEvaluation.weapon.itemInstanceId}-perk-list`}
+              />
+            </Stack>
+          </Box>
+        ) : null}
       </Stack>
     </Screen>
   );
