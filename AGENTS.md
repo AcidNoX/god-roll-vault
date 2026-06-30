@@ -43,6 +43,17 @@ Rules:
 - Put component tests in the component directory (`Component.test.ts` or `Component.test.tsx` when JSX is needed).
 - Prefer composing shared UI components from lower-level atoms before reaching directly for `react-native` primitives.
 
+## Storybook
+
+Shared UI components are documented in Storybook under `packages/ui`.
+
+- Colocate stories beside components: `Component.stories.tsx` in each component directory (alongside `Component.test.ts`).
+- Story discovery: `packages/ui/src/**/*.stories.@(ts|tsx)`.
+- Shared weapon/inventory fixtures live in `packages/ui/src/stories/fixtures/`.
+- All stories are wrapped in `ThemeProvider` via the global decorator in `packages/ui/.storybook/preview.tsx` (dark theme default).
+- Local authoring: `pnpm storybook` (port 6006, HMR).
+- Static catalog for the web app: `pnpm storybook:build` outputs to `apps/web/public/storybook/` and is served at `/storybook/`.
+
 ## Commands
 
 ```bash
@@ -53,6 +64,8 @@ pnpm lint:fix      # Biome auto-fix
 pnpm typecheck
 pnpm test
 pnpm test:coverage   # unit tests with v8 coverage
+pnpm storybook       # UI component catalog (port 6006)
+pnpm storybook:build # static Storybook bundle for apps/web/public/storybook/
 ```
 
 ## Tickets, Branches, and PRs

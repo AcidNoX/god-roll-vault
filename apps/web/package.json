@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "pnpm --filter @god-roll-vault/ui storybook:build",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
