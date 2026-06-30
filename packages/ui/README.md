@@ -22,6 +22,9 @@ Components follow atomic design under `src/components`:
 Design tokens and theme helpers live under `src/theme` and are re-exported through
 the package barrel.
 
+See [docs/design-system.md](../../docs/design-system.md) and `design/tokens/` for
+DIM-inspired token specs (LEE-70). Code theme migration is tracked in LEE-72.
+
 ## Vite consumption
 
 The web app must resolve React Native imports to `react-native-web`. Keep the package

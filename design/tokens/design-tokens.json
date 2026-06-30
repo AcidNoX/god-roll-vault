@@ -1,0 +1,149 @@
+{
+  "$schema": "./design-tokens.schema.json",
+  "meta": {
+    "name": "God Roll Vault — v1",
+    "description": "DIM / Ishtar-inspired dark companion UI. LEE-70 foundations.",
+    "figma": "https://www.figma.com/design/wxhNTKhoNRnnRP3MQsmrwq/Untitled",
+    "references": {
+      "dim": "https://github.com/DestinyItemManager/DIM",
+      "dimVariables": "https://github.com/DestinyItemManager/DIM/blob/master/src/app/_variables.scss",
+      "ishtar": "https://github.com/guardiangames/Ishtar-Commander"
+    }
+  },
+  "color": {
+    "app": {
+      "background": "#313233",
+      "backgroundDeep": "#222222",
+      "surface": "#252627",
+      "surfaceRaised": "#2d2e2f",
+      "surfaceMuted": "#1a1a1a",
+      "header": "#000000",
+      "section": "#222222"
+    },
+    "border": {
+      "default": "#48494a",
+      "subtle": "#3a3b3c",
+      "strong": "#6d6e70",
+      "focus": "#4887ba"
+    },
+    "text": {
+      "primary": "#ffffff",
+      "secondary": "#cccccc",
+      "muted": "#999999",
+      "subtle": "#777777",
+      "inverse": "#111111"
+    },
+    "brand": {
+      "primary": "#e8a534",
+      "primaryMuted": "#5c4520",
+      "community": "#0d7fad",
+      "success": "#51a351",
+      "error": "#ff3232",
+      "warning": "#e8a534"
+    },
+    "rarity": {
+      "common": "#dcdcdc",
+      "uncommon": "#366e42",
+      "rare": "#5076a3",
+      "legendary": "#513065",
+      "exotic": "#c3a019"
+    },
+    "element": {
+      "kinetic": { "base": "#d6d3c5", "background": "#383835", "text": "#f0eee4" },
+      "arc": { "base": "#79bbe8", "background": "#1a2f3d", "text": "#c8e8ff" },
+      "solar": { "base": "#f0631e", "background": "#3d2412", "text": "#ffd0a3" },
+      "void": { "base": "#8e749e", "background": "#2a1f33", "text": "#e0d4e8" },
+      "stasis": { "base": "#4d88ff", "background": "#142d45", "text": "#c4e4ff" },
+      "strand": { "base": "#35e366", "background": "#17331e", "text": "#c8ffce" },
+      "prismatic": { "base": "#e3619b", "background": "#3d1a2a", "text": "#ffc8dd" }
+    },
+    "godRoll": {
+      "perfect": { "background": "#3b2c0c", "border": "#f5dc56", "text": "#fff8d6" },
+      "partial": { "background": "#2b2f3a", "border": "#c7ccd8", "text": "#eef1f7" },
+      "missing": { "background": "#3d151d", "border": "#ff3232", "text": "#ffc4ca" },
+      "unknown": { "background": "#2d2e2f", "border": "#6d6e70", "text": "#cccccc" }
+    },
+    "item": {
+      "masterworkBorder": "#eade8b",
+      "enhancedPerk": "#f3cf55",
+      "power": "#f5dc56",
+      "equippedRing": "#e8a534"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "ui": "Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
+      "destinyHeader": "Helvetica, Arial, sans-serif"
+    },
+    "fontSize": {
+      "caption": 11,
+      "small": 12,
+      "body": 14,
+      "subtitle": 16,
+      "title": 18,
+      "heading": 24
+    },
+    "lineHeight": {
+      "caption": 14,
+      "small": 16,
+      "body": 20,
+      "subtitle": 22,
+      "title": 24,
+      "heading": 30
+    },
+    "fontWeight": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "letterSpacing": {
+      "tight": -0.2,
+      "normal": 0,
+      "wide": 0.4,
+      "badge": 0.6
+    }
+  },
+  "spacing": {
+    "0": 0,
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32,
+    "10": 40
+  },
+  "radius": {
+    "sm": 4,
+    "md": 6,
+    "lg": 8,
+    "tooltip": 6,
+    "pill": 999
+  },
+  "size": {
+    "itemTile": 50,
+    "itemTileCompact": 40,
+    "itemTileLarge": 64,
+    "itemBorderWidth": 1,
+    "itemEquippedPadding": 2,
+    "perkIcon": 32,
+    "headerHeight": 48,
+    "searchBarHeight": 28,
+    "characterEmblemWidth": 237,
+    "characterEmblemHeight": 48
+  },
+  "grid": {
+    "itemGap": 8,
+    "itemMargin": 8,
+    "inventoryColumnGap": 24,
+    "listRowHeight": 56,
+    "sidebarWidth": 280,
+    "contentMaxWidth": 1280
+  },
+  "shadow": {
+    "item": "0 1px 3px rgba(0, 0, 0, 0.45)",
+    "popover": "0 8px 24px rgba(0, 0, 0, 0.55)"
+  }
+}
