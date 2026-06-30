@@ -11,6 +11,7 @@ const CORS_HEADERS = {
 };
 
 const FATEBRINGER_INSTANCE_ID = "1000000000000000001";
+const FATEBRINGER_KEEPER_ID = "1000000000000000004";
 const AUSTRINGER_INSTANCE_ID = "1000000000000000002";
 const BELOVED_INSTANCE_ID = "1000000000000000003";
 
@@ -57,24 +58,38 @@ async function seedInventorySession(page: Page) {
   );
 }
 
-function createInventoryProfile(fatebringerPower = 1980) {
+function createInventoryProfile(
+  fatebringerPower = 1980,
+  options: { includeDuplicateFatebringer?: boolean } = {},
+) {
+  const characterItems = [
+    {
+      itemHash: 4219826183,
+      itemInstanceId: FATEBRINGER_INSTANCE_ID,
+      bucketHash: 149531261,
+      quantity: 1,
+    },
+    {
+      itemHash: 2429822977,
+      itemInstanceId: AUSTRINGER_INSTANCE_ID,
+      bucketHash: 149531261,
+      quantity: 1,
+    },
+  ];
+
+  if (options.includeDuplicateFatebringer) {
+    characterItems.push({
+      itemHash: 4219826183,
+      itemInstanceId: FATEBRINGER_KEEPER_ID,
+      bucketHash: 149531261,
+      quantity: 1,
+    });
+  }
+
   return {
     characterInventories: {
       [MOCK_CHARACTER_ID]: {
-        items: [
-          {
-            itemHash: 4219826183,
-            itemInstanceId: FATEBRINGER_INSTANCE_ID,
-            bucketHash: 149531261,
-            quantity: 1,
-          },
-          {
-            itemHash: 2429822977,
-            itemInstanceId: AUSTRINGER_INSTANCE_ID,
-            bucketHash: 149531261,
-            quantity: 1,
-          },
-        ],
+        items: characterItems,
       },
     },
     characterEquipment: {
@@ -100,6 +115,14 @@ function createInventoryProfile(fatebringerPower = 1980) {
             primaryStat: { value: fatebringerPower },
             damageTypeHash: 3373582085,
           },
+          ...(options.includeDuplicateFatebringer
+            ? {
+                [FATEBRINGER_KEEPER_ID]: {
+                  primaryStat: { value: 1985 },
+                  damageTypeHash: 3373582085,
+                },
+              }
+            : {}),
           [AUSTRINGER_INSTANCE_ID]: {
             primaryStat: { value: 1975 },
             damageTypeHash: 3373582085,
@@ -113,13 +136,32 @@ function createInventoryProfile(fatebringerPower = 1980) {
       sockets: {
         data: {
           [FATEBRINGER_INSTANCE_ID]: {
-            sockets: [
-              { plugHash: 3250034553 },
-              { plugHash: 2847525152 },
-              { plugHash: 3177301540 },
-              { plugHash: 1467527085 },
-            ],
+            sockets: options.includeDuplicateFatebringer
+              ? [
+                  { plugHash: 4090651448 },
+                  { plugHash: 3142289711 },
+                  { plugHash: 1015611457 },
+                  { plugHash: 3824105627 },
+                ]
+              : [
+                  { plugHash: 3250034553 },
+                  { plugHash: 2847525152 },
+                  { plugHash: 3177301540 },
+                  { plugHash: 1467527085 },
+                ],
           },
+          ...(options.includeDuplicateFatebringer
+            ? {
+                [FATEBRINGER_KEEPER_ID]: {
+                  sockets: [
+                    { plugHash: 1482024992 },
+                    { plugHash: 3142289711 },
+                    { plugHash: 1015611457 },
+                    { plugHash: 3824105627 },
+                  ],
+                },
+              }
+            : {}),
           [AUSTRINGER_INSTANCE_ID]: {
             sockets: [
               { plugHash: 839105230 },
@@ -137,7 +179,10 @@ function createInventoryProfile(fatebringerPower = 1980) {
   };
 }
 
-async function mockInventoryApi(page: Page, options: { delayMs?: number } = {}) {
+async function mockInventoryApi(
+  page: Page,
+  options: { delayMs?: number; includeDuplicateFatebringer?: boolean } = {},
+) {
   let inventoryRequestCount = 0;
 
   await page.route("**/Platform/**", async (route) => {
@@ -165,7 +210,11 @@ async function mockInventoryApi(page: Page, options: { delayMs?: number } = {}) 
         headers: CORS_HEADERS,
         contentType: "application/json",
         body: JSON.stringify(
-          bungieEnvelope(createInventoryProfile(inventoryRequestCount > 2 ? 1988 : 1980)),
+          bungieEnvelope(
+            createInventoryProfile(inventoryRequestCount > 2 ? 1988 : 1980, {
+              includeDuplicateFatebringer: options.includeDuplicateFatebringer,
+            }),
+          ),
         ),
       });
       return;
@@ -348,6 +397,27 @@ test.describe("Weapon inventory", () => {
     );
     await expect(page.getByTestId("inventory-page")).toBeVisible();
     await expect(page.getByTestId("inventory-summary")).toHaveText("3 weapons, 1 god roll in PVP");
+  });
+
+  test("shows ranked duplicate copies on weapon detail", async ({ page }) => {
+    await mockInventoryApi(page, { includeDuplicateFatebringer: true });
+
+    await page.goto(
+      `/weapons/${FATEBRINGER_INSTANCE_ID}?membershipType=3&membershipId=${MOCK_DESTINY_MEMBERSHIP_ID}&characterId=${MOCK_CHARACTER_ID}&mode=pvp`,
+    );
+
+    await expect(page.getByTestId("weapon-detail-copies")).toBeVisible();
+    await expect(page.getByTestId(`weapon-detail-copy-${FATEBRINGER_KEEPER_ID}`)).toContainText(
+      "Recommended keeper",
+    );
+    await expect(page.getByTestId(`weapon-detail-copy-${FATEBRINGER_INSTANCE_ID}`)).toContainText(
+      "Dismantle",
+    );
+
+    await page.getByTestId(`weapon-detail-copy-${FATEBRINGER_KEEPER_ID}`).click();
+
+    await expect(page.getByTestId(`weapon-detail-${FATEBRINGER_KEEPER_ID}`)).toBeVisible();
+    await expect(page.getByTestId("weapon-detail-god-roll-badge")).toHaveText("PVPGod Roll100%");
   });
 
   test("shows an empty state when no weapons are returned", async ({ page }) => {
