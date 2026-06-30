@@ -8,8 +8,12 @@ export type {
   TextProps,
 } from "./components/atoms/index.js";
 export { AppText, Box, Pressable, Stack, Text } from "./components/atoms/index.js";
-export type { GodRollBadgeProps, WeaponCardProps } from "./components/molecules/index.js";
-export { GodRollBadge, WeaponCard } from "./components/molecules/index.js";
+export type {
+  GodRollBadgeProps,
+  PerkListProps,
+  WeaponCardProps,
+} from "./components/molecules/index.js";
+export { GodRollBadge, PerkList, WeaponCard } from "./components/molecules/index.js";
 export type { ScreenProps } from "./components/templates/index.js";
 export { Screen } from "./components/templates/index.js";
 export type {
