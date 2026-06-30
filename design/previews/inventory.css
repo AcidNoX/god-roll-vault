@@ -469,3 +469,154 @@
     border-left: none;
   }
 }
+
+.inventory-page .weapon-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.inventory-page .weapon-group-header {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.inventory-page .weapon-group-name {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inventory-page .weapon-group-meta {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.inventory-page .weapon-group-duplicates {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 10px 12px;
+}
+
+.inventory-page .disposition {
+  border-radius: 3px;
+  bottom: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  left: 4px;
+  letter-spacing: 0.06em;
+  padding: 2px 4px;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.inventory-page .disposition-keep {
+  background: rgba(110, 231, 168, 0.2);
+  color: #6ee7a8;
+}
+
+.inventory-page .disposition-dismantle {
+  background: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+}
+
+.inventory-page .disposition-consider {
+  background: rgba(245, 220, 86, 0.15);
+  color: var(--brand);
+}
+
+.inventory-page .item-tile.disposition-dismantle {
+  opacity: 0.72;
+}
+
+.inventory-page .copy-compare {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+.inventory-page .copy-compare-title {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.inventory-page .copy-compare-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inventory-page .copy-row {
+  align-items: flex-start;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+}
+
+.inventory-page .copy-row-selected {
+  background: rgba(72, 135, 186, 0.08);
+  border-color: rgba(72, 135, 186, 0.35);
+}
+
+.inventory-page .copy-row-rank {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 24px;
+}
+
+.inventory-page .copy-row-top {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.inventory-page .copy-row-power {
+  font-weight: 600;
+}
+
+.inventory-page .copy-row-keeper,
+.inventory-page .copy-row-inspecting {
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+.inventory-page .copy-row-keeper {
+  background: rgba(110, 231, 168, 0.15);
+  color: #6ee7a8;
+}
+
+.inventory-page .copy-row-inspecting {
+  background: rgba(72, 135, 186, 0.15);
+  color: #79bbe8;
+}
+
+.inventory-page .copy-row-status {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-top: 2px;
+  text-transform: capitalize;
+}

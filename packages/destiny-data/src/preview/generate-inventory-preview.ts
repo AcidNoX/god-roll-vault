@@ -3,8 +3,9 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
-  evaluateInventory,
   type GodRollPerkSlot,
+  groupInventoryByWeapon,
+  type InstanceDisposition,
   type InventoryWeapon,
   type MatchStatus,
   type WeaponPerk,
@@ -33,6 +34,13 @@ const BUCKET_SECTIONS = [
   { bucketHash: POWER_WEAPON_BUCKET, key: "power", label: "Power" },
 ] as const;
 
+const DISPOSITION_LABELS: Record<InstanceDisposition, string> = {
+  keep: "Keep",
+  dismantle: "Dismantle",
+  consider: "Consider",
+  only: "Only copy",
+};
+
 export type PreviewPerkCell = {
   name: string;
   iconUrl?: string;
@@ -58,18 +66,41 @@ export type PreviewWeaponTile = {
   badge: "perfect" | "partial" | "missing" | null;
 };
 
+export type PreviewWeaponCopy = PreviewWeaponTile & {
+  rank: number;
+  disposition: InstanceDisposition;
+  dispositionLabel: string;
+};
+
+export type PreviewWeaponGroup = {
+  itemHash: number;
+  name: string;
+  copyCount: number;
+  dispositionSummary: string;
+  keeper: PreviewWeaponCopy;
+  copies: PreviewWeaponCopy[];
+};
+
 export type PreviewInventoryData = {
   generatedAt: string;
   mode: typeof PREVIEW_MODE;
   character: typeof PREVIEW_CHARACTER;
+  summary: {
+    weaponGroups: number;
+    duplicateGroups: number;
+    keepers: number;
+    dismantleCandidates: number;
+  };
   sections: Array<{
     key: (typeof BUCKET_SECTIONS)[number]["key"];
     label: string;
-    weapons: PreviewWeaponTile[];
+    groups: PreviewWeaponGroup[];
   }>;
   selectedInstanceId: string;
   detail: {
     weapon: PreviewWeaponTile;
+    keeperInstanceId: string;
+    duplicateCopies: PreviewWeaponCopy[];
     rollLabel?: string;
     verdict: {
       matched: number;
@@ -108,7 +139,12 @@ function rollLabelForWeapon(itemHash: number, mode: typeof PREVIEW_MODE): string
   return entry?.rolls.find((roll) => roll.mode === mode)?.label;
 }
 
-function tileFromWeapon(weapon: InventoryWeapon, matchStatus: MatchStatus): PreviewWeaponTile {
+function tileFromEvaluation(
+  weapon: InventoryWeapon,
+  matchStatus: MatchStatus,
+  rank: number,
+  disposition: InstanceDisposition,
+): PreviewWeaponCopy {
   return {
     itemInstanceId: weapon.itemInstanceId,
     itemHash: weapon.itemHash,
@@ -119,6 +155,59 @@ function tileFromWeapon(weapon: InventoryWeapon, matchStatus: MatchStatus): Prev
     ...(weapon.iconUrl ? { iconUrl: weapon.iconUrl } : {}),
     matchStatus,
     badge: badgeForStatus(matchStatus),
+    rank,
+    disposition,
+    dispositionLabel: DISPOSITION_LABELS[disposition],
+  };
+}
+
+function buildDispositionSummary(copies: PreviewWeaponCopy[]): string {
+  if (copies.length === 1) {
+    return "1 copy";
+  }
+
+  const keepCount = copies.filter((copy) => copy.disposition === "keep").length;
+  const dismantleCount = copies.filter((copy) => copy.disposition === "dismantle").length;
+  const considerCount = copies.filter((copy) => copy.disposition === "consider").length;
+
+  const parts = [`${copies.length} copies`];
+  if (keepCount > 0) {
+    parts.push(`keep ${keepCount}`);
+  }
+  if (dismantleCount > 0) {
+    parts.push(`dismantle ${dismantleCount}`);
+  }
+  if (considerCount > 0) {
+    parts.push(`consider ${considerCount}`);
+  }
+
+  return parts.join(" · ");
+}
+
+function groupToPreview(
+  group: ReturnType<typeof groupInventoryByWeapon>[number],
+): PreviewWeaponGroup {
+  const copies = group.instances.map((instance) =>
+    tileFromEvaluation(
+      instance.evaluation.weapon,
+      instance.evaluation.result.status,
+      instance.rank,
+      instance.disposition,
+    ),
+  );
+
+  const keeper = copies[0];
+  if (!keeper) {
+    throw new Error(`Weapon group ${group.itemHash} has no ranked copies`);
+  }
+
+  return {
+    itemHash: group.itemHash,
+    name: group.weaponName,
+    copyCount: group.copyCount,
+    dispositionSummary: buildDispositionSummary(copies),
+    keeper,
+    copies,
   };
 }
 
@@ -139,38 +228,78 @@ function buildVerdictCaption(rows: PreviewPerkRow[]): {
   return { matched, total, caption };
 }
 
-export function buildInventoryPreviewData(): PreviewInventoryData {
-  const evaluations = evaluateInventory(previewInventoryWeapons, godRollDefinitions, PREVIEW_MODE);
-  const evaluationById = new Map(
-    evaluations.map((evaluation) => [evaluation.weapon.itemInstanceId, evaluation]),
+function buildSummary(groups: PreviewWeaponGroup[]): PreviewInventoryData["summary"] {
+  const duplicateGroups = groups.filter((group) => group.copyCount > 1).length;
+  const keepers = groups.filter((group) => group.keeper.disposition === "keep").length;
+  const dismantleCandidates = groups.reduce(
+    (count, group) =>
+      count + group.copies.filter((copy) => copy.disposition === "dismantle").length,
+    0,
   );
+
+  return {
+    weaponGroups: groups.length,
+    duplicateGroups,
+    keepers,
+    dismantleCandidates,
+  };
+}
+
+export function buildInventoryPreviewData(): PreviewInventoryData {
+  const groupedWeapons = groupInventoryByWeapon(
+    previewInventoryWeapons,
+    godRollDefinitions,
+    PREVIEW_MODE,
+  );
+  const weaponGroups = groupedWeapons.map(groupToPreview);
+  const groupByHash = new Map(weaponGroups.map((group) => [group.itemHash, group]));
+  const coreGroupByHash = new Map(groupedWeapons.map((group) => [group.itemHash, group]));
 
   const sections = BUCKET_SECTIONS.map((section) => ({
     key: section.key,
     label: section.label,
-    weapons: previewInventoryWeapons
-      .filter((weapon) => weapon.bucketHash === section.bucketHash)
-      .map((weapon) => {
-        const evaluation = evaluationById.get(weapon.itemInstanceId);
-        return tileFromWeapon(weapon, evaluation?.result.status ?? "unknown");
-      }),
+    groups: weaponGroups.filter((group) => {
+      const keeperWeapon = previewInventoryWeapons.find(
+        (weapon) => weapon.itemInstanceId === group.keeper.itemInstanceId,
+      );
+      return keeperWeapon?.bucketHash === section.bucketHash;
+    }),
   }));
 
-  const selectedEvaluation = evaluations.find(
-    (evaluation) => evaluation.weapon.itemInstanceId === PREVIEW_SELECTED_INSTANCE_ID,
+  const selectedWeapon = previewInventoryWeapons.find(
+    (weapon) => weapon.itemInstanceId === PREVIEW_SELECTED_INSTANCE_ID,
   );
-  if (!selectedEvaluation) {
+  if (!selectedWeapon) {
     throw new Error(`Preview fixture missing selected weapon ${PREVIEW_SELECTED_INSTANCE_ID}`);
   }
 
-  const slottedPerks = toWeaponPerks(selectedEvaluation.weapon.perks);
-  const perkRows: PreviewPerkRow[] = selectedEvaluation.result.details.map((detail) => ({
-    slot: detail.slot,
-    label: SLOT_LABELS[detail.slot],
-    yours: toPerkCell(slottedPerks[detail.slot]),
-    target: { name: detail.target },
-    matched: detail.matched,
-  }));
+  const selectedGroup = groupByHash.get(selectedWeapon.itemHash);
+  if (!selectedGroup) {
+    throw new Error(`Preview fixture missing weapon group for ${selectedWeapon.itemHash}`);
+  }
+
+  const selectedCopy = selectedGroup.copies.find(
+    (copy) => copy.itemInstanceId === PREVIEW_SELECTED_INSTANCE_ID,
+  );
+  if (!selectedCopy) {
+    throw new Error(`Selected copy missing from group ${selectedWeapon.itemHash}`);
+  }
+
+  const rankedInstance = coreGroupByHash
+    .get(selectedWeapon.itemHash)
+    ?.instances.find(
+      (instance) => instance.evaluation.weapon.itemInstanceId === PREVIEW_SELECTED_INSTANCE_ID,
+    );
+
+  const slottedPerks = toWeaponPerks(selectedWeapon.perks);
+  const perkRows: PreviewPerkRow[] =
+    rankedInstance?.evaluation.result.details.map((detail) => ({
+      slot: detail.slot,
+      label: SLOT_LABELS[detail.slot],
+      yours: toPerkCell(slottedPerks[detail.slot]),
+      target: { name: detail.target },
+      matched: detail.matched,
+    })) ?? [];
 
   if (slottedPerks.originTrait) {
     perkRows.push({
@@ -183,16 +312,29 @@ export function buildInventoryPreviewData(): PreviewInventoryData {
   }
 
   const verdict = buildVerdictCaption(perkRows);
-  const rollLabel = rollLabelForWeapon(selectedEvaluation.weapon.itemHash, PREVIEW_MODE);
+  const rollLabel = rollLabelForWeapon(selectedWeapon.itemHash, PREVIEW_MODE);
 
   return {
     generatedAt: new Date().toISOString(),
     mode: PREVIEW_MODE,
     character: PREVIEW_CHARACTER,
+    summary: buildSummary(weaponGroups),
     sections,
     selectedInstanceId: PREVIEW_SELECTED_INSTANCE_ID,
     detail: {
-      weapon: tileFromWeapon(selectedEvaluation.weapon, selectedEvaluation.result.status),
+      weapon: {
+        itemInstanceId: selectedCopy.itemInstanceId,
+        itemHash: selectedCopy.itemHash,
+        name: selectedCopy.name,
+        tier: selectedCopy.tier,
+        power: selectedCopy.power,
+        element: selectedCopy.element,
+        ...(selectedCopy.iconUrl ? { iconUrl: selectedCopy.iconUrl } : {}),
+        matchStatus: selectedCopy.matchStatus,
+        badge: selectedCopy.badge,
+      },
+      keeperInstanceId: selectedGroup.keeper.itemInstanceId,
+      duplicateCopies: selectedGroup.copies,
       ...(rollLabel ? { rollLabel } : {}),
       verdict,
       perkRows,
@@ -214,5 +356,6 @@ if (isMain) {
   const repoRoot = resolve(packageRoot, "../..");
   const outputPath = resolve(repoRoot, "design/previews/inventory-data.js");
   const data = writeInventoryPreviewData(outputPath);
-  console.log(`Wrote ${outputPath} (${data.sections.flatMap((s) => s.weapons).length} weapons)`);
+  const groupCount = data.sections.reduce((count, section) => count + section.groups.length, 0);
+  console.log(`Wrote ${outputPath} (${groupCount} weapon groups)`);
 }
