@@ -5,6 +5,11 @@ const MOCK_AUTH_CODE = "e2e-mock-auth-code";
 const MOCK_MEMBERSHIP_ID = "4611686018467427902";
 const MOCK_DESTINY_MEMBERSHIP_ID = "4611686018467427903";
 const MOCK_CHARACTER_ID = "2305789507540360956";
+const CORS_HEADERS = {
+  "Access-Control-Allow-Headers": "Authorization, X-API-Key",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Origin": "*",
+};
 
 function bungieEnvelope<T>(response: T) {
   return {
@@ -21,9 +26,18 @@ async function mockCharacterApi(page: Page) {
   await page.route("**/Platform/**", async (route) => {
     const url = new URL(route.request().url());
 
+    if (route.request().method() === "OPTIONS") {
+      await route.fulfill({
+        status: 204,
+        headers: CORS_HEADERS,
+      });
+      return;
+    }
+
     if (url.pathname.endsWith("/Platform/User/GetMembershipsForCurrentUser/")) {
       await route.fulfill({
         status: 200,
+        headers: CORS_HEADERS,
         contentType: "application/json",
         body: JSON.stringify(
           bungieEnvelope({
@@ -49,6 +63,7 @@ async function mockCharacterApi(page: Page) {
     ) {
       await route.fulfill({
         status: 200,
+        headers: CORS_HEADERS,
         contentType: "application/json",
         body: JSON.stringify(
           bungieEnvelope({

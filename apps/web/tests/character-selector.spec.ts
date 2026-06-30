@@ -5,6 +5,11 @@ const MOCK_CHARACTER_ID = "2305789507540360956";
 const MOCK_SECOND_CHARACTER_ID = "2305789507540360957";
 const AUTH_STORAGE_KEY = "god-roll-vault:auth-tokens";
 const SELECTED_CHARACTER_STORAGE_KEY = "god-roll-vault:selected-character";
+const CORS_HEADERS = {
+  "Access-Control-Allow-Headers": "Authorization, X-API-Key",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Origin": "*",
+};
 
 function bungieEnvelope<T>(response: T, overrides = {}) {
   return {
@@ -39,6 +44,14 @@ async function mockSuccessfulCharacterApi(page: Page, delayMs = 0) {
   await page.route("**/Platform/**", async (route) => {
     const url = new URL(route.request().url());
 
+    if (route.request().method() === "OPTIONS") {
+      await route.fulfill({
+        status: 204,
+        headers: CORS_HEADERS,
+      });
+      return;
+    }
+
     if (delayMs > 0) {
       await new Promise((resolve) => setTimeout(resolve, delayMs));
     }
@@ -46,6 +59,7 @@ async function mockSuccessfulCharacterApi(page: Page, delayMs = 0) {
     if (url.pathname.endsWith("/Platform/User/GetMembershipsForCurrentUser/")) {
       await route.fulfill({
         status: 200,
+        headers: CORS_HEADERS,
         contentType: "application/json",
         body: JSON.stringify(
           bungieEnvelope({
@@ -71,6 +85,7 @@ async function mockSuccessfulCharacterApi(page: Page, delayMs = 0) {
     ) {
       await route.fulfill({
         status: 200,
+        headers: CORS_HEADERS,
         contentType: "application/json",
         body: JSON.stringify(
           bungieEnvelope({
@@ -100,8 +115,17 @@ async function mockSuccessfulCharacterApi(page: Page, delayMs = 0) {
 
 async function mockErroredCharacterApi(page: Page) {
   await page.route("**/Platform/User/GetMembershipsForCurrentUser/", async (route) => {
+    if (route.request().method() === "OPTIONS") {
+      await route.fulfill({
+        status: 204,
+        headers: CORS_HEADERS,
+      });
+      return;
+    }
+
     await route.fulfill({
       status: 200,
+      headers: CORS_HEADERS,
       contentType: "application/json",
       body: JSON.stringify(
         bungieEnvelope(
