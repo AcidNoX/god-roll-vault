@@ -7,6 +7,14 @@ export type WeaponPerk = {
   name: string;
 };
 
+export type WeaponPerks = {
+  barrel?: WeaponPerk;
+  magazine?: WeaponPerk;
+  perk1?: WeaponPerk;
+  perk2?: WeaponPerk;
+  originTrait?: WeaponPerk;
+};
+
 export type InventoryWeapon = {
   itemHash: number;
   itemInstanceId: string;
