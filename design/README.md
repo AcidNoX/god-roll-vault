@@ -8,6 +8,9 @@ Source-of-truth design tokens for God Roll Vault (DIM / Ishtar Commander aesthet
 | `tokens/design-tokens.json` | Canonical token values (LEE-70) |
 | `tokens/figma-tokens.json` | [Tokens Studio](https://tokens.studio/) / Figma Variables import format |
 | [docs/design-system.md](../docs/design-system.md) | Full design system documentation |
+| `screens/screens.json` | Screen mock specs (LEE-71) |
+| `previews/` | Static HTML screen previews at 1280px |
+| [docs/design-screens.md](../docs/design-screens.md) | Figma Screens page build guide |
 
 ## Import tokens into Figma
 
@@ -20,4 +23,12 @@ Source-of-truth design tokens for God Roll Vault (DIM / Ishtar Commander aesthet
 
 ```bash
 pnpm validate-design-tokens
+```
+
+## Screen previews (LEE-71)
+
+Open `design/previews/index.html` in a browser, then screenshot into Figma **Screens** page. See [docs/design-screens.md](../docs/design-screens.md).
+
+```bash
+pnpm validate-design-screens
 ```

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Settings — GRV preview</title>
+    <link rel="stylesheet" href="shared.css" />
+  </head>
+  <body>
+    <nav class="preview-nav">
+      <a href="index.html">All</a>
+      <a href="login.html">Login</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="weapon-detail.html">Detail</a>
+    </nav>
+    <header class="app-header">
+      <div class="logo">God Roll Vault</div>
+      <div style="flex: 1"></div>
+      <a class="icon-btn" href="inventory.html" style="display: inline-block; text-decoration: none">← Inventory</a>
+    </header>
+    <main class="content" style="max-width: 640px">
+      <h1 style="font-size: 18px; margin-bottom: 16px">Settings</h1>
+      <section class="settings-section">
+        <h2>Account</h2>
+        <div class="settings-row">
+          <span>Bungie membership</span>
+          <span style="color: var(--text-muted); font-size: 12px">4611686018467427902</span>
+        </div>
+        <div class="settings-row">
+          <span>Default game mode</span>
+          <span style="color: var(--text-secondary)">PVP</span>
+        </div>
+      </section>
+      <section class="settings-section">
+        <h2>Session</h2>
+        <div class="settings-row">
+          <span>Sign out</span>
+          <button class="btn" style="border-color: var(--error); color: #ffc4ca" type="button">Sign out</button>
+        </div>
+      </section>
+      <div class="state-note">
+        <strong>Figma:</strong> section cards on <code>#222</code> · 8px radius · sign-out uses error border (not filled
+        red — DIM-style subtle destructive).
+      </div>
+    </main>
+  </body>
+</html>

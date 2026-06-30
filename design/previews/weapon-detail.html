@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weapon detail — GRV preview</title>
+    <link rel="stylesheet" href="shared.css" />
+  </head>
+  <body>
+    <nav class="preview-nav">
+      <a href="index.html">All</a>
+      <a href="login.html">Login</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <header class="app-header">
+      <div class="logo">God Roll Vault</div>
+      <input class="search-bar" placeholder="Search weapons…" type="search" />
+      <div class="mode-toggle">
+        <button class="active" type="button">PVP</button>
+        <button type="button">PVE</button>
+      </div>
+      <div class="emblem"></div>
+      <button class="icon-btn" type="button">⚙</button>
+    </header>
+    <main class="content layout-split">
+      <div>
+        <p style="margin-bottom: 16px"><a href="inventory.html">← Back to inventory</a></p>
+        <div class="item-grid" style="opacity: 0.45">
+          <div class="item-tile"></div>
+          <div class="item-tile"></div>
+          <div class="item-tile selected"></div>
+          <div class="item-tile"></div>
+        </div>
+      </div>
+      <aside class="detail-panel">
+        <div class="detail-header">
+          <div class="item-tile item-tile-lg exotic" style="border-width: 2px">
+            <div class="element element-solar"></div>
+            <span class="power">1810</span>
+          </div>
+          <div>
+            <h2>Fatebringer (Timelost)</h2>
+            <div class="sub">Legendary · Hand Cannon · Solar · Vault</div>
+            <span class="badge badge-perfect" style="position: static; display: inline-block; margin-top: 8px"
+              >PVP God Roll</span
+            >
+          </div>
+        </div>
+        <div class="socket-label">Barrel</div>
+        <div class="perk-row match">
+          <div class="perk-icon"></div>
+          <span>Arrowhead Brake</span>
+        </div>
+        <div class="socket-label">Magazine</div>
+        <div class="perk-row match">
+          <div class="perk-icon"></div>
+          <span>Accurized Rounds</span>
+        </div>
+        <div class="socket-label">Perk 1</div>
+        <div class="perk-row match">
+          <div class="perk-icon"></div>
+          <span>Explosive Payload</span>
+        </div>
+        <div class="socket-label">Perk 2</div>
+        <div class="perk-row miss">
+          <div class="perk-icon"></div>
+          <span>Firefly <span style="color: var(--text-muted)">→ Rampage</span></span>
+        </div>
+        <div class="target-roll">
+          <h3>Target PVP roll — Dueling</h3>
+          <p style="color: var(--text-secondary); font-size: 12px">
+            Arrowhead Brake · Accurized Rounds · Explosive Payload · Rampage
+          </p>
+        </div>
+      </aside>
+    </main>
+    <div class="content">
+      <div class="state-note">
+        <strong>Mobile ≤540px:</strong> detail panel stacks below grid (single column). Toggle PVP/PVE updates badge label
+        and target roll block.
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "$schema": "./screens.schema.json",
+  "meta": {
+    "figma": "https://www.figma.com/design/wxhNTKhoNRnnRP3MQsmrwq/Untitled",
+    "figmaPage": "Screens",
+    "desktopWidth": 1280,
+    "mobileBreakpoint": 540,
+    "mobileWidth": 390,
+    "previewBase": "design/previews/"
+  },
+  "screens": [
+    {
+      "id": "login",
+      "name": "Login",
+      "file": "login.html",
+      "figmaFrame": { "width": 1280, "height": 800, "name": "Login / Desktop" },
+      "mobileFrame": { "width": 390, "height": 844, "name": "Login / Mobile" },
+      "states": ["default", "config-error", "loading"],
+      "regions": [
+        { "id": "brand", "component": "Logo + title", "bounds": "center, max-width 400" },
+        { "id": "bungie-cta", "component": "Button/Primary", "token": "color.brand.primary" },
+        {
+          "id": "error-banner",
+          "component": "Inline error",
+          "token": "color.brand.error",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "app-shell",
+      "name": "App shell",
+      "file": "inventory.html",
+      "figmaFrame": { "width": 1280, "height": 900, "name": "App shell + Inventory / Desktop" },
+      "regions": [
+        { "id": "header", "height": 48, "token": "color.app.header" },
+        { "id": "logo", "width": 120 },
+        { "id": "search", "height": 28, "token": "size.searchBarHeight" },
+        { "id": "mode-toggle", "component": "SegmentedControl", "options": ["PVP", "PVE"] },
+        { "id": "character-emblem", "width": 237, "height": 48 },
+        { "id": "settings-link", "component": "IconButton" }
+      ]
+    },
+    {
+      "id": "inventory",
+      "name": "Inventory grid",
+      "file": "inventory.html",
+      "figmaFrame": { "width": 1280, "height": 900, "name": "Inventory / Desktop" },
+      "mobileFrame": { "width": 390, "height": 844, "name": "Inventory / Mobile" },
+      "states": ["default", "loading", "empty", "error", "hover-tile", "selected-tile"],
+      "regions": [
+        { "id": "toolbar", "components": ["search", "refresh", "sort"] },
+        { "id": "weapon-grid", "layout": "flex-wrap", "tileSize": 50, "gap": 8 },
+        { "id": "god-roll-badge", "position": "tile-top-right" }
+      ]
+    },
+    {
+      "id": "weapon-detail",
+      "name": "Weapon detail",
+      "file": "weapon-detail.html",
+      "figmaFrame": { "width": 1280, "height": 900, "name": "Weapon detail / Desktop" },
+      "mobileFrame": { "width": 390, "height": 844, "name": "Weapon detail / Mobile" },
+      "states": ["default", "pvp-mode", "pve-mode"],
+      "regions": [
+        { "id": "detail-panel", "width": 420, "position": "right-overlay" },
+        { "id": "item-tile-large", "size": 64 },
+        { "id": "perk-list", "component": "PerkList" },
+        { "id": "god-roll-comparison", "component": "Target roll column" },
+        { "id": "back-nav", "component": "Text link" }
+      ]
+    },
+    {
+      "id": "settings",
+      "name": "Settings",
+      "file": "settings.html",
+      "figmaFrame": { "width": 1280, "height": 800, "name": "Settings / Desktop" },
+      "regions": [
+        { "id": "section-card", "token": "color.app.section" },
+        { "id": "sign-out", "component": "Button/Destructive" },
+        { "id": "membership", "component": "Read-only row" }
+      ]
+    }
+  ],
+  "annotations": {
+    "hover": "Tile: border-color → color.border.focus; badge scale 1.02",
+    "selected": "Tile: 2px outline color.border.focus",
+    "loading": "Skeleton grid or centered LoadingSpinner on color.app.background",
+    "empty": "EmptyState centered in content area",
+    "error": "ErrorState with retry button, brand.primary CTA"
+  }
+}

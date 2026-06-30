@@ -214,7 +214,7 @@ pnpm validate-design-tokens
 | Ticket | Scope |
 |--------|-------|
 | **LEE-70** | This doc + token JSON + Figma structure |
-| LEE-71 | High-fidelity screen mocks in Figma |
+| **LEE-71** | [design-screens.md](./design-screens.md) + `design/screens/` + HTML previews |
 | LEE-72 | Implement tokens in `packages/ui` |
 | LEE-73 | Redesign components |
 | LEE-74 | Apply to web screens |

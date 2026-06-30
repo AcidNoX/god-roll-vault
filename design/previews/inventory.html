@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inventory — GRV preview</title>
+    <link rel="stylesheet" href="shared.css" />
+  </head>
+  <body>
+    <nav class="preview-nav">
+      <a href="index.html">All</a>
+      <a href="login.html">Login</a>
+      <a href="weapon-detail.html">Detail</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+    <header class="app-header">
+      <div class="logo">God Roll Vault</div>
+      <input class="search-bar" placeholder="Search weapons…" type="search" />
+      <div class="mode-toggle">
+        <button class="active" type="button">PVP</button>
+        <button type="button">PVE</button>
+      </div>
+      <div class="emblem" title="Character emblem 237×48"></div>
+      <button class="icon-btn" type="button">⚙</button>
+    </header>
+    <main class="content">
+      <div class="toolbar">
+        <div>
+          <h1>Weapons</h1>
+          <div class="meta">Titan · 1985 power · 24 items</div>
+        </div>
+        <button class="btn" type="button">Refresh</button>
+        <button class="btn" type="button">Change character</button>
+      </div>
+      <div class="item-grid">
+        <div class="item-tile exotic">
+          <div class="element element-solar"></div>
+          <span class="power">1810</span>
+          <span class="badge badge-perfect">GR</span>
+        </div>
+        <div class="item-tile hover">
+          <div class="element element-arc"></div>
+          <span class="power">1805</span>
+          <span class="badge badge-partial">GR</span>
+        </div>
+        <div class="item-tile selected">
+          <div class="element element-void"></div>
+          <span class="power">1800</span>
+          <span class="badge badge-perfect">GR</span>
+        </div>
+        <div class="item-tile">
+          <div class="element element-arc"></div>
+          <span class="power">1798</span>
+          <span class="badge badge-missing">GR</span>
+        </div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile exotic"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+        <div class="item-tile"></div>
+      </div>
+      <div class="state-note">
+        <strong>Figma annotations:</strong> 50×50 tiles, 8px gap · hover = blue border · selected = 2px outline · GR
+        badge variants (gold/silver/red) · loading = spinner overlay · empty = centered message · mobile ≤540px: search
+        full width, header wraps.
+      </div>
+    </main>
+  </body>
+</html>
