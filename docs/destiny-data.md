@@ -29,6 +29,27 @@ Exported from `@god-roll-vault/destiny-data`:
 
 We do **not** ship or cache the full Destiny manifest (~hundreds of MB). Only hashes for ~50 popular weapons and their common perk pool are stored.
 
+## Design preview (`design/previews/inventory.html`)
+
+The inventory HTML mock is generated from the same fixture and matchers as the app:
+
+- Fixture loadout: `src/preview/inventory-fixture.ts`
+- God roll evaluation: `evaluateInventory` from `@god-roll-vault/core`
+- Bungie icons: `getWeaponIconUrl` / `getPerkIconUrl` from this package
+
+Regenerate after changing god rolls, manifest icons, or the fixture:
+
+```bash
+pnpm generate-inventory-preview
+```
+
+To refresh manifest `iconPath` fields from Bungie (requires `BUNGIE_API_KEY` in `.env`):
+
+```bash
+node scripts/verify-manifest-hashes.mjs
+pnpm generate-inventory-preview
+```
+
 ## Fixture hashes (LEE-38)
 
 These hashes are pinned for unit tests and API inventory fixtures. Their names in JSON **intentionally override** live Bungie definitions:

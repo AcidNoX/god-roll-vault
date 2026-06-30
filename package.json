@@ -13,7 +13,8 @@
     "test:e2e:mobile": "turbo test:e2e:mobile",
     "validate-data": "pnpm --filter @god-roll-vault/destiny-data validate-data",
     "validate-design-tokens": "node scripts/validate-design-tokens.mjs",
-    "validate-design-screens": "node scripts/validate-design-screens.mjs"
+    "validate-design-screens": "node scripts/validate-design-screens.mjs",
+    "generate-inventory-preview": "pnpm --filter @god-roll-vault/destiny-data generate-inventory-preview"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.1",

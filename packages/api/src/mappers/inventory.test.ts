@@ -10,7 +10,12 @@ describe("extractWeaponPerks", () => {
     const perks = extractWeaponPerks("6913529092654216196", weaponsInventoryFixture);
 
     expect(perks).toEqual([
-      { plugHash: 1467527085, name: "Firefly" },
+      {
+        plugHash: 1467527085,
+        name: "Firefly",
+        iconUrl:
+          "https://www.bungie.net/common/destiny2_content/icons/d9e5e8fa07a84c29252b78b0e7b3106d.png",
+      },
       {
         plugHash: 3177301540,
         name: "Explosive Payload",
@@ -38,7 +43,12 @@ describe("extractWeaponPerks", () => {
     const perks = extractWeaponPerks("6913529092654216201", weaponsInventoryFixture);
 
     expect(perks).toEqual([
-      { plugHash: 1467527085, name: "Firefly" },
+      {
+        plugHash: 1467527085,
+        name: "Firefly",
+        iconUrl:
+          "https://www.bungie.net/common/destiny2_content/icons/d9e5e8fa07a84c29252b78b0e7b3106d.png",
+      },
       {
         plugHash: 3177301540,
         name: "Explosive Payload",
@@ -66,8 +76,15 @@ describe("mapInventoryWeapons", () => {
       tier: "Legendary",
       power: 1985,
       element: "kinetic",
+      iconUrl:
+        "https://www.bungie.net/common/destiny2_content/icons/b62083eed6a4708e581fc9a061bcc8e9.jpg",
       perks: [
-        { plugHash: 1467527085, name: "Firefly" },
+        {
+          plugHash: 1467527085,
+          name: "Firefly",
+          iconUrl:
+            "https://www.bungie.net/common/destiny2_content/icons/d9e5e8fa07a84c29252b78b0e7b3106d.png",
+        },
         {
           plugHash: 3177301540,
           name: "Explosive Payload",

@@ -68,6 +68,10 @@ if (!existsSync(resolve(previewsDir, "shared.css"))) {
   fail("missing design/previews/shared.css");
 }
 
+if (!existsSync(resolve(previewsDir, "inventory-data.js"))) {
+  fail("missing design/previews/inventory-data.js — run pnpm generate-inventory-preview");
+}
+
 if (!screens.annotations || Object.keys(screens.annotations).length < 3) {
   fail("annotations must document interaction states");
 }

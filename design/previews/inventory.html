@@ -3,74 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Inventory — GRV preview</title>
+    <title>Inventory — God Roll Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="shared.css" />
+    <link rel="stylesheet" href="inventory.css" />
   </head>
-  <body>
-    <nav class="preview-nav">
+  <body class="inventory-page">
+    <nav class="preview-nav" aria-label="Preview screens">
       <a href="index.html">All</a>
       <a href="login.html">Login</a>
       <a href="weapon-detail.html">Detail</a>
       <a href="settings.html">Settings</a>
     </nav>
+
     <header class="app-header">
       <div class="logo">God Roll Vault</div>
-      <input class="search-bar" placeholder="Search weapons…" type="search" />
-      <div class="mode-toggle">
-        <button class="active" type="button">PVP</button>
-        <button type="button">PVE</button>
-      </div>
-      <div class="emblem" title="Character emblem 237×48"></div>
-      <button class="icon-btn" type="button">⚙</button>
+      <nav class="header-nav" aria-label="Main">
+        <a class="active" href="inventory.html">Inventory</a>
+        <a href="index.html">Characters</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+      <input
+        class="search-bar search-bar-wide"
+        placeholder="is:weapon perk:firefly"
+        type="search"
+        aria-label="Search inventory"
+      />
+      <button class="icon-btn" type="button" title="Refresh inventory">↻</button>
+      <button class="icon-btn" type="button" title="Open settings">⚙</button>
     </header>
-    <main class="content">
-      <div class="toolbar">
-        <div>
-          <h1>Weapons</h1>
-          <div class="meta">Titan · 1985 power · 24 items</div>
+
+    <div class="character-strip">
+      <div class="emblem emblem-lg" role="img" aria-label="Titan emblem">
+        <span class="emblem-void"></span>
+        <span class="emblem-solar"></span>
+      </div>
+      <div class="character-meta">
+        <div class="character-name">Titan</div>
+        <div class="character-stats">
+          <span class="power-level">1985</span>
+          <span class="character-detail"><strong>8</strong> perfect rolls · 24 weapons · PVP targets</span>
         </div>
-        <button class="btn" type="button">Refresh</button>
+      </div>
+      <div class="strip-actions">
+        <fieldset class="mode-toggle">
+          <legend class="mode-toggle-legend">God roll mode</legend>
+          <button class="active" type="button">PVP</button>
+          <button type="button">PVE</button>
+        </fieldset>
         <button class="btn" type="button">Change character</button>
       </div>
-      <div class="item-grid">
-        <div class="item-tile exotic">
-          <div class="element element-solar"></div>
-          <span class="power">1810</span>
-          <span class="badge badge-perfect">GR</span>
-        </div>
-        <div class="item-tile hover">
-          <div class="element element-arc"></div>
-          <span class="power">1805</span>
-          <span class="badge badge-partial">GR</span>
-        </div>
-        <div class="item-tile selected">
-          <div class="element element-void"></div>
-          <span class="power">1800</span>
-          <span class="badge badge-perfect">GR</span>
-        </div>
-        <div class="item-tile">
-          <div class="element element-arc"></div>
-          <span class="power">1798</span>
-          <span class="badge badge-missing">GR</span>
-        </div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile exotic"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-        <div class="item-tile"></div>
-      </div>
-      <div class="state-note">
-        <strong>Figma annotations:</strong> 50×50 tiles, 8px gap · hover = blue border · selected = 2px outline · GR
-        badge variants (gold/silver/red) · loading = spinner overlay · empty = centered message · mobile ≤540px: search
-        full width, header wraps.
-      </div>
+    </div>
+
+    <main class="inventory-layout">
+      <section class="weapon-panel" id="weapon-sections" aria-label="Equipped weapons"></section>
+      <aside class="detail-panel detail-panel-fixed" id="detail-panel" aria-label="Selected weapon"></aside>
     </main>
+
+    <script src="inventory-data.js"></script>
+    <script src="preview-render.js"></script>
   </body>
 </html>

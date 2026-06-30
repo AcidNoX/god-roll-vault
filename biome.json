@@ -14,7 +14,8 @@
       "!**/coverage",
       "!**/pnpm-lock.yaml",
       "!**/apps/web/dist",
-      "!**/apps/mobile/.expo"
+      "!**/apps/mobile/.expo",
+      "!**/design/previews/inventory-data.js"
     ]
   },
   "formatter": {

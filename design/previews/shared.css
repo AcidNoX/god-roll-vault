@@ -20,6 +20,10 @@
   --element-arc: #79bbe8;
   --element-solar: #f0631e;
   --element-void: #8e749e;
+  --element-stasis: #4d88ff;
+  --rarity-legendary-text: #a077ce;
+  --perk-match: #4ade80;
+  --btn-primary: #4887ba;
   --tile: 50px;
   --header-h: 48px;
   --search-h: 28px;
@@ -70,6 +74,24 @@ a:hover {
   white-space: nowrap;
 }
 
+.header-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.header-nav a {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+  color: var(--brand);
+  text-decoration: none;
+}
+
 .search-bar {
   background: var(--bg-app);
   border: 1px solid var(--border);
@@ -86,12 +108,33 @@ a:hover {
   color: var(--text-muted);
 }
 
+.search-bar-wide {
+  background: #1a1a1a;
+  flex: 1;
+  max-width: 460px;
+}
+
 .mode-toggle {
   background: var(--bg-deep);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   display: flex;
+  margin: 0;
+  min-width: 0;
   overflow: hidden;
+  padding: 0;
+}
+
+.mode-toggle-legend {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .mode-toggle button {
@@ -115,7 +158,268 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: 4px;
   height: 32px;
+  overflow: hidden;
+  position: relative;
   width: 120px;
+}
+
+.emblem-lg {
+  flex-shrink: 0;
+  height: 40px;
+  width: 237px;
+}
+
+.emblem-void,
+.emblem-solar {
+  bottom: 0;
+  position: absolute;
+  top: 0;
+}
+
+.emblem-void {
+  background: var(--element-void);
+  left: 0;
+  width: 90px;
+}
+
+.emblem-solar {
+  background: var(--element-solar);
+  left: 90px;
+  width: 60px;
+}
+
+.character-strip {
+  align-items: center;
+  background: var(--bg-surface);
+  display: flex;
+  gap: 16px;
+  min-height: 56px;
+  padding: 8px 16px;
+}
+
+.character-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.character-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.character-stats {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.power-level {
+  color: var(--god-perfect);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.character-detail {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.strip-actions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.inventory-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+  min-height: calc(100vh - 104px);
+}
+
+.weapon-panel {
+  border-right: 1px solid var(--border);
+  overflow: auto;
+  padding: 16px;
+}
+
+.weapon-section {
+  margin-bottom: 20px;
+}
+
+.section-label {
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.detail-panel-fixed {
+  background: var(--bg-surface);
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 16px;
+}
+
+.weapon-hero {
+  background: #1a1a1a;
+  border: 2px solid var(--rarity-legendary);
+  border-radius: 6px;
+  height: 200px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.weapon-hero-art {
+  background: linear-gradient(180deg, #2d2e2f 0%, #1a1a1a 100%);
+  height: 140px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -55%);
+  width: 280px;
+}
+
+.detail-title-row {
+  align-items: flex-start;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.weapon-name {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.weapon-name.legendary {
+  color: var(--rarity-legendary-text);
+}
+
+.weapon-sub {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.weapon-power-row {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.element-tag {
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+}
+
+.element-tag.element-solar {
+  background: rgba(240, 99, 30, 0.15);
+  color: var(--element-solar);
+}
+
+.god-roll-pill {
+  background: #3b2c0c;
+  border: 1px solid var(--god-perfect);
+  border-radius: 4px;
+  color: var(--god-perfect);
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.perk-compare {
+  border-top: 1px solid #1a1a1a;
+  flex: 1;
+  padding-top: 12px;
+}
+
+.perk-compare-header {
+  color: var(--text-muted);
+  display: grid;
+  font-size: 10px;
+  font-weight: 600;
+  grid-template-columns: 1fr 1fr;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.perk-compare-row {
+  display: grid;
+  font-size: 13px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 4px;
+}
+
+.perk-current {
+  color: var(--text);
+}
+
+.perk-target {
+  color: var(--perk-match);
+  text-align: right;
+}
+
+.perk-target.muted {
+  color: var(--text-muted);
+}
+
+.perk-current.match,
+.perk-compare-row .match {
+  color: var(--perk-match);
+}
+
+.roll-source {
+  color: var(--text-muted);
+  font-size: 10px;
+  margin: 16px 0;
+}
+
+.detail-actions {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.btn-block {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.detail-actions-row {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.btn:hover {
+  background: linear-gradient(145deg, #3a3b3c, #252627);
+  border-radius: 2px;
+  height: 28px;
+  left: 6px;
+  position: absolute;
+  top: 12px;
+  width: 38px;
+}
+
+.element-stasis {
+  background: var(--element-stasis);
 }
 
 .icon-btn {
@@ -463,6 +767,20 @@ a:hover {
   color: var(--border-focus);
 }
 
+@media (max-width: 960px) {
+  .inventory-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-panel-fixed {
+    border-top: 1px solid var(--border);
+  }
+
+  .weapon-panel {
+    border-right: none;
+  }
+}
+
 @media (max-width: 540px) {
   .app-header {
     flex-wrap: wrap;
@@ -470,17 +788,32 @@ a:hover {
     padding: 8px 12px;
   }
 
-  .search-bar {
+  .header-nav {
+    order: 2;
+    width: 100%;
+  }
+
+  .search-bar,
+  .search-bar-wide {
     max-width: none;
     order: 3;
     width: 100%;
   }
 
-  .layout-split {
+  .layout-split,
+  .inventory-layout {
     grid-template-columns: 1fr;
   }
 
-  .emblem {
-    display: none;
+  .character-strip {
+    flex-wrap: wrap;
+  }
+
+  .emblem-lg {
+    width: 100%;
+  }
+
+  .strip-actions {
+    width: 100%;
   }
 }
