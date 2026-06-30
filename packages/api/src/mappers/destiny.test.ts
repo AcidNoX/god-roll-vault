@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import charactersFixture from "../fixtures/characters.json";
 import membershipsFixture from "../fixtures/memberships.json";
-import { mapCharacters, mapMemberships } from "./destiny.js";
+import { mapCharacters, mapMemberships, resolvePlayableMemberships } from "./destiny.js";
 
 describe("mapMemberships", () => {
   it("maps Bungie memberships to domain types", () => {
@@ -31,6 +31,59 @@ describe("mapMemberships", () => {
         membershipType: 2,
         membershipId: "123",
         displayName: "LegacyName",
+      },
+    ]);
+  });
+});
+
+describe("resolvePlayableMemberships", () => {
+  it("returns only the cross-save primary membership when set", () => {
+    expect(
+      resolvePlayableMemberships({
+        destinyMemberships: [
+          {
+            membershipType: 5,
+            membershipId: "4611686018501887616",
+            displayName: "Stadia",
+          },
+          {
+            membershipType: 3,
+            membershipId: "4611686018467427903",
+            displayName: "Steam",
+          },
+        ],
+        primaryMembershipId: "4611686018467427903",
+      }),
+    ).toEqual([
+      {
+        membershipType: 3,
+        membershipId: "4611686018467427903",
+        displayName: "Steam",
+      },
+    ]);
+  });
+
+  it("drops deprecated platforms when no primary membership is set", () => {
+    expect(
+      resolvePlayableMemberships({
+        destinyMemberships: [
+          {
+            membershipType: 5,
+            membershipId: "4611686018501887616",
+            displayName: "Stadia",
+          },
+          {
+            membershipType: 1,
+            membershipId: "123",
+            displayName: "Xbox",
+          },
+        ],
+      }),
+    ).toEqual([
+      {
+        membershipType: 1,
+        membershipId: "123",
+        displayName: "Xbox",
       },
     ]);
   });

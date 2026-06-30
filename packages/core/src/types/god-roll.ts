@@ -25,6 +25,8 @@ export type GodRollFlexSlot = {
 /** Target perk combo for a weapon hash, loaded from curated god-roll data. */
 export type GodRollDefinition = {
   weaponHash: number;
+  /** Other inventory item hashes for the same weapon archetype (reissues, timelost variants). */
+  alternateWeaponHashes?: number[];
   mode: GameMode;
   label?: string;
   slots?: GodRollSlots;

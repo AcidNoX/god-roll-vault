@@ -1,3 +1,4 @@
+import { registerWeaponDefinition } from "@god-roll-vault/destiny-data";
 import { describe, expect, it } from "vitest";
 
 import weaponsInventoryFixture from "../fixtures/weapons-inventory.json";
@@ -159,5 +160,51 @@ describe("mapInventoryWeapons", () => {
       iconUrl:
         "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
     });
+  });
+
+  it("includes unequipped weapons when manifest marks them as weapons", () => {
+    registerWeaponDefinition(5555555555, {
+      name: "Test AR",
+      tier: "Legendary",
+      itemType: 3,
+    });
+
+    const profile = {
+      characterInventories: {
+        [CHARACTER_ID]: {
+          items: [
+            {
+              itemHash: 5555555555,
+              itemInstanceId: "inv-weapon",
+              bucketHash: 1234567890,
+              quantity: 1,
+            },
+          ],
+        },
+      },
+      characterEquipment: {
+        [CHARACTER_ID]: { items: [] },
+      },
+      profileInventory: { items: [], privacy: 1 },
+      itemComponents: {
+        instances: {
+          data: {
+            "inv-weapon": {
+              primaryStat: { value: 1980 },
+              damageTypeHash: 3373582085,
+            },
+          },
+        },
+        sockets: { data: {} },
+      },
+    };
+
+    expect(mapInventoryWeapons(profile, CHARACTER_ID)).toEqual([
+      expect.objectContaining({
+        itemHash: 5555555555,
+        itemInstanceId: "inv-weapon",
+        name: "Test AR",
+      }),
+    ]);
   });
 });

@@ -1,13 +1,18 @@
 import { z } from "zod";
 
+/** Bungie envelope fields shared by success and error responses. */
+export const bungieEnvelopeMetaSchema = z.object({
+  ErrorCode: z.number(),
+  ThrottleSeconds: z.number(),
+  ErrorStatus: z.string(),
+  Message: z.string(),
+  MessageData: z.record(z.unknown()).optional().default({}),
+  Response: z.unknown().optional(),
+});
+
 export const bungieEnvelopeSchema = <T extends z.ZodTypeAny>(responseSchema: T) =>
-  z.object({
+  bungieEnvelopeMetaSchema.extend({
     Response: responseSchema,
-    ErrorCode: z.number(),
-    ThrottleSeconds: z.number(),
-    ErrorStatus: z.string(),
-    Message: z.string(),
-    MessageData: z.record(z.unknown()),
   });
 
 export type BungieEnvelope<T> = {

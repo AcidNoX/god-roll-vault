@@ -152,6 +152,47 @@ describe("matchGodRoll", () => {
 });
 
 describe("findBestRoll", () => {
+  it("returns unknown when no god roll data exists for the weapon", () => {
+    const weapon = makeWeapon({ itemHash: 9999999999 });
+    const result = findBestRoll(weapon, [makeGodRoll()], "pvp");
+
+    expect(result.status).toBe("unknown");
+    expect(result.score).toBe(0);
+  });
+
+  it("matches alternate weapon hashes for the same archetype", () => {
+    const weapon = makeWeapon({
+      itemHash: 1363886209,
+      perks: [
+        { plugHash: 1, name: "Smallbore" },
+        { plugHash: 2, name: "Accurized Rounds" },
+        { plugHash: 3, name: "Kill Clip" },
+        { plugHash: 4, name: "Firefly" },
+      ],
+    });
+
+    const result = findBestRoll(
+      weapon,
+      [
+        makeGodRoll({
+          weaponHash: 4219826183,
+          alternateWeaponHashes: [1363886209],
+          slots: {
+            barrel: ["Smallbore"],
+            magazine: ["Accurized Rounds"],
+            perk1: ["Kill Clip"],
+            perk2: ["Rampage", "Firefly"],
+          },
+          flexSlots: [{ slot: "perk2", perks: ["Rampage", "Firefly"] }],
+        }),
+      ],
+      "pvp",
+    );
+
+    expect(result.status).toBe("perfect");
+    expect(result.score).toBe(100);
+  });
+
   it("returns the highest-scoring variant for a weapon", () => {
     const weapon = makeWeapon({
       perks: [

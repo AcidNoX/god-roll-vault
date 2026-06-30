@@ -30,6 +30,8 @@ export {
 export type { BungieClientConfig } from "./client.js";
 export { BUNGIE_API_BASE_URL, BungieClient } from "./client.js";
 export { BungieApiError } from "./errors.js";
+export { formatApiError } from "./format-api-error.js";
+export { enrichInventoryWeapons } from "./mappers/enrich-inventory.js";
 export type {
   DestinyCharacterResponse,
   DestinyItemResponse,

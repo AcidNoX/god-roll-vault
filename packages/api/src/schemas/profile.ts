@@ -11,7 +11,7 @@ export const destinyItemComponentSchema = z.object({
 });
 
 export const destinyInventoryComponentSchema = z.object({
-  items: z.array(destinyItemComponentSchema),
+  items: z.array(destinyItemComponentSchema).default([]),
   privacy: z.number().optional(),
 });
 
@@ -22,6 +22,40 @@ export const destinyCharacterComponentSchema = z.object({
   dateLastPlayed: z.string(),
   emblemHash: z.number().optional(),
 });
+
+/**
+ * Bungie dictionary components arrive as `{ data: { id: entry }, privacy }`.
+ * Tests and older fixtures may use the unwrapped record directly.
+ */
+function dictionaryComponentRecord<T extends z.ZodTypeAny>(entrySchema: T) {
+  return z.preprocess((value) => {
+    if (!value || typeof value !== "object") {
+      return undefined;
+    }
+
+    if ("data" in value) {
+      const wrapped = value as { data?: Record<string, unknown> };
+      return wrapped.data;
+    }
+
+    return value;
+  }, z.record(entrySchema).optional());
+}
+
+/** Bungie single components (vault, profile, etc.) use the same `{ data, privacy }` envelope. */
+function singleComponent<T extends z.ZodTypeAny>(componentSchema: T) {
+  return z.preprocess((value) => {
+    if (!value || typeof value !== "object") {
+      return undefined;
+    }
+
+    if ("data" in value) {
+      return (value as { data?: unknown }).data;
+    }
+
+    return value;
+  }, componentSchema.optional());
+}
 
 export const destinyItemSocketStateSchema = z.object({
   plugHash: z.number().nullable().optional(),
@@ -48,33 +82,51 @@ export const destinyItemReusablePlugsComponentSchema = z.object({
 });
 
 export const destinyProfileResponseSchema = z.object({
-  characters: z.record(destinyCharacterComponentSchema).optional(),
-  characterInventories: z.record(destinyInventoryComponentSchema).optional(),
-  characterEquipment: z.record(destinyInventoryComponentSchema).optional(),
-  profileInventory: destinyInventoryComponentSchema.optional(),
+  characters: dictionaryComponentRecord(destinyCharacterComponentSchema),
+  characterInventories: dictionaryComponentRecord(destinyInventoryComponentSchema),
+  characterEquipment: dictionaryComponentRecord(destinyInventoryComponentSchema),
+  profileInventory: singleComponent(destinyInventoryComponentSchema),
   itemComponents: z
     .object({
-      instances: z
-        .object({
-          data: z.record(destinyItemInstanceComponentSchema),
-        })
-        .optional(),
-      sockets: z
-        .object({
-          data: z.record(
-            z.object({
-              sockets: z.array(destinyItemSocketStateSchema).optional(),
-            }),
-          ),
-        })
-        .optional(),
-      reusablePlugs: z
-        .object({
-          data: z.record(destinyItemReusablePlugsComponentSchema),
-        })
-        .optional(),
+      instances: singleComponent(z.record(destinyItemInstanceComponentSchema)),
+      sockets: singleComponent(
+        z.record(
+          z.object({
+            sockets: z.array(destinyItemSocketStateSchema).optional(),
+          }),
+        ),
+      ),
+      reusablePlugs: singleComponent(z.record(destinyItemReusablePlugsComponentSchema)),
     })
-    .optional(),
+    .partial()
+    .optional()
+    .transform((itemComponents) => {
+      if (!itemComponents) {
+        return undefined;
+      }
+
+      const normalized: {
+        instances?: { data: Record<string, z.infer<typeof destinyItemInstanceComponentSchema>> };
+        sockets?: {
+          data: Record<string, { sockets?: z.infer<typeof destinyItemSocketStateSchema>[] }>;
+        };
+        reusablePlugs?: {
+          data: Record<string, z.infer<typeof destinyItemReusablePlugsComponentSchema>>;
+        };
+      } = {};
+
+      if (itemComponents.instances) {
+        normalized.instances = { data: itemComponents.instances };
+      }
+      if (itemComponents.sockets) {
+        normalized.sockets = { data: itemComponents.sockets };
+      }
+      if (itemComponents.reusablePlugs) {
+        normalized.reusablePlugs = { data: itemComponents.reusablePlugs };
+      }
+
+      return Object.keys(normalized).length > 0 ? normalized : undefined;
+    }),
 });
 
 export type DestinyItemComponent = z.output<typeof destinyItemComponentSchema>;

@@ -9,6 +9,9 @@ import {
   getWeaponIconUrl,
   getWeaponName,
   getWeaponTier,
+  isWeaponItemHash,
+  registerPlugDefinition,
+  registerWeaponDefinition,
 } from "./lookup.js";
 import mvpPlugs from "./mvp-plugs.json";
 import mvpWeapons from "./mvp-weapons.json";
@@ -67,6 +70,14 @@ describe("manifest lookup", () => {
     expect(getPerkName(2847525152)).toBe("Accurized Rounds");
   });
 
+  it("uses runtime manifest entries when registered", () => {
+    registerWeaponDefinition(999001, { name: "Runtime Rifle", tier: "Legendary" });
+    registerPlugDefinition(999002, { name: "Runtime Perk" });
+
+    expect(getWeaponName(999001)).toBe("Runtime Rifle");
+    expect(getPerkName(999002)).toBe("Runtime Perk");
+  });
+
   it("falls back for unknown hashes", () => {
     expect(getWeaponName(999)).toBe("Unknown Weapon (999)");
     expect(getWeaponTier(999)).toBe("Unknown");
@@ -82,5 +93,16 @@ describe("isWeaponBucket", () => {
       expect(isWeaponBucket(bucketHash)).toBe(true);
     }
     expect(isWeaponBucket(3448274439)).toBe(false);
+  });
+});
+
+describe("isWeaponItemHash", () => {
+  it("identifies weapons from manifest itemType", () => {
+    registerWeaponDefinition(888001, { name: "Manifest AR", tier: "Legendary", itemType: 3 });
+    registerWeaponDefinition(888002, { name: "Helmet", tier: "Legendary", itemType: 2 });
+
+    expect(isWeaponItemHash(888001)).toBe(true);
+    expect(isWeaponItemHash(888002)).toBe(false);
+    expect(isWeaponItemHash(1363886209)).toBe(true);
   });
 });

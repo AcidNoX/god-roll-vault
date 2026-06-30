@@ -26,6 +26,7 @@ export const godRollFlexSlotSchema = z.object({
 
 export const godRollDefinitionSchema = z.object({
   weaponHash: z.number(),
+  alternateWeaponHashes: z.array(z.number()).optional(),
   mode: gameModeSchema,
   label: z.string().optional(),
   slots: godRollSlotsSchema.optional(),

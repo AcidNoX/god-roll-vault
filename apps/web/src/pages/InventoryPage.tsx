@@ -69,7 +69,6 @@ export function InventoryPage() {
   const { error, isLoading, isRefreshing, weapons } = useInventoryWeapons({
     reloadToken,
     selectedCharacter,
-    tokens,
   });
 
   const buttonStyle: CSSProperties = {

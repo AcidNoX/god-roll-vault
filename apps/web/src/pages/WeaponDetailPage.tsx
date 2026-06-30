@@ -92,7 +92,7 @@ function findEvaluation(
 }
 
 export function WeaponDetailPage() {
-  const { logout, tokens } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const { itemInstanceId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -103,7 +103,6 @@ export function WeaponDetailPage() {
   const { error, isLoading, isRefreshing, weapons } = useInventoryWeapons({
     reloadToken,
     selectedCharacter,
-    tokens,
   });
   const evaluations = useMemo(
     () =>

@@ -1,4 +1,9 @@
-import { BungieClient, type DestinyCharacter, type DestinyMembership } from "@god-roll-vault/api";
+import {
+  BungieClient,
+  type DestinyCharacter,
+  type DestinyMembership,
+  formatApiError,
+} from "@god-roll-vault/api";
 import {
   Box,
   EmptyState,
@@ -170,7 +175,7 @@ function CharacterCard({ option, isSelected, onSelect }: CharacterCardProps) {
 }
 
 export function CharacterSelectorPage() {
-  const { tokens } = useAuth();
+  const { ensureValidTokens } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
   const [characters, setCharacters] = useState<CharacterOption[]>([]);
@@ -189,6 +194,7 @@ export function CharacterSelectorPage() {
       setError(null);
 
       try {
+        const tokens = await ensureValidTokens();
         if (!tokens) {
           throw new Error("Sign in again to load your Destiny characters.");
         }
@@ -198,27 +204,44 @@ export function CharacterSelectorPage() {
           apiKey,
           accessToken: tokens.accessToken,
         });
-        const memberships = await client.getMemberships();
+        const memberships = await client.getPlayableMemberships();
+        if (memberships.length === 0) {
+          throw new Error(
+            "No playable Destiny memberships were found. If you only linked defunct platforms (e.g. Stadia), sign in on Steam, Xbox, or PlayStation.",
+          );
+        }
+
+        const loadFailures: unknown[] = [];
         const characterGroups = await Promise.all(
           memberships.map(async (membership) => {
-            const membershipCharacters = await client.getCharacters(
-              membership.membershipType,
-              membership.membershipId,
-            );
+            try {
+              const membershipCharacters = await client.getCharacters(
+                membership.membershipType,
+                membership.membershipId,
+              );
 
-            return membershipCharacters.map((character) => ({
-              membership,
-              character,
-            }));
+              return membershipCharacters.map((character) => ({
+                membership,
+                character,
+              }));
+            } catch (loadError) {
+              loadFailures.push(loadError);
+              return [];
+            }
           }),
         );
 
+        const loadedCharacters = characterGroups.flat();
+        if (loadedCharacters.length === 0 && loadFailures.length > 0) {
+          throw loadFailures[0];
+        }
+
         if (!cancelled) {
-          setCharacters(characterGroups.flat());
+          setCharacters(loadedCharacters);
         }
       } catch (loadError) {
         if (!cancelled) {
-          setError(loadError instanceof Error ? loadError.message : "Unable to load characters.");
+          setError(formatApiError(loadError, "Unable to load characters."));
           setCharacters([]);
         }
       } finally {
@@ -233,7 +256,7 @@ export function CharacterSelectorPage() {
     return () => {
       cancelled = true;
     };
-  }, [tokens, reloadToken]);
+  }, [ensureValidTokens, reloadToken]);
 
   const handleRetry = useCallback(() => {
     setReloadToken((current) => current + 1);
