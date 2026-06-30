@@ -11,9 +11,11 @@ function createHostComponent(name: string) {
 }
 
 export type GestureResponderEvent = unknown;
+export type ImageStyle = Record<string, unknown>;
 export type TextStyle = Record<string, unknown>;
 export type ViewStyle = Record<string, unknown>;
 
+export const Image = createHostComponent("Image");
 export const Text = createHostComponent("Text");
 export const View = createHostComponent("View");
 export const ActivityIndicator = createHostComponent("ActivityIndicator");
@@ -70,3 +72,4 @@ export const StyleSheet = {
 export type TextProps = ComponentProps<typeof Text>;
 export type ViewProps = ComponentProps<typeof View>;
 export type ActivityIndicatorProps = ComponentProps<typeof ActivityIndicator>;
+export type ImageProps = ComponentProps<typeof Image>;

@@ -261,7 +261,10 @@ test.describe("Weapon inventory", () => {
       cards.nth(0).getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-badge`),
     ).toHaveText("God Roll");
     await expect(
-      cards.nth(0).getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-icon-image`),
+      cards
+        .nth(0)
+        .getByTestId(`weapon-card-${FATEBRINGER_INSTANCE_ID}-weapon-icon-image`)
+        .locator("img"),
     ).toHaveAttribute(
       "src",
       "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
@@ -307,7 +310,7 @@ test.describe("Weapon inventory", () => {
     await expect(page.getByTestId("weapon-detail-page")).toBeVisible();
     await expect(page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}`)).toBeVisible();
     await expect(page.getByTestId("weapon-detail-title")).toHaveText("Fatebringer (Timelost)");
-    await expect(page.getByTestId("weapon-detail-icon-image")).toHaveAttribute(
+    await expect(page.getByTestId("weapon-detail-icon-image").locator("img")).toHaveAttribute(
       "src",
       "https://www.bungie.net/common/destiny2_content/icons/0e281ebb76f5e5ba169bd44c036fcf39.jpg",
     );

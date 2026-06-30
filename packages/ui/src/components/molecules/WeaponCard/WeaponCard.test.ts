@@ -12,7 +12,7 @@ type TestElementProps = {
   children?: ReactNode;
   disabled?: boolean;
   onPress?: unknown;
-  source?: unknown;
+  sourceUri?: string;
   style?: unknown;
   testID?: string;
 };
@@ -91,7 +91,7 @@ describe("WeaponCard", () => {
     const weaponIconImage = findByTestID(card, `${cardTestID}-weapon-icon-image`);
 
     expect(weaponIcon.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
-    expect(weaponIconImage.props.source).toEqual({ uri: iconUrl });
+    expect(weaponIconImage.props.sourceUri).toBe(iconUrl);
     expect(weaponIconImage.props.accessibilityLabel).toBe("Fatebringer (Timelost) icon");
     expect(() => findByTestID(card, `${cardTestID}-element-icon`)).toThrow(
       `Unable to find testID ${cardTestID}-element-icon`,

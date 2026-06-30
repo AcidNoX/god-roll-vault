@@ -9,7 +9,7 @@ import { PerkList } from "./PerkList.js";
 type TestElementProps = {
   accessibilityLabel?: string;
   children?: ReactNode;
-  source?: unknown;
+  sourceUri?: string;
   style?: unknown;
   testID?: string;
 };
@@ -155,7 +155,7 @@ describe("PerkList", () => {
     const perkIcon = findByTestID(list, "perk-list-perk1-icon");
 
     expect(perkIcon.props.accessibilityLabel).toBe("Kill Clip icon");
-    expect(perkIcon.props.source).toEqual({ uri: iconUrl });
+    expect(perkIcon.props.sourceUri).toBe(iconUrl);
     expect(textContent(findByTestID(list, "perk-list-perk1"))).toBe("Perk 1MatchedKill Clip");
   });
 });
