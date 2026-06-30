@@ -16,6 +16,12 @@ export type ViewStyle = Record<string, unknown>;
 
 export const Text = createHostComponent("Text");
 export const View = createHostComponent("View");
+export const Platform = {
+  OS: "web",
+  select<T>(specifics: Partial<Record<string, T>> & { default?: T }) {
+    return specifics.web ?? specifics.default;
+  },
+};
 export const Pressable = ({
   children,
   disabled,

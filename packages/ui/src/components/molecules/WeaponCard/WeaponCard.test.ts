@@ -2,6 +2,8 @@ import type { InventoryWeapon, MatchStatus, RollMatchResult } from "@god-roll-va
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
+import { flattenStyle, textContent } from "../../../test-utils/componentTree.js";
+import { designTokens } from "../../../theme/index.js";
 import { WeaponCard } from "./WeaponCard.js";
 
 type TestElementProps = {
@@ -64,44 +66,6 @@ function findByTestID(node: ReactNode, testID: string): ReactElement<TestElement
   throw new Error(`Unable to find testID ${testID}`);
 }
 
-function textContent(node: ReactNode): string {
-  if (typeof node === "string" || typeof node === "number") {
-    return String(node);
-  }
-
-  if (Array.isArray(node)) {
-    return node.map(textContent).join("");
-  }
-
-  if (isValidElement<TestElementProps>(node)) {
-    return textContent(node.props.children);
-  }
-
-  return "";
-}
-
-function flattenStyle(style: unknown): Record<string, unknown> {
-  if (!style) {
-    return {};
-  }
-
-  if (Array.isArray(style)) {
-    const merged: Record<string, unknown> = {};
-
-    for (const stylePart of style) {
-      Object.assign(merged, flattenStyle(stylePart));
-    }
-
-    return merged;
-  }
-
-  if (typeof style === "object") {
-    return style as Record<string, unknown>;
-  }
-
-  return {};
-}
-
 describe("WeaponCard", () => {
   it("renders compact weapon details with an element icon and default unknown badge", () => {
     const card = renderWeaponCard();
@@ -128,10 +92,30 @@ describe("WeaponCard", () => {
   });
 
   it.each([
-    ["perfect", "God Roll", "#123524", "#2ecc71"],
-    ["partial", "Partial", "#3a2f12", "#f5c542"],
-    ["missing", "Missing", "#3a1717", "#ff6b6b"],
-    ["unknown", "Unknown", "#282836", "#5f6472"],
+    [
+      "perfect",
+      "God Roll",
+      designTokens.colors.badge.perfect.background,
+      designTokens.colors.badge.perfect.border,
+    ],
+    [
+      "partial",
+      "Partial",
+      designTokens.colors.badge.partial.background,
+      designTokens.colors.badge.partial.border,
+    ],
+    [
+      "missing",
+      "Missing",
+      designTokens.colors.badge.missing.background,
+      designTokens.colors.badge.missing.border,
+    ],
+    [
+      "unknown",
+      "Unknown",
+      designTokens.colors.badge.unknown.background,
+      designTokens.colors.badge.unknown.border,
+    ],
   ] satisfies [
     MatchStatus,
     string,
