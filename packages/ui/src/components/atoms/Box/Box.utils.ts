@@ -1,34 +1,11 @@
-import type { ReactNode } from "react";
-import type { StyleProp, ViewProps, ViewStyle } from "react-native";
-import { View } from "react-native";
+import type { ViewStyle } from "react-native";
 
-import { type ColorToken, resolveSpacing, type SpacingValue, theme } from "./theme.js";
+import { resolveSpacing, theme } from "../../../theme/index.js";
+import type { BoxProps } from "./Box.types.js";
 
-export type BoxProps = Omit<ViewProps, "style"> & {
-  backgroundColor?: ColorToken;
-  borderColor?: ColorToken;
-  children?: ReactNode;
-  margin?: SpacingValue;
-  marginBottom?: SpacingValue;
-  marginHorizontal?: SpacingValue;
-  marginLeft?: SpacingValue;
-  marginRight?: SpacingValue;
-  marginTop?: SpacingValue;
-  marginVertical?: SpacingValue;
-  padding?: SpacingValue;
-  paddingBottom?: SpacingValue;
-  paddingHorizontal?: SpacingValue;
-  paddingLeft?: SpacingValue;
-  paddingRight?: SpacingValue;
-  paddingTop?: SpacingValue;
-  paddingVertical?: SpacingValue;
-  style?: StyleProp<ViewStyle>;
-};
-
-export function Box({
+export function createBoxStyle({
   backgroundColor,
   borderColor,
-  children,
   margin,
   marginBottom,
   marginHorizontal,
@@ -43,10 +20,26 @@ export function Box({
   paddingRight,
   paddingTop,
   paddingVertical,
-  style,
-  ...viewProps
-}: BoxProps) {
-  const boxStyle: ViewStyle = {
+}: Pick<
+  BoxProps,
+  | "backgroundColor"
+  | "borderColor"
+  | "margin"
+  | "marginBottom"
+  | "marginHorizontal"
+  | "marginLeft"
+  | "marginRight"
+  | "marginTop"
+  | "marginVertical"
+  | "padding"
+  | "paddingBottom"
+  | "paddingHorizontal"
+  | "paddingLeft"
+  | "paddingRight"
+  | "paddingTop"
+  | "paddingVertical"
+>): ViewStyle {
+  return {
     backgroundColor: backgroundColor ? theme.colors[backgroundColor] : undefined,
     borderColor: borderColor ? theme.colors[borderColor] : undefined,
     margin: resolveSpacing(margin),
@@ -64,10 +57,4 @@ export function Box({
     paddingTop: resolveSpacing(paddingTop),
     paddingVertical: resolveSpacing(paddingVertical),
   };
-
-  return (
-    <View {...viewProps} style={[boxStyle, style]}>
-      {children}
-    </View>
-  );
 }

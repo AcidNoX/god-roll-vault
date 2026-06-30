@@ -7,6 +7,42 @@
 - `packages/ui` contains shared visual components (react-native primitives)
 - Apps (`web`, `mobile`) wire auth storage, routing, and platform APIs
 
+## UI Component Organization
+
+`packages/ui` uses atomic design under `packages/ui/src/components`:
+
+- `atoms/` — lowest-level primitives and simple wrappers (`Box`, `Text`, `Pressable`, `Stack`, `AppText`)
+- `molecules/` — small composed UI blocks (`WeaponCard`)
+- `organisms/` — larger feature sections when needed
+- `templates/` — screen/page-level layout wrappers (`Screen`)
+
+Every UI component must live in its own directory with a local barrel:
+
+```text
+components/atoms/Box/
+  index.ts
+  Box.tsx
+  Box.types.ts
+  Box.test.ts
+  Box.utils.ts        # when needed
+  Box.styles.ts       # when needed
+  Box.constants.ts    # when needed
+  hooks/
+    useMyHook/
+      index.ts
+      useMyHook.ts
+      useMyHook.test.ts
+```
+
+Rules:
+
+- Export each component through its own `index.ts`, then re-export through the atomic-design layer barrel and `packages/ui/src/index.ts`.
+- Keep prop/type definitions in `Component.types.ts`.
+- Keep non-trivial style objects in `Component.styles.ts`.
+- Keep reusable helpers in `Component.utils.ts`; keep static presentation maps in `Component.constants.ts`.
+- Put component tests in the component directory (`Component.test.ts` or `Component.test.tsx` when JSX is needed).
+- Prefer composing shared UI components from lower-level atoms before reaching directly for `react-native` primitives.
+
 ## Commands
 
 ```bash
@@ -52,7 +88,7 @@ Examples:
 
 ## Testing
 
-Use `@god-roll-vault/vitest` shared configs. Add `*.test.ts` (or `*.test.tsx` for UI) alongside source files.
+Use `@god-roll-vault/vitest` shared configs. Add `*.test.ts` (or `*.test.tsx` when JSX is needed) next to the source under test.
 
 | Package | Config import | Environment |
 |---------|---------------|-------------|

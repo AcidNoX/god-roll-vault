@@ -38,16 +38,3 @@ export const theme = {
     },
   },
 } as const;
-
-export type ColorToken = keyof typeof theme.colors;
-export type SpacingToken = keyof typeof theme.spacing;
-export type SpacingValue = SpacingToken | number;
-export type TextVariant = keyof typeof theme.typography;
-
-export function resolveSpacing(value: SpacingValue | undefined) {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  return typeof value === "number" ? value : theme.spacing[value];
-}
