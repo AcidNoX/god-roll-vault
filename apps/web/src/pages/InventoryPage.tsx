@@ -28,7 +28,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { TextStyle } from "react-native";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthProvider.js";
@@ -157,7 +156,7 @@ export function InventoryPage() {
   const metadataTextStyle = {
     display: "block",
     lineHeight: theme.typography.lineHeight.caption + 2,
-  } as TextStyle;
+  } satisfies CSSProperties;
 
   useEffect(() => {
     let cancelled = false;
