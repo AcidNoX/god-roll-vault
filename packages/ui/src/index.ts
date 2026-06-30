@@ -24,6 +24,7 @@ export type {
   GodRollBadgeProps,
   PerkListProps,
   WeaponCardProps,
+  WeaponGroupCardProps,
 } from "./components/molecules/index.js";
 export {
   EmptyState,
@@ -31,6 +32,7 @@ export {
   GodRollBadge,
   PerkList,
   WeaponCard,
+  WeaponGroupCard,
 } from "./components/molecules/index.js";
 export type { ScreenProps } from "./components/templates/index.js";
 export { Screen } from "./components/templates/index.js";

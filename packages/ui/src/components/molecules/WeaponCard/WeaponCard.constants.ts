@@ -1,4 +1,4 @@
-import type { InventoryWeapon, MatchStatus } from "@god-roll-vault/core";
+import type { InstanceDisposition, InventoryWeapon, MatchStatus } from "@god-roll-vault/core";
 
 import { designTokens } from "../../../theme/index.js";
 import type { BadgePresentation, ElementPresentation } from "./WeaponCard.types.js";
@@ -45,6 +45,39 @@ export const badgePresentationByStatus = {
     },
   },
 } satisfies Record<MatchStatus, BadgePresentation>;
+
+export const dispositionPresentationByType = {
+  keep: {
+    label: "Keep",
+    containerStyle: {
+      backgroundColor: "rgba(110, 231, 168, 0.12)",
+      borderColor: "rgba(110, 231, 168, 0.35)",
+    },
+    textStyle: {
+      color: "#6ee7a8",
+    },
+  },
+  dismantle: {
+    label: "Dismantle",
+    containerStyle: {
+      backgroundColor: "rgba(248, 113, 113, 0.12)",
+      borderColor: "rgba(248, 113, 113, 0.35)",
+    },
+    textStyle: {
+      color: "#f87171",
+    },
+  },
+  consider: {
+    label: "Consider",
+    containerStyle: {
+      backgroundColor: designTokens.colors.badge.partial.background,
+      borderColor: designTokens.colors.badge.partial.border,
+    },
+    textStyle: {
+      color: designTokens.colors.badge.partial.text,
+    },
+  },
+} satisfies Record<Exclude<InstanceDisposition, "only">, BadgePresentation>;
 
 export const elementPresentationByType = {
   kinetic: {

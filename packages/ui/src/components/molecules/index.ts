@@ -8,3 +8,5 @@ export type { PerkListProps } from "./PerkList/index.js";
 export { PerkList } from "./PerkList/index.js";
 export type { WeaponCardProps } from "./WeaponCard/index.js";
 export { WeaponCard } from "./WeaponCard/index.js";
+export type { WeaponGroupCardProps } from "./WeaponGroupCard/index.js";
+export { WeaponGroupCard } from "./WeaponGroupCard/index.js";
