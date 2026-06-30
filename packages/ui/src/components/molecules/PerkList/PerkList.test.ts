@@ -105,7 +105,7 @@ describe("PerkList", () => {
     expect(textContent(findByTestID(list, "perk-list-magazine"))).toBe("MagMatchedRicochet Rounds");
     expect(textContent(findByTestID(list, "perk-list-perk1"))).toBe("Perk 1MatchedKill Clip");
     expect(textContent(findByTestID(list, "perk-list-perk2"))).toBe("Perk 2MatchedRampage");
-    expect(textContent(originTrait)).toBe("Origin TraitEquippedNadir Focus");
+    expect(textContent(originTrait)).toBe("Origin TraitOptionalNadir Focus");
     expect(flattenStyle(originTrait.props.style)).toMatchObject({
       backgroundColor: designTokens.colors.surfaceMuted,
       borderColor: designTokens.colors.border,

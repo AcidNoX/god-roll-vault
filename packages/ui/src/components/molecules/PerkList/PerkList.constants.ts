@@ -47,7 +47,7 @@ export const perkListPresentationByStatus = {
     },
   },
   neutral: {
-    statusLabel: "Equipped",
+    statusLabel: "Optional",
     containerStyle: {
       backgroundColor: designTokens.colors.surfaceMuted,
       borderColor: designTokens.colors.border,
