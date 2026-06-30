@@ -154,8 +154,9 @@ export function InventoryPage() {
     padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
   };
   const metadataTextStyle = {
-    display: "block",
+    display: "flex",
     lineHeight: theme.typography.lineHeight.caption + 2,
+    marginBottom: theme.spacing.xs,
   } satisfies CSSProperties;
 
   useEffect(() => {
