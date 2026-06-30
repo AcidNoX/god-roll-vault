@@ -10,6 +10,18 @@ package use React Native primitives so they can be shared by the Vite web app th
 - Do not add app routing, auth storage, platform API wiring, or other app-specific logic here.
 - Export public components from `src/index.ts`.
 
+## Component organization
+
+Components follow atomic design under `src/components`:
+
+- `atoms/` exports primitive building blocks such as `Box`, `Text`, `Pressable`,
+  `Stack`, and `AppText`.
+- `molecules/` exports composed UI blocks such as `WeaponCard`.
+- `templates/` exports layout wrappers such as `Screen`.
+
+Design tokens and theme helpers live under `src/theme` and are re-exported through
+the package barrel.
+
 ## Vite consumption
 
 The web app must resolve React Native imports to `react-native-web`. Keep the package

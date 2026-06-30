@@ -26,6 +26,7 @@ export {
   colors,
   darkTheme,
   designTokens,
+  resolveSpacing,
   spacing,
   ThemeProvider,
   theme,
