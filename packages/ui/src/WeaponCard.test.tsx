@@ -2,6 +2,7 @@ import type { InventoryWeapon, MatchStatus, RollMatchResult } from "@god-roll-va
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
+import { designTokens } from "./theme.js";
 import { WeaponCard } from "./WeaponCard.js";
 
 type TestElementProps = {
@@ -128,10 +129,30 @@ describe("WeaponCard", () => {
   });
 
   it.each([
-    ["perfect", "God Roll", "#123524", "#2ecc71"],
-    ["partial", "Partial", "#3a2f12", "#f5c542"],
-    ["missing", "Missing", "#3a1717", "#ff6b6b"],
-    ["unknown", "Unknown", "#282836", "#5f6472"],
+    [
+      "perfect",
+      "God Roll",
+      designTokens.colors.badge.perfect.background,
+      designTokens.colors.badge.perfect.border,
+    ],
+    [
+      "partial",
+      "Partial",
+      designTokens.colors.badge.partial.background,
+      designTokens.colors.badge.partial.border,
+    ],
+    [
+      "missing",
+      "Missing",
+      designTokens.colors.badge.missing.background,
+      designTokens.colors.badge.missing.border,
+    ],
+    [
+      "unknown",
+      "Unknown",
+      designTokens.colors.badge.unknown.background,
+      designTokens.colors.badge.unknown.border,
+    ],
   ] satisfies [
     MatchStatus,
     string,

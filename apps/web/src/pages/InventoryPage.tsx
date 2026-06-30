@@ -1,21 +1,21 @@
-import { AppText, Screen } from "@god-roll-vault/ui";
+import { AppText, Screen, useTheme } from "@god-roll-vault/ui";
 import type { CSSProperties } from "react";
 
 import { useAuth } from "../auth/AuthProvider.js";
 
-const buttonStyle: CSSProperties = {
-  backgroundColor: "#3a3a4a",
-  border: "none",
-  borderRadius: 4,
-  color: "#f5f5f5",
-  cursor: "pointer",
-  fontSize: 16,
-  marginTop: 16,
-  padding: "12px 24px",
-};
-
 export function InventoryPage() {
   const { logout, tokens } = useAuth();
+  const theme = useTheme();
+  const buttonStyle: CSSProperties = {
+    backgroundColor: theme.colors.surfaceMuted,
+    border: `1px solid ${theme.colors.borderStrong}`,
+    borderRadius: theme.borderRadius.sm,
+    color: theme.colors.text,
+    cursor: "pointer",
+    fontSize: theme.typography.fontSize.body,
+    marginTop: theme.spacing.lg,
+    padding: `${theme.spacing.md}px ${theme.spacing.xl}px`,
+  };
 
   return (
     <Screen testID="inventory-page">
