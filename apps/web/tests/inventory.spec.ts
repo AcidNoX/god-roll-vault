@@ -289,6 +289,52 @@ test.describe("Weapon inventory", () => {
     await expect(page.getByTestId("inventory-empty-search")).toBeVisible();
   });
 
+  test("renders a routed weapon detail breakdown with target perks and back navigation", async ({
+    page,
+  }) => {
+    await mockInventoryApi(page);
+
+    await page.goto(
+      `/weapons/${FATEBRINGER_INSTANCE_ID}?membershipType=3&membershipId=${MOCK_DESTINY_MEMBERSHIP_ID}&characterId=${MOCK_CHARACTER_ID}&mode=pve`,
+    );
+
+    await expect(page.getByTestId("weapon-detail-page")).toBeVisible();
+    await expect(page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}`)).toBeVisible();
+    await expect(page.getByTestId("weapon-detail-title")).toHaveText("Fatebringer (Timelost)");
+    await expect(page.getByTestId("weapon-detail-icon")).toHaveText("K");
+    await expect(page.getByTestId("weapon-detail-power")).toHaveText("Power 1980");
+    await expect(page.getByTestId("weapon-detail-element")).toHaveText("Kinetic element");
+    await expect(page.getByTestId("weapon-detail-tier")).toHaveText("Legendary");
+    await expect(page.getByTestId("weapon-detail-god-roll-badge")).toHaveText("PVEGod Roll100%");
+    await expect(
+      page.getByTestId(`weapon-detail-${FATEBRINGER_INSTANCE_ID}-perk-list-perk2`),
+    ).toContainText("Firefly");
+    await expect(page.getByTestId("weapon-detail-target-barrel")).toContainText(
+      "Hammer-Forged Rifling",
+    );
+    await expect(page.getByTestId("weapon-detail-target-magazine")).toContainText(
+      "Accurized Rounds",
+    );
+    await expect(page.getByTestId("weapon-detail-target-perk1")).toContainText("Explosive Payload");
+    await expect(page.getByTestId("weapon-detail-target-perk2")).toContainText("Firefly");
+
+    await page.getByTestId("weapon-detail-mode-pvp").click();
+
+    await expect(page.getByTestId("weapon-detail-god-roll-badge")).toHaveText("PVPPartial50%");
+    await expect(page.getByTestId("weapon-detail-target-barrel")).toContainText("Smallbore");
+    await expect(page.getByTestId("weapon-detail-target-perk1")).toContainText("Kill Clip");
+
+    await page.getByTestId("weapon-detail-back-button").click();
+
+    await expect(page).toHaveURL(
+      new RegExp(
+        `/inventory\\?membershipType=3&membershipId=${MOCK_DESTINY_MEMBERSHIP_ID}&characterId=${MOCK_CHARACTER_ID}&mode=pvp`,
+      ),
+    );
+    await expect(page.getByTestId("inventory-page")).toBeVisible();
+    await expect(page.getByTestId("inventory-summary")).toHaveText("3 weapons, 1 god roll in PVP");
+  });
+
   test("shows an empty state when no weapons are returned", async ({ page }) => {
     await mockEmptyInventoryApi(page);
 
