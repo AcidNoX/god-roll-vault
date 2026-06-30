@@ -16,6 +16,7 @@ export type ViewStyle = Record<string, unknown>;
 
 export const Text = createHostComponent("Text");
 export const View = createHostComponent("View");
+export const ActivityIndicator = createHostComponent("ActivityIndicator");
 export const Platform = {
   OS: "web",
   select<T>(specifics: Partial<Record<string, T>> & { default?: T }) {
@@ -68,3 +69,4 @@ export const StyleSheet = {
 
 export type TextProps = ComponentProps<typeof Text>;
 export type ViewProps = ComponentProps<typeof View>;
+export type ActivityIndicatorProps = ComponentProps<typeof ActivityIndicator>;

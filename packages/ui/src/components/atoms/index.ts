@@ -2,6 +2,8 @@ export type { AppTextProps } from "./AppText/index.js";
 export { AppText } from "./AppText/index.js";
 export type { BoxProps } from "./Box/index.js";
 export { Box } from "./Box/index.js";
+export type { LoadingSpinnerProps } from "./LoadingSpinner/index.js";
+export { LoadingSpinner } from "./LoadingSpinner/index.js";
 export type { PressableProps, PressableState } from "./Pressable/index.js";
 export { Pressable } from "./Pressable/index.js";
 export type { StackDirection, StackProps } from "./Stack/index.js";
