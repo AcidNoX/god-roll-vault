@@ -28,6 +28,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import type { TextStyle } from "react-native";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "../auth/AuthProvider.js";
@@ -153,6 +154,10 @@ export function InventoryPage() {
     minWidth: 220,
     padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
   };
+  const metadataTextStyle = {
+    display: "block",
+    lineHeight: theme.typography.caption.lineHeight + 2,
+  } as TextStyle;
 
   useEffect(() => {
     let cancelled = false;
@@ -272,12 +277,22 @@ export function InventoryPage() {
               Review selected character and vault weapons against curated god rolls.
             </Text>
             {tokens?.membershipId ? (
-              <Text color="textMuted" testID="inventory-membership-id" variant="caption">
+              <Text
+                color="textMuted"
+                style={metadataTextStyle}
+                testID="inventory-membership-id"
+                variant="caption"
+              >
                 Membership: {tokens.membershipId}
               </Text>
             ) : null}
             {selectedCharacter ? (
-              <Text color="textMuted" testID="inventory-selected-character" variant="caption">
+              <Text
+                color="textMuted"
+                style={metadataTextStyle}
+                testID="inventory-selected-character"
+                variant="caption"
+              >
                 Character: {selectedCharacter.characterId}
               </Text>
             ) : null}
