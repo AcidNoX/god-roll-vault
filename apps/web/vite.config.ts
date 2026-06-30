@@ -63,7 +63,24 @@ export default defineConfig(({ mode }) => {
       "import.meta.env.VITE_BUNGIE_CLIENT_SECRET": JSON.stringify(authEnv.clientSecret),
       "import.meta.env.VITE_OAUTH_REDIRECT_URI": JSON.stringify(authEnv.redirectUri),
     },
-    plugins: [react(), basicSsl()],
+    plugins: [
+      react(),
+      basicSsl(),
+      {
+        name: "storybook-trailing-slash",
+        configureServer(server) {
+          server.middlewares.use((request, response, next) => {
+            if (request.url === "/storybook") {
+              response.writeHead(301, { Location: "/storybook/" });
+              response.end();
+              return;
+            }
+
+            next();
+          });
+        },
+      },
+    ],
     resolve: {
       alias: {
         "react-native": "react-native-web",
