@@ -6,29 +6,49 @@ import { defineConfig, loadEnv } from "vite";
 const repoRoot = path.resolve(__dirname, "../..");
 const defaultRedirectUri = "https://127.0.0.1:3000/auth/callback";
 
+function firstEnv(...values: Array<string | undefined>): string {
+  for (const value of values) {
+    if (value) return value;
+  }
+  return "";
+}
+
 /** Root `.env` uses BUNGIE_*; Vite client code expects VITE_* — bridge both here. */
 function resolveWebAuthEnv(mode: string) {
   const rootEnv = loadEnv(mode, repoRoot, "");
   const appEnv = loadEnv(mode, __dirname, "");
+  const runtimeEnv = process.env;
 
   return {
-    apiKey:
-      appEnv.VITE_BUNGIE_API_KEY || rootEnv.VITE_BUNGIE_API_KEY || rootEnv.BUNGIE_API_KEY || "",
-    clientId:
-      appEnv.VITE_BUNGIE_CLIENT_ID ||
-      rootEnv.VITE_BUNGIE_CLIENT_ID ||
-      rootEnv.BUNGIE_CLIENT_ID ||
-      "",
-    clientSecret:
-      appEnv.VITE_BUNGIE_CLIENT_SECRET ||
-      rootEnv.VITE_BUNGIE_CLIENT_SECRET ||
-      rootEnv.BUNGIE_CLIENT_SECRET ||
-      "",
-    redirectUri:
-      appEnv.VITE_OAUTH_REDIRECT_URI ||
-      rootEnv.VITE_OAUTH_REDIRECT_URI ||
-      rootEnv.OAUTH_REDIRECT_URI_WEB ||
+    apiKey: firstEnv(
+      appEnv.VITE_BUNGIE_API_KEY,
+      rootEnv.VITE_BUNGIE_API_KEY,
+      rootEnv.BUNGIE_API_KEY,
+      runtimeEnv.VITE_BUNGIE_API_KEY,
+      runtimeEnv.BUNGIE_API_KEY,
+    ),
+    clientId: firstEnv(
+      appEnv.VITE_BUNGIE_CLIENT_ID,
+      rootEnv.VITE_BUNGIE_CLIENT_ID,
+      rootEnv.BUNGIE_CLIENT_ID,
+      runtimeEnv.VITE_BUNGIE_CLIENT_ID,
+      runtimeEnv.BUNGIE_CLIENT_ID,
+    ),
+    clientSecret: firstEnv(
+      appEnv.VITE_BUNGIE_CLIENT_SECRET,
+      rootEnv.VITE_BUNGIE_CLIENT_SECRET,
+      rootEnv.BUNGIE_CLIENT_SECRET,
+      runtimeEnv.VITE_BUNGIE_CLIENT_SECRET,
+      runtimeEnv.BUNGIE_CLIENT_SECRET,
+    ),
+    redirectUri: firstEnv(
+      appEnv.VITE_OAUTH_REDIRECT_URI,
+      rootEnv.VITE_OAUTH_REDIRECT_URI,
+      rootEnv.OAUTH_REDIRECT_URI_WEB,
+      runtimeEnv.VITE_OAUTH_REDIRECT_URI,
+      runtimeEnv.OAUTH_REDIRECT_URI_WEB,
       defaultRedirectUri,
+    ),
   };
 }
 
