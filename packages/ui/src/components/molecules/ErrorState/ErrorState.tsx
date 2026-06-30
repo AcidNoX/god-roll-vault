@@ -17,7 +17,11 @@ export function ErrorState({
       style={[errorStateStyles.container, style]}
       testID={testID}
     >
-      <Text color="textMuted" style={errorStateStyles.message} testID={testID && `${testID}-message`}>
+      <Text
+        color="textMuted"
+        style={errorStateStyles.message}
+        testID={testID && `${testID}-message`}
+      >
         {message}
       </Text>
       <Pressable onPress={onRetry} testID={testID && `${testID}-retry-button`}>

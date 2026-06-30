@@ -28,7 +28,11 @@ export function EmptyState({ icon, message, style, testID }: EmptyStateProps) {
       <Box style={emptyStateStyles.icon} testID={testID && `${testID}-icon`}>
         {renderIcon(icon)}
       </Box>
-      <Text color="textMuted" style={emptyStateStyles.message} testID={testID && `${testID}-message`}>
+      <Text
+        color="textMuted"
+        style={emptyStateStyles.message}
+        testID={testID && `${testID}-message`}
+      >
         {message}
       </Text>
     </Stack>

@@ -46,7 +46,7 @@ describe("EmptyState", () => {
 
   it("allows callers to supply a composed icon node", () => {
     const emptyState = renderEmptyState({
-      icon: <Text testID="custom-empty-icon">Vault</Text>,
+      icon: Text({ children: "Vault", testID: "custom-empty-icon" }),
       message: "No rolls match your filters",
       testID: "filtered-empty",
     });
