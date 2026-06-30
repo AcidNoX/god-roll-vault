@@ -215,7 +215,7 @@ export function WeaponDetailPage() {
                   <Text
                     style={{
                       color: theme.colors.element[weapon.element].text,
-                      fontWeight: theme.typography.fontWeight.bold,
+                      fontWeight: "700",
                     }}
                     variant="caption"
                   >
