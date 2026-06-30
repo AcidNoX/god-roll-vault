@@ -8,6 +8,15 @@ export type BungieApiConfig = {
   apiKey: string;
 };
 
+/** Bungie requires an exact redirect URI match — use the host the app is served from. */
+export function resolveOAuthRedirectUri(): string {
+  if (typeof window !== "undefined" && window.location.origin) {
+    return new URL("/auth/callback", window.location.origin).href;
+  }
+
+  return import.meta.env.VITE_OAUTH_REDIRECT_URI || "";
+}
+
 export function getBungieApiConfig(): BungieApiConfig {
   const apiKey = import.meta.env.VITE_BUNGIE_API_KEY;
 
@@ -23,11 +32,11 @@ export function getBungieApiConfig(): BungieApiConfig {
 export function getAuthConfig(): AuthConfig {
   const clientId = import.meta.env.VITE_BUNGIE_CLIENT_ID;
   const clientSecret = import.meta.env.VITE_BUNGIE_CLIENT_SECRET || undefined;
-  const redirectUri = import.meta.env.VITE_OAUTH_REDIRECT_URI;
+  const redirectUri = resolveOAuthRedirectUri();
 
   if (!clientId || !redirectUri) {
     throw new Error(
-      "Missing Bungie OAuth config. Set BUNGIE_CLIENT_ID and OAUTH_REDIRECT_URI_WEB (local: repo root .env; Vercel: project env vars), then rebuild. See docs/bungie-setup.md.",
+      "Missing Bungie OAuth config. Set BUNGIE_CLIENT_ID (local: repo root .env; Vercel: project env vars). See docs/bungie-setup.md.",
     );
   }
 
