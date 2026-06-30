@@ -76,35 +76,32 @@ describe("GodRollBadge", () => {
       textColor: designTokens.colors.badge.unknown.text,
       textValue: "PVPUnknown",
     },
-  ] satisfies BadgeCase[])(
-    "renders $status status with its visual variant and accessible label",
-    ({
-      accessibilityLabel,
+  ] satisfies BadgeCase[])("renders $status status with its visual variant and accessible label", ({
+    accessibilityLabel,
+    backgroundColor,
+    borderColor,
+    borderStyle,
+    mode,
+    score,
+    status,
+    textColor,
+    textValue,
+  }) => {
+    const badge = renderGodRollBadge({ mode, score, status });
+
+    expect(badge.props.testID).toBe(`god-roll-badge-${mode}-${status}`);
+    expect(badge.props.accessibilityLabel).toBe(accessibilityLabel);
+    expect(textContent(badge)).toBe(textValue);
+    expect(flattenStyle(badge.props.style)).toMatchObject({
       backgroundColor,
       borderColor,
-      borderStyle,
-      mode,
-      score,
-      status,
-      textColor,
-      textValue,
-    }) => {
-      const badge = renderGodRollBadge({ mode, score, status });
+      ...(borderStyle ? { borderStyle } : {}),
+    });
 
-      expect(badge.props.testID).toBe(`god-roll-badge-${mode}-${status}`);
-      expect(badge.props.accessibilityLabel).toBe(accessibilityLabel);
-      expect(textContent(badge)).toBe(textValue);
-      expect(flattenStyle(badge.props.style)).toMatchObject({
-        backgroundColor,
-        borderColor,
-        ...(borderStyle ? { borderStyle } : {}),
-      });
-
-      for (const textChild of textChildren(badge)) {
-        expect(flattenStyle(textChild.props.style)).toMatchObject({ color: textColor });
-      }
-    },
-  );
+    for (const textChild of textChildren(badge)) {
+      expect(flattenStyle(textChild.props.style)).toMatchObject({ color: textColor });
+    }
+  });
 
   it("allows callers to supply a stable testID", () => {
     const badge = renderGodRollBadge({

@@ -1,9 +1,6 @@
 import { Text, View } from "react-native";
 
-import {
-  gameModeLabels,
-  godRollBadgePresentationByStatus,
-} from "./GodRollBadge.constants.js";
+import { gameModeLabels, godRollBadgePresentationByStatus } from "./GodRollBadge.constants.js";
 import { godRollBadgeStyles } from "./GodRollBadge.styles.js";
 import type { GodRollBadgeProps } from "./GodRollBadge.types.js";
 
@@ -29,7 +26,14 @@ function createAccessibilityLabel({
   return `${modeLabel} ${statusDescription}${scoreDescription}`;
 }
 
-export function GodRollBadge({ mode, score, status, style, testID, ...viewProps }: GodRollBadgeProps) {
+export function GodRollBadge({
+  mode,
+  score,
+  status,
+  style,
+  testID,
+  ...viewProps
+}: GodRollBadgeProps) {
   const modeLabel = gameModeLabels[mode];
   const presentation = godRollBadgePresentationByStatus[status];
   const scoreLabel = formatScore(score);
